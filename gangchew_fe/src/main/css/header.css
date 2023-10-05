@@ -5,8 +5,11 @@
     width: 100%;
     background-color: #fff;
     box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
+    background-color: purple;
+    color: #fff;
     align-items: center;
     height: auto;
+    z-index: 999;
 }
 
 
