@@ -10,7 +10,7 @@ const Login = () => {
         <div className="left">left</div>
 
         <div className="right">
-          <div className="undifined">
+          <div className="login-form">
             <div className="login-input">
               <form className="form">
                 <div className="input-group">
@@ -29,7 +29,7 @@ const Login = () => {
                   />
                   <div className="join-link">
                     <p>
-                      아직 회원이 아니신가요? <Link to="">회원가입</Link>
+                      아직 회원이 아니신가요? <Link to="/selectRegistration">회원가입</Link>
                     </p>
                   </div>
                 </div>
@@ -42,11 +42,12 @@ const Login = () => {
                 variant="contained"
                 style={{ borderRadius: "8px" }}
               >
-                Button
+                login
               </Button>
             </div>
             <div className="api-login">
               <hr />
+              <p>SNS로 간편로그인</p>
               <ul className="api-login-button">
                 <li>
                   <span>
