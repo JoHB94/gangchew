@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+}
+.center {
+  height: 100vh;
+  display: flex;
+}
+
+.select-form-base {
+  margin: auto;
+  display: flex;
+  width: 500px;
+  height: 600px;
+  justify-content: center;
+  border-radius: 15px;
+  border: 1px solid black;
+}
+
+.logo-name {
+  text-align: center;
+  letter-spacing: 2px;
+  font-size: 40px;
+  font-weight: 900;
+  margin: 15% 0 15% 0;
+}
+.select-form {
+  display: flex;
+  flex-direction: column;
+}
+.select-form hr {
+  width: 100%;
+  margin: 30px 0 30px 0;
+}
+
+#regButton {
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  width: 350px;
+}
+
+.select-form a {
+  text-decoration-line: none;
+  color: black;
+}
+
+.select-form button:nth-of-type(1) {
+  font-size: 20px;
+  font-weight: 900;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  background-color: white;
+  border: 1px solid gray;
+}
+.select-form button:nth-of-type(2) {
+  font-size: 20px;
+  font-weight: 900;
+  background-color: yellow;
+}
+.select-form button:nth-of-type(3) {
+  font-size: 20px;
+  font-weight: 900;
+  color: white;
+  background-color: rgb(52, 202, 59);
+}
+.select-form button:nth-of-type(4) {
+  font-size: 20px;
+  font-weight: 900;
+  color: white;
+  background-color: rgb(46, 95, 231);
+}
+
+.regName {
+margin : 15px 0 15px 0;
+}
+
+.select-form button:nth-of-type(1):hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.select-form button:nth-of-type(2):hover {
+  background-color: rgb(234, 234, 0);
+}
+
+.select-form button:nth-of-type(3):hover {
+  background-color: rgb(52, 188, 59);
+}
+
+.select-form button:nth-of-type(4):hover {
+  background-color: rgb(46, 80, 231);
+}

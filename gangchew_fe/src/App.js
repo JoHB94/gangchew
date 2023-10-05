@@ -5,6 +5,8 @@ import Header from './main/Header';
 import FundingList from './funding/FundingList';
 import FundingCreate from './funding/FundingCreate';
 import Login from './member/Login';
+import SelectRegistration from './member/SelectRegistration';
+import RegistrationForm from './member/RegistrationForm';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route exact path='/fundinglist' element={<FundingList/>}/>
         <Route exact path='/fundingcreate' element={<FundingCreate/>}/>
         <Route exact path='/login' element={<Login/>}/>
+        <Route exact path='/selectRegistration' element={<SelectRegistration/>}/>
+        <Route exact path='/registration' element={<RegistrationForm/>}/>
       </Routes>
     {/* 푸터 컴포넌트 들어갈 부분*/}
     </BrowserRouter>
