@@ -1,0 +1,64 @@
+#card_container{
+    width: auto;
+    border-radius: 25px;
+    height: 326px;
+    /* display: flex; */
+    max-width: 380px;
+    border: 1px solid black;
+    overflow: hidden;
+
+}
+
+#card_imgContainer{
+    width: 100%;
+    overflow: hidden;
+    height: 214px;
+    background-color: lightgray;
+}
+
+#card_img{
+    width: 100%;
+    object-fit: cover;
+}
+
+#card_infoContainer{
+    width: 100%;
+    /* display: flex; */
+    
+}
+
+#card_info_line{
+    width: 100%;
+    display: flex;
+    height: 75px;
+}
+
+#card_infoTitle{
+    width: 80%;
+    min-width: 304px;
+}
+
+#card_title{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+#card_infoLike{
+    display: flex;
+    width: 20%;
+    
+}
+
+#card_infoRate{
+    width: 100%;
+    text-align: right;
+}
+
+#card_rate{
+    width: 100%;
+    font-weight: 500;
+    margin-right: 15px;
+    padding-bottom: 10px;
+    
+}

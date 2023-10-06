@@ -7,7 +7,7 @@ export default function DeleteFunding() {
   return (
     <Stack spacing={2} direction="row">
       
-      <Button variant="outlined" color='secondary' size='large'>
+      <Button variant="outlined" style={{color :'#701edb'}} size='large'>
       &nbsp;<h3>펀딩 취소하기 </h3>
         &nbsp;<AiOutlineDelete size={25}/>&nbsp;
         

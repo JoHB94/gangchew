@@ -3,6 +3,7 @@ body {
 }
 
 .colorbase {
+  background-color: gray;
 }
 
 
@@ -10,10 +11,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 1050px;
 }
 
 .registrationDiv {
-  width: 900px;
+  width: 40%;
   height: 950px;
   border-radius: 5px;
   padding-left: 30px;
@@ -85,4 +87,8 @@ label {
 
 .inputDiv9 a {
     text-decoration: none;
+}
+
+.reg_height150{
+  height: 150px;
 }

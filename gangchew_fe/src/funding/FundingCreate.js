@@ -44,7 +44,7 @@ export default function FundingCreate() {
                 <div id="center">
                     {/* <div id="p_empty350"></div> */}
                     <div id='p_carousel'>
-                        <SimpleSlider/>
+                        {/* <SimpleSlider/> */}
                     </div>
                     <h1>Project 생성하기</h1>
                     <div id="p_createcontainer">
@@ -60,6 +60,7 @@ export default function FundingCreate() {
                             <div id="pn_end"><br/></div>
                         </div>{/**프로젝트 생성하기 설명란 */}
                     </div>
+                    <hr id='p_hr'></hr>
                     <div id="p_empty150"></div>
                     <div id="projectInfo">
                         <h2>Project 이름</h2>
@@ -81,6 +82,7 @@ export default function FundingCreate() {
                             
                         </div>{/**프로젝트 이름 설명란 */}
                     </div>
+                    <hr id='p_hr'></hr>
                     <div id="p_empty150"></div>
                     <div id="projectInfo">{/**프로젝트 세부사항 */}
                         
@@ -145,6 +147,7 @@ export default function FundingCreate() {
                             </div>
                             </div>  
                         </div>
+                        <hr id='p_hr'></hr>
                         <div id="p_empty150"></div>
                     <div id="projectThumbnail">
                         <h2>썸네일</h2>
@@ -152,6 +155,7 @@ export default function FundingCreate() {
                             <InputThumbnail name={'thumbnail'} handleInputChange={handleInputChange}/>
                         </div>
                     </div>
+                    <hr id='p_hr'></hr>
                     <div id="p_empty150"></div>
                     <div id="projectContent">
                         

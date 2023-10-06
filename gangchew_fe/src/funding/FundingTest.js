@@ -7,6 +7,7 @@ import FullHeart from "../component/buttons/FullHeart";
 import UpdateFunding from "../component/buttons/UpdateFunding";
 import DeleteFunding from "../component/buttons/DeleteFunding";
 import StartFunding from "../component/buttons/StartFunding";
+import Card from "../component/Card";
 
 export default function FundingTest(){
 
@@ -21,7 +22,7 @@ export default function FundingTest(){
             <UpdateFunding/>
             <DeleteFunding/>
             <StartFunding/>
-            
+            <Card/>
         </div>
     )
 }
