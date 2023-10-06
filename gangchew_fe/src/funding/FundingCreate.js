@@ -1,13 +1,13 @@
 
 import TitleTextFilelds from '../component/inputs/TitleTextFields';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import fundingCreate from "../funding/css/fundingCreate.css";
 import CategorySelect from '../component/inputs/CategorySelect';
 import InputDate from '../component/inputs/InputDate';
 import InputThumbnail from './InputThumbnail';
 import ToastEditor from '../component/inputs/ToastEditor';
-import OkButton from '../component/inputs/OkButton';
-import CancelButton from '../component/inputs/CancelButton';
+import OkButton from '../component/buttons/OkButton';
+import CancelButton from '../component/buttons/CancelButton';
 import SimpleSlider from '../component/SimpleSlider'
 
 export default function FundingCreate() {
@@ -27,7 +27,7 @@ export default function FundingCreate() {
         content: ''
     });
     // input 컴포넌트에서 호출할 함수
-    const handleInputChange = (key,newValue) => {
+    const handleInputChange = (key, newValue) => {
         setFunding((prevFunding) => ({
             ...prevFunding,
             [key]: newValue
@@ -174,6 +174,7 @@ export default function FundingCreate() {
                         <div id="p_editor">
                             {/**toastUIEditor 들어갈 곳 */}
                             <ToastEditor name={'content'} handleInputChange={handleInputChange}/>
+                            
                         </div>
 
                     </div>
