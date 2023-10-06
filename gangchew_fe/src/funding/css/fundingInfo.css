@@ -1,0 +1,45 @@
+#f_container{
+    width: 100%;
+    display: flex;
+}
+
+#f_left{
+    width: 20%;
+}
+
+#f_center{
+    width: 60%;
+}
+
+#f_right{
+    width: 20%;
+}
+
+#f_headerarea{
+    height: 3.45rem;
+}
+
+
+
+
+#f_infoContainer{
+    width: 100%;
+    display: flex;
+}
+
+#f_infoTitle{
+    font-weight: 700;
+}
+
+#f_infoThumbContainer{
+    width: 60%;
+    overflow: hidden;
+}
+
+#f_infoThumb{
+    object-fit: cover;
+}
+
+#f_infoDetail{
+    width: 40%;
+}

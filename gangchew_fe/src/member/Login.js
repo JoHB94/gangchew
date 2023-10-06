@@ -27,7 +27,11 @@ const Login = () => {
       username: username,
       password: password,
     };
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 8a6caa1cdf6eadf02a2e532352dceb55f58adf62
     axios({
       method: requestMethod,
       url: baseUrl,

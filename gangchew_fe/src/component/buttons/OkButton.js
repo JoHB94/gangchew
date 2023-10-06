@@ -6,7 +6,7 @@ export default function OkButton() {
   return (
     <Stack spacing={2} direction="row">
       
-      <Button variant="contained" color='secondary'>확인</Button>
+      <Button variant="contained" style={{color :'#701edb'}}>확인</Button>
       
     </Stack>
   );

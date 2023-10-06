@@ -5,6 +5,8 @@ import Header from './main/Header';
 import FundingList from './funding/FundingList';
 import FundingCreate from './funding/FundingCreate';
 import Login from './member/Login';
+import FundingInfo from './funding/FundingInfo';
+import FundingTest from './funding/FundingTest';
 import SelectRegistration from './member/SelectRegistration';
 import RegistrationForm from './member/RegistrationForm';
 
@@ -18,6 +20,8 @@ function App() {
         {/*홈*/}
         <Route exact path='/fundinglist' element={<FundingList/>}/>
         <Route exact path='/fundingcreate' element={<FundingCreate/>}/>
+        <Route exact path='/fundinginfo' element={<FundingInfo/>}/>
+        <Route exact path='/fundingtest' element={<FundingTest/>}/>
         <Route exact path='/login' element={<Login/>}/>
         <Route exact path='/selectRegistration' element={<SelectRegistration/>}/>
         <Route exact path='/registration' element={<RegistrationForm/>}/>
