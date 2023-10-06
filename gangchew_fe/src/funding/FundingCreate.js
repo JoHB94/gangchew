@@ -10,6 +10,8 @@ import OkButton from '../component/buttons/OkButton';
 import CancelButton from '../component/buttons/CancelButton';
 import SimpleSlider from '../component/SimpleSlider'
 
+import axios from 'axios';
+
 export default function FundingCreate() {
 
     const [funding, setFunding] = useState({
@@ -34,7 +36,21 @@ export default function FundingCreate() {
         }));
         
     };
-    
+
+    /*submit 핸들러 : 버튼 클릭시 axios 통신을 합니다.*/ 
+    const submit = (e) => {
+        const formData = new FormData();
+
+        formData.append('funding',funding);
+
+        axios.post('/funding/create',formData)
+        .then((res) => {
+            console.log(res);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
     return (
         <div>
             
@@ -184,7 +200,7 @@ export default function FundingCreate() {
                     </div>
                     <div id="p_empty150"></div>
                     <div id="projectButton">
-                        <div id='ok'>
+                        <div id='ok' onClick={submit}>
                             <OkButton/>                       
                         </div>
                         <div>

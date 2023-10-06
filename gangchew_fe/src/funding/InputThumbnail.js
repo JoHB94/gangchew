@@ -41,7 +41,7 @@ export default function InputThumbnail({name,handleInputChange}){
             </div>
             
             <div id='thumbInput'>
-            <Button color='secondary' component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+            <Button style={{backgroundColor:'#701edb'}} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                 Upload file
                 <VisuallyHiddenInput type="file" accept='image/*' onChange={imgHandler}/>
             </Button>

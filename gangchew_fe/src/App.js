@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App">
     <BrowserRouter>
-      <Header/>
+      {/* <Header/> */}
       <Routes>
        {/* <Route exact path='/' element={<Home/>}/> */} 
         {/*홈*/}

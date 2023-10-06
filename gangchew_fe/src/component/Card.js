@@ -2,7 +2,16 @@ import card from '../component/css/card.css';
 import FullHeart from './buttons/FullHeart';
 
 
-export default function Card(){
+/**
+ * 
+ * 
+ * funding(Object) : 펀딩 글 객체
+ * rate(int) : 달성률
+ * funding.title : 제목
+ * funding.thumbnail(byte[]) : 썸네일 인코딩해야함.
+ * 
+ */
+export default function Card({funding,rate}){
 
     return(
         <div>
