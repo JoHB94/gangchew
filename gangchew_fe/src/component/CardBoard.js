@@ -15,13 +15,14 @@ function CardBoard() {
         <CardActionArea>
           <CardMedia
             component="img"
+            height="200"
             image={image}
             alt="image"
-            style={{ height: '100%', width: '100%', objectFit: 'cover' }}
+            style={{objectFit: 'contain'}}
           />
           <CardContent>
-            <Typography gutterBottom variant="h6" component="div">
-              Lizardㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ
+            <Typography variant="h6" component="div">
+              Liz
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {/* content */}

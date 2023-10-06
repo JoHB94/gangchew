@@ -1,0 +1,88 @@
+body {
+  margin: 0;
+}
+
+.colorbase {
+}
+
+
+.baseDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.registrationDiv {
+  width: 900px;
+  height: 950px;
+  border-radius: 5px;
+  padding-left: 30px;
+  box-shadow: 5px 5px 3px 3px gray;
+  background-color: white;
+}
+
+.formDiv {
+  margin-top: 55px;
+}
+
+.checkBtn,
+.addressFind {
+  height: 2.2rem;
+  width: 7rem;
+  border: none;
+  border-radius: 10px;
+  margin-left: 5px;
+  color: white;
+  background-color: rgb(154, 14, 175);
+}
+
+label {
+  font-weight: 700;
+}
+
+.id-input, .password-input, .passwordCheck-input, .name-input, .nickname-input, .email-input, .address-input {
+  height: 2rem;
+  width: 28rem;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+.inputDiv2,
+.inputDiv4 {
+  margin-top: 40px;
+}
+
+.inputDiv3 {
+  margin-top: 10px;
+}
+
+.inputDiv5,
+.inputDiv6,
+.inputDiv7 {
+  margin-top: 20px;
+}
+
+.inputDiv7 {
+  margin-top: 40px;
+}
+
+.inputDiv8 {
+  margin-top: 40px;
+}
+
+.checkboxForm {
+  position: relative;
+  top: 3px;
+  zoom: 1.5;
+}
+
+.inputDiv9 {
+    margin-top: 45px; 
+    text-align: center;
+    padding-right: 30px;
+}
+
+.inputDiv9 a {
+    text-decoration: none;
+}
