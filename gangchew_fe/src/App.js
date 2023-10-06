@@ -5,17 +5,21 @@ import Header from './main/Header';
 import FundingList from './funding/FundingList';
 import FundingCreate from './funding/FundingCreate';
 import Login from './member/Login';
+import FundingInfo from './funding/FundingInfo';
+import FundingTest from './funding/FundingTest';
 
 function App() {
   return (
     <div className="App">
     <BrowserRouter>
-      <Header/>
+      {/* <Header/> */}
       <Routes>
        {/* <Route exact path='/' element={<Home/>}/> */} 
         {/*홈*/}
         <Route exact path='/fundinglist' element={<FundingList/>}/>
         <Route exact path='/fundingcreate' element={<FundingCreate/>}/>
+        <Route exact path='/fundinginfo' element={<FundingInfo/>}/>
+        <Route exact path='/fundingtest' element={<FundingTest/>}/>
         <Route exact path='/login' element={<Login/>}/>
       </Routes>
     {/* 푸터 컴포넌트 들어갈 부분*/}

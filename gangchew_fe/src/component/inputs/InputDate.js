@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -9,24 +9,33 @@ import "react-datepicker/dist/react-datepicker.css";
  * @returns 
  */
 const InputDate =({name ,handleInputChange}) => {
-    const [startDate, setStartDate] = useState(new Date());
-    const [selectedDate, setSelectedDate] = useState('');
 
+    /* 날짜 변경후 출력용 state변수 */
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [dateFlag, setDateFlag] = useState(false) // 데이트값 변경여부 flag변수
 
+    useEffect(()=> {
+      if(dateFlag == true) {
+        handleInputChange(name,selectedDate);
+        setDateFlag(false); //변경여부 초기화
+      }
+    }, [dateFlag])
+
+    /**
+     * state변경은 이벤트함수 내에서 비동기적으로 처리된다 따라서 flag값을 함께 변경하고
+     * 변경 이후에 useEffect를 통해 
+     * @param {*} date 
+     */
     const handleChange =(date)=> {
-      const key = name;
       setSelectedDate(date)
-      setStartDate(date)
-      const newValue = selectedDate;
-
-      handleInputChange(key,newValue);
+      setDateFlag(true)
       // console.log(selectedDate);
     }
 
     return (
       <DatePicker
         showIcon
-        selected={startDate}
+        selected={selectedDate}
         onChange={(date) => handleChange(date)}
       />
     );
