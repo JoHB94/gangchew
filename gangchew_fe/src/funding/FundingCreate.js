@@ -174,7 +174,7 @@ export default function FundingCreate() {
                         <div id="p_editor">
                             {/**toastUIEditor 들어갈 곳 */}
                             <ToastEditor name={'content'} handleInputChange={handleInputChange}/>
-                            <p> 데드라인 : {funding.deadline[0]}</p>
+                            
                         </div>
 
                     </div>

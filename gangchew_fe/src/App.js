@@ -5,19 +5,16 @@ import Header from './main/Header';
 import FundingList from './funding/FundingList';
 import FundingCreate from './funding/FundingCreate';
 import Login from './member/Login';
-<<<<<<< HEAD
 import FundingInfo from './funding/FundingInfo';
 import FundingTest from './funding/FundingTest';
-=======
 import SelectRegistration from './member/SelectRegistration';
 import RegistrationForm from './member/RegistrationForm';
->>>>>>> 540ed33756fbbc905ab5e3efd80031c91f80b2f0
 
 function App() {
   return (
     <div className="App">
     <BrowserRouter>
-      {/* <Header/> */}
+      <Header/>
       <Routes>
        {/* <Route exact path='/' element={<Home/>}/> */} 
         {/*홈*/}
