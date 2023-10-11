@@ -37,8 +37,9 @@ export default function FundingInfo(){
     }
 
     useEffect(() => {
-        const intervalId = setInterval(diffDay, 1000); // 1시간 호출
-        setDiffDayValue(intervalId)
+        const intervalId = setInterval(()=>{
+            setDiffDayValue(diffDay())
+        }, 1000); // 1시간 호출
         return () => {
           clearInterval(intervalId); // 컴포넌트가 언마운트되면 setInterval 해제
         };
@@ -99,13 +100,13 @@ export default function FundingInfo(){
                                 <hr/>
                                 
                                 <ul>
-                                    <li id="f_info_li" className="f_Dday"><h3>{diffDay()}</h3></li>
+                                    <li id="f_info_li" className="f_Dday"><h3>{diffDayValue}</h3></li>
                                     <li id="f_info_li">마감 2023/12/25</li>
                                     <li id="f_info_li">금액 150,000 원</li>
                                     <li id="f_info_li">최대 모집 인원 16명</li>
                                     <li id="f_info_li">현재 남은 인원 3명</li>
                                     <li id="f_info_li">
-                                    <h3>달성률 80% <BsFire style={{color:"red"}}/></h3>
+                                    <h2 style={{color:"#fa6363"}}>달성률 80% <BsFire style={{color:"red"}}/></h2>
                                     </li>
                                 </ul>
 
