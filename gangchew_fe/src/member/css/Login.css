@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 65% 35%;
+  height: 100vh;
+}
+
+.left {
+  background-color: #cccbcb;
+}
+.right {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.logo-name {
+    letter-spacing: 2px;
+    font-size: 40px;
+    font-weight: 900;
+    margin-bottom: 10%;
+}
+
+.login-input {
+  text-align: center;
+}
+
+.input-group {
+  margin: 20px;
+}
+
+.input-id {
+  height: 3rem;
+  width: 24rem;
+  border-radius: 10px;
+  border: hidden;
+  padding: 0 0.5rem 0 0.5rem;
+  background-color: rgb(247, 216, 251);
+}
+
+.input-password {
+  height: 3rem;
+  width: 24rem;
+  border-radius: 10px;
+  border: hidden;
+  padding: 0 0.5rem 0 0.5rem;
+  background-color: rgb(247, 216, 251);
+}
+
+.input-id::placeholder {
+  color: rgb(204, 18, 233);
+}
+
+.input-password::placeholder {
+  color: rgb(204, 18, 233);
+}
+
+.join-link {
+  margin: auto;
+  width: 25rem;
+}
+
+.join-link p {
+  font-size: 12px;
+  text-align: right;
+}
+
+.join-link p a {
+  text-decoration-line: none;
+  color: rgb(178, 8, 204);
+}
+
+.action {
+  text-align: center;
+}
+.api-login {
+}
+.api-login hr {
+  width: 90%;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.api-login p {
+  margin-top: -18px;
+  margin-left: 20px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.submit-button {
+  height: 3rem;
+  width: 25rem;
+  
+}
+
+.api-login-button {
+  list-style-type: none;
+  display: flex;
+  padding: 10px 65px 0 65px;
+  justify-content: space-around;
+}
