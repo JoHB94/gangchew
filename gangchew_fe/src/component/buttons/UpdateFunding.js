@@ -8,8 +8,8 @@ export default function UpdateFunding() {
     <Stack spacing={2} direction="row">
       
       <Button variant="outlined" style={{color :'#701edb'}} size='large'>
-      &nbsp;<h3>펀딩 수정하기 </h3>
-        &nbsp;<FaTools size={25}/>&nbsp;
+      <h3>펀딩 수정하기 </h3>
+        &nbsp;<FaTools size={25}/>
         
         </Button>
       

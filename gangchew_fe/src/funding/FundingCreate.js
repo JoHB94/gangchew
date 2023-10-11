@@ -30,20 +30,51 @@ export default function FundingCreate() {
     });
     // input 컴포넌트에서 호출할 함수
     const handleInputChange = (key, newValue) => {
-        setFunding((prevFunding) => ({
+        if (key === 'thumbnail' && newValue instanceof File) {
+          // 이미지 파일을 base64로 변환
+          convertImageToBase64(newValue)
+            .then((base64Image) => {
+              // base64로 변환된 이미지 데이터를 thumbnail 속성에 할당
+              setFunding((prevFunding) => ({
+                ...prevFunding,
+                thumbnail: base64Image,
+              }));
+            })
+            .catch((error) => {
+              console.error('이미지를 base64로 변환하는 중 오류 발생:', error);
+            });
+        } else {
+          // 다른 키의 변경이나 문자열 값의 변경은 그대로 처리
+          setFunding((prevFunding) => ({
             ...prevFunding,
-            [key]: newValue
-        }));
-        
+            [key]: newValue,
+          }));
+        }
+      };
+
+      // 파일을 base64로 변환하는 도우미 함수
+    const convertImageToBase64 = (imageFile) => {
+        return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+    
+        reader.onload = (e) => {
+            const base64Image = e.target.result;
+            resolve(base64Image);
+        };
+    
+        reader.onerror = (error) => {
+            reject(error);
+        };
+    
+        reader.readAsDataURL(imageFile);
+        });
     };
+
 
     /*submit 핸들러 : 버튼 클릭시 axios 통신을 합니다.*/ 
     const submit = (e) => {
-        const formData = new FormData();
-
-        formData.append('funding',funding);
-
-        axios.post('/funding/create',formData)
+       
+        axios.post('/funding/create',funding)
         .then((res) => {
             console.log(res);
         }).catch((error) => {

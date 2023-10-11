@@ -1,8 +1,73 @@
+import React, {useState} from 'react';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+
 import PaginationRounded from "./PaginationRounded";
 import SimpleSlider from "../component/SimpleSlider";
 import fundingList from "../funding/css/fundingList.css";
 import Card from "../component/Card";
+import { useEffect } from 'react';
+import axios from 'axios';
+
 export default function FundingList() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(8);
+  const [data, setData] = useState([]);
+
+  useEffect(()=>{
+    /*axios통신 들어갈 부분 => currentPage : 1
+    axios.get('')
+    .then((res)=>{
+      
+    })*/
+    fetch('/ListTest.json')
+    .then((res)=>res.json())
+    .then((data)=>{
+
+      const jsonData = data;
+      console.log(jsonData);
+      setData(jsonData.data);
+    })
+    .catch((error) => {
+      console.error('데이터를 불러오는 중 오류 발생:', error);
+    });
+  },[])
+
+
+  const handlePage =(event, page)=>{
+    console.log(page)
+    setCurrentPage(page);
+
+    /*axios통신 들어갈 부분 => currentPage : 클릭한 값
+    */
+    
+  }
+
+  const prevhandlePage =(event, page)=>{
+    console.log(page)
+    if(currentPage === 1){
+      return
+    } else {
+      setCurrentPage(currentPage - 1);
+      /*axios통신 들어갈 부분
+      */
+
+    }
+   
+  }
+
+  const nexthandlePage =(event, page)=>{
+    console.log(page)
+    if(currentPage === totalItems){
+      return
+    }else{
+      setCurrentPage(currentPage + 1);
+      /*axios통신 들어갈 부분
+      */
+    }
+        
+  }
+
   return (
     <div>
       <div id="headerarea"></div>
@@ -42,40 +107,21 @@ export default function FundingList() {
           <div>
             <div id="content">
               <div id="contentBox">
-                <span id="cardBoard">
-                  <Card/>
+                {data.map((funding) => (
+                <span key={funding.num} id="cardBoard">
+                  <Card funding={funding}/>
                 </span>
-                <span id="cardBoard">
-                  <Card/>
-                </span>
-                <span id="cardBoard">
-                  <Card/>
-                </span>
-                <span id="cardBoard">
-                  <Card/>
-                </span>
-                <span id="cardBoard">
-                  <Card/>
-                </span>
-                <span id="cardBoard">
-                  <Card/>
-                </span>
-                <span id="cardBoard">
-                  <Card/>
-                </span>
-                <span id="cardBoard">
-                  <Card/>
-                </span>
-                <span id="cardBoard">
-                  <Card/>
-                </span>
-              </div>
+                ))}
+                </div>
             </div>
           </div>
           <div id="empty5"></div>
           <div id="pagination100">
             {/*------------페이지네이션 위치!!!!-----------*/}
-            <PaginationRounded />
+            <Stack spacing={2}>
+              <Pagination count={3} variant="outlined" shape="rounded" color="secondary" 
+              page={currentPage} onChange={handlePage}/>
+            </Stack>
           </div>
           <div id="empty5"></div>
         </div>

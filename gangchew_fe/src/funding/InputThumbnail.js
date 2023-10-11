@@ -26,18 +26,25 @@ export default function InputThumbnail({name,handleInputChange}){
         const key = name;
 
         if (file) {
-          setSelectedImage(file);
-          handleInputChange(key,file);
-        }
+          const reader = new FileReader();
 
+          reader.onload = (e) => {
+            const imagePreviewURL = e.target.result;
+            setSelectedImage(imagePreviewURL);
+            handleInputChange(key, file);
+        };
+
+        reader.readAsDataURL(file);
+        console.log(selectedImage);
     
         
       };
+    }
 
     return(
         <div id='thumbContainer'>
             <div id='thumbImg'>
-            {selectedImage && <img id='img' src={URL.createObjectURL(selectedImage)} alt='' />}
+            {selectedImage && <img id='img' src={selectedImage} alt='' />}
             </div>
             
             <div id='thumbInput'>

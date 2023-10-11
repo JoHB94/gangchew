@@ -36,6 +36,7 @@
 #card_infoTitle{
     width: 80%;
     min-width: 304px;
+    text-align: center;
 }
 
 #card_title{
