@@ -70,7 +70,7 @@ const heartStyle = {
 
 export default function ConsumerList(){  
 
-    const [consumers, setUsers] = useState(null);
+    const [consumers, setConsumers] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -79,14 +79,14 @@ export default function ConsumerList(){
         try {
           // 요청이 시작 할 때에는 error 와 consumers 를 초기화하고
           setError(null);
-          setUsers(null);
+          setConsumers(null);
           // loading 상태를 true 로 바꿉니다.
           setLoading(true);
           const response = await axios.get(
             'consumer/ConsumerList.json'
             //'https://www.gangchew.com/studentrequest/all'
           );
-          setUsers(response.data); // 데이터는 response.data 안에 들어있습니다.
+          setConsumers(response.data); // 데이터는 response.data 안에 들어있습니다.
         } catch (e) { 
           setError(e);
         }
