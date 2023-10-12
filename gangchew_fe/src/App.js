@@ -9,6 +9,9 @@ import FundingInfo from './funding/FundingInfo';
 import FundingTest from './funding/FundingTest';
 import SelectRegistration from './member/SelectRegistration';
 import RegistrationForm from './member/RegistrationForm';
+import MainBoard from './main/MainBoard';
+import MainSlider from './component/inputs/MainSlider';
+
 
 function App() {
   return (
@@ -18,6 +21,7 @@ function App() {
       <Routes>
        {/* <Route exact path='/' element={<Home/>}/> */} 
         {/*홈*/}
+        <Route exact path='/main' element={<MainBoard/>}/>
         <Route exact path='/fundinglist' element={<FundingList/>}/>
         <Route exact path='/fundingcreate' element={<FundingCreate/>}/>
         <Route exact path='/fundinginfo' element={<FundingInfo/>}/>
@@ -25,6 +29,7 @@ function App() {
         <Route exact path='/login' element={<Login/>}/>
         <Route exact path='/selectRegistration' element={<SelectRegistration/>}/>
         <Route exact path='/registration' element={<RegistrationForm/>}/>
+        <Route exact path='/mainSlider' element={<MainSlider/>}/>
       </Routes>
     {/* 푸터 컴포넌트 들어갈 부분*/}
     </BrowserRouter>

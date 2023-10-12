@@ -1,41 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { BsFacebook } from "react-icons/bs";
+import { RiKakaoTalkFill } from "react-icons/ri";
+import { SiNaver } from "react-icons/si";
+import MemberModal from "./MemberModal";
 
 import "../member/css/Login.css";
 
+/* 로그인 데이터 전송 */
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [loginData, setLoginData] = useState({
+    username: "",
+    password: "",
+  });
 
-  const handleChange_username = (e) => {
-    setUsername(e.target.value);
+
+  const handleInputChange = (key, value) => {
+    setLoginData((prevData) => ({
+      ...prevData,
+      [key]: value,
+    }));
   };
 
-  const handleChange_password = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const baseUrl = "http://localhost:9000/authenticate";
+    const serverUrl = "http://localhost:9000/authenticate"; // 서버의 URL을 여기에 넣으세요
     const requestMethod = "POST";
 
-    const loginData = {
-      username: username,
-      password: password,
-    };
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> 8a6caa1cdf6eadf02a2e532352dceb55f58adf62
     axios({
       method: requestMethod,
-      url: baseUrl,
-      Data: loginData,
+      url: serverUrl,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: loginData,
     })
       .then((response) => {
         console.log("서버 응답 데이터:", response.data);
@@ -45,6 +46,12 @@ const Login = () => {
         console.error("오류 발생:", error);
         // 오류 처리 코드를 추가
       });
+  };
+  /* --------- */
+
+  /* 소셜 로그인 api연결 */
+  const socialLogin = (identifier) => {
+    window.location.href = `http://localhost:9000/oauth2/authorization/${identifier}`;
   };
 
   return (
@@ -63,30 +70,35 @@ const Login = () => {
                       type="text"
                       className="input-id"
                       placeholder="Enter id"
-                      value={username}
-                      onChange={handleChange_username}
+                      onChange={(e) => 
+                        handleInputChange("username", e.target.value)
+                      }
+
                     />
                   </p>
                   <input
                     type="password"
                     className="input-password"
                     placeholder="Enter password"
-                    value={password}
-                    onChange={handleChange_password}
+                    onChange={(e) =>
+                      handleInputChange("password", e.target.value)
+                    }
                   />
                   <div className="join-link">
                     <p>
-                      아직 회원이 아니신가요?{" "}
-                      <Link to="/selectRegistration">회원가입</Link>
+                      아직 회원이 아니신가요?
+                      <MemberModal />
                     </p>
                   </div>
                 </div>
                 <div className="action">
                   <Button
                     className="submit-button"
-                    color="secondary"
-                    variant="contained"
-                    style={{ borderRadius: "8px" }}
+                    style={{
+                      borderRadius: "8px",
+                      backgroundColor: "#701edb",
+                      color: "white",
+                    }}
                     type="submit"
                   >
                     login
@@ -94,27 +106,53 @@ const Login = () => {
                 </div>
               </form>
             </div>
+            {/* api 로그인 접속 링크 버튼 */}
             <div className="api-login">
               <hr />
               <p>SNS로 간편로그인</p>
               <ul className="api-login-button">
                 <li>
-                  <span>
-                    <div>api Image</div>
-                    kakao
-                  </span>
+                  <button
+                    className="socialLogButton"
+                    onClick={() => socialLogin("kakao")}
+                  >
+                    <div className="kakao-icon">
+                      <RiKakaoTalkFill
+                        size={45}
+                        style={{
+                          color: "#341808",
+                          backgroundColor: "yellow",
+                          borderRadius: "5px",
+                        }}
+                      />
+                      <li>kakao</li>
+                    </div>
+                  </button>
                 </li>
                 <li>
-                  <span>
-                    <div>api Image</div>
-                    naver
-                  </span>
+                  <button
+                    className="socialLogButton"
+                    onClick={() => socialLogin("naver")}
+                  >
+                    <div className="naver-icon">
+                      <SiNaver size={25} style={{ color: "white" }} />
+                      <li className="">naver</li>
+                    </div>
+                  </button>
                 </li>
                 <li>
-                  <span>
-                    <div>api Image</div>
-                    facebook
-                  </span>
+                  <button
+                    className="socialLogButton"
+                    onClick={() => socialLogin("facebook")}
+                  >
+                    <div className="facebook-icon">
+                      <BsFacebook
+                        size={45}
+                        style={{ color: "blue", paddingBottom: "5px" }}
+                      />
+                      <li>facebook</li>
+                    </div>
+                  </button>
                 </li>
               </ul>
             </div>
