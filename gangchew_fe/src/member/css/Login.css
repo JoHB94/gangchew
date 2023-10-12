@@ -20,10 +20,12 @@ body {
 }
 
 .logo-name {
-    letter-spacing: 2px;
-    font-size: 40px;
-    font-weight: 900;
-    margin-bottom: 10%;
+  letter-spacing: 2px;
+  margin-bottom: 10%;
+  letter-spacing: 2px;
+  font-size: 40px;
+  font-weight: 900;
+  margin: 7% 0 15% 0;
 }
 
 .login-input {
@@ -40,7 +42,7 @@ body {
   border-radius: 10px;
   border: hidden;
   padding: 0 0.5rem 0 0.5rem;
-  background-color: rgb(247, 216, 251);
+  background-color: #ebdefa;
 }
 
 .input-password {
@@ -49,7 +51,7 @@ body {
   border-radius: 10px;
   border: hidden;
   padding: 0 0.5rem 0 0.5rem;
-  background-color: rgb(247, 216, 251);
+  background-color: #ebdefa;
 }
 
 .input-id::placeholder {
@@ -96,12 +98,57 @@ body {
 .submit-button {
   height: 3rem;
   width: 25rem;
-  
 }
 
 .api-login-button {
   list-style-type: none;
   display: flex;
-  padding: 10px 65px 0 65px;
+  padding: 10px 40px 0 40px;
+  margin-bottom: -16px;
   justify-content: space-around;
+  text-align: center;
 }
+
+.facebook-icon {
+  text-align: center;
+  margin-top: 1px;
+}
+
+.api-login-button li:nth-of-type(2) {
+  margin-left: 10px;
+}
+
+.naver-icon {
+  text-align: center;
+  margin-top: 1px;
+  padding-top: 10px;
+  border-radius: 30px;
+  background-color: green;
+  width: 45px;
+  height: 35px;
+}
+
+.kakao-icon li {
+  margin-top: 2px;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.naver-icon li {
+  margin-top: 11.5px;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.facebook-icon li {
+  margin-top: -3px;
+  margin-left: 3px;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.socialLogButton {
+  border: none;
+  background-color: white;
+}
+

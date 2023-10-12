@@ -107,17 +107,5 @@
     height: 5rem;
 }
 
-#content {
-    display: flex;
-    justify-content: space-around;
-}
 
-#contentBox {
-    display: grid;
-    width: auto;
-    gap: 20px;
-    grid-template-columns: 1fr 1fr 1fr;
-    place-items: center;
-    padding-top: 30px;
-}
 

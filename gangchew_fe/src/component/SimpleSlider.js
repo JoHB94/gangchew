@@ -17,6 +17,7 @@ export default class SimpleSlider extends Component {
     const imgs = ['/carousel001.jpg','/carousel002.jpg','/carousel003.jpg',];
     return (
       <div id="sliderSize">
+        
         <Slider {...settings}>
           {imgs.map((imgPath, index) => (
             <div key={index} id="sliderContainer">
