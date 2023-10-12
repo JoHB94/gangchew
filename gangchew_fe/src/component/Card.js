@@ -8,12 +8,6 @@ import FullHeart from './buttons/FullHeart';
 import { useEffect } from 'react';
 
 
-const Card = ({ posts, loading }) => {
-  return (
-    <div>
-      {loading && <div> loading... </div>}
-
-
 /**
  * 
  * 
@@ -76,11 +70,7 @@ export default function Card({funding}){
                     </div>
                   </div>
                 </div>
-              </span>
-          </div>
-        </div>
-      </div>
-    </div>
+            </div>
   );
 };
-export default Card;
+
