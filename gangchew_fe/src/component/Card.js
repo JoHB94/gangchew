@@ -17,7 +17,7 @@ import { useEffect } from 'react';
  */
 export default function Card({funding}){
    
-    const rate = Math.floor(funding.goal/funding.participants)
+    // const rate = Math.floor(funding.goal/funding.participants)
     const [like, setLike] = useState(false);
 
     useEffect(()=>{
@@ -41,7 +41,10 @@ export default function Card({funding}){
                     <div id="card_info_line">
                         <div id="card_infoTitle">
                         {/**제목 */}
-                        <h3 id='card_title'>{funding.title}</h3>
+                        <h3 id='card_title'>
+                            {/* {funding.title} */}
+                            제목
+                            </h3>
                         </div>
                         <div id="card_infoLike" onClick={likeHandler}> {/**좋아요 버튼 */}
                             {like ? (
@@ -54,7 +57,8 @@ export default function Card({funding}){
                     <div id="card_infoRate">
                         {/**진행률 */}
                         <span id='card_rate'>
-                            현재 진행률 {rate}%
+                            {/* 현재 진행률 {rate}% */}
+                            진행률
                         </span>
                     </div>
 

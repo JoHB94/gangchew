@@ -9,6 +9,7 @@ import ToastEditor from '../component/inputs/ToastEditor';
 import OkButton from '../component/buttons/OkButton';
 import CancelButton from '../component/buttons/CancelButton';
 import SimpleSlider from '../component/SimpleSlider'
+import {FiAlertTriangle} from "react-icons/fi";
 
 import axios from 'axios';
 
@@ -97,7 +98,8 @@ export default function FundingCreate() {
                     <div id="p_createcontainer">
                         <div id="width30"></div>
                         <div id="projectNote">
-                            <div id="pn_title">! 반드시 읽어주세요</div>
+                            <div id="pn_title">
+                                <FiAlertTriangle style={{color :"red"}} size={28}/>&nbsp; 반드시 읽어주세요</div>
                             <div id="pn_content">
                                     작성자는 강사 본인 또는 대리인이며, 플랫폼은 강사의 선정과 자격증명에 관여하지 않습니다. <br/>
                                     허위사실 적발 시 고발을 당할 수 있으며 이는 작성자 본인의 책임입니다. <br/>
