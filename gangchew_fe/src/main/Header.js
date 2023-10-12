@@ -6,6 +6,8 @@ import TextField from '@mui/material/TextField';
 const Header =()=> {
     if (window.location.pathname === '/login' || 
     window.location.pathname === '/selectRegistration' ||
+    window.location.pathname === '/mainSlider' ||
+    window.location.pathname === '/bestRankingList' ||
     window.location.pathname === '/registration') 
     return null;
     

@@ -15,8 +15,8 @@ import FundingTest from './funding/FundingTest';
 import SelectRegistration from './member/SelectRegistration';
 import RegistrationForm from './member/RegistrationForm';
 import MainBoard from './main/MainBoard';
-import MainSlider from './component/inputs/MainSlider';
-
+import MainSlider from './component/MainSlider';
+import BestRankingList from './component/BestRankingList';
 
 
 
@@ -42,6 +42,7 @@ function App() {
         <Route exact path='/selectRegistration' element={<SelectRegistration/>}/>
         <Route exact path='/registration' element={<RegistrationForm/>}/>
         <Route exact path='/mainSlider' element={<MainSlider/>}/>
+        <Route exact path='/bestRankingList' element={<BestRankingList/>}/>
       </Routes>
     {/* 푸터 컴포넌트 들어갈 부분*/}
     </BrowserRouter>
