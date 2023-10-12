@@ -1,0 +1,8 @@
+.SimpleLine{
+    width: auto; /* 원하는 가로 길이 설정 */
+    height: 1px; /* 선의 높이 설정 */
+    background-color: #dcdcdc; /* 회색으로 설정 */
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

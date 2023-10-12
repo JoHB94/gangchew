@@ -1,0 +1,195 @@
+
+.m_HeaderBlank{
+    height: 200px;
+    
+    display: flex;
+    
+}
+.m_Container{
+    height: 800px;
+    
+    display: flex;
+}
+
+.m_Left{
+    width: 20%;    
+}
+
+.m_Right{
+    width: 20%;   
+}
+
+.m_Center{
+    width: 60%;
+}
+.m_OrderBox{
+    width: auto;    
+    display: flex;
+}
+.m_OrderB2{
+    width: auto;
+    border-radius: 10px;  
+    background-color:#dcdcdc;
+    height: 100px;
+    padding: 20px;
+    
+}
+.m_OrderBox_1{
+    width: 70%;
+    border: solid 1px #d3d3d3;
+    border-radius: 10px;
+    padding: 20px;
+    
+}
+.m_OrderBox_2{
+    width: 30%;
+    border: solid 1px #d3d3d3;
+    border-radius: 10px;
+    margin-left: 20px;
+}
+.m_OrderB3{
+    width: auto;
+    background-color:#dcdcdc;
+    height: 100px;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.m_OrderBox_21{
+    width: auto;
+    border-radius: 10px;  
+    background-color:#dcdcdc;
+    height: 100px;
+    margin: 20px;
+    padding: 20px;
+}
+.m_OrderBox_22{
+    display: flex;
+    padding: 20px;
+}
+.m_OrderBox_22a{
+    color: #dcdcdc ;
+    display: flex;
+    justify-content: right;
+    width: 40%;
+}
+.m_OrderBox_22b{
+    display: flex;
+    justify-content: right;
+    width: 60%;
+    padding-right: 20px;
+}.m_OrderBox_Btn{
+    margin: 20px;
+    
+}    
+
+.m_Line{
+    width: auto; /* 원하는 가로 길이 설정 */
+    height: 1px; /* 선의 높이 설정 */
+    background-color: #dcdcdc; /* 회색으로 설정 */
+    position: relative;
+    margin: 20px;
+}
+
+.m_OrderM{
+    width: auto;    
+    display: flex;
+    
+}
+
+.m_OrderM_1{
+    width: 70%;
+    border-radius: 10px;  
+    border: solid 1px #d3d3d3;
+    height: 300px;
+    margin-top: 20px;    
+    padding: 20px;
+    
+}
+.m_OrderM_2{
+    width: 30%;   
+    height: 300px;
+    margin-left: 20px;
+    margin-top: 20px;     
+    border-radius: 10px;
+}
+
+.m_OrderS{
+    width: auto;
+    border-radius: 10px;
+    border: solid 1px #d3d3d3;
+    height: 45px;
+    align-items: center;
+    padding-left: 20px;
+    margin-bottom: 25px;
+}
+.m_OrderP{
+    width: auto;
+    border-radius: 10px;
+    border: solid 1px #d3d3d3;
+    height: 100px;
+    align-items: center;
+    padding-left: 20px;
+}
+.m_OrdeEmptBox{
+    width: auto;
+    height: 100px;
+   
+}
+.m_WarningBox{
+    width: auto;
+    height: 300px;
+    background-color: #f3f1f1;
+    border-radius: 10px;
+    padding: 20px
+    
+}
+.m_WarningBox_1{
+    font: color #dcdcdc;
+    padding-right: 30px;
+    padding-top: 10px;
+}
+li{
+    font-size: 12px;
+    color: rgb(133, 132, 132);
+}
+.m_WarningBox_2{
+    display: flex;
+    align-items: center;
+    color: #686767;
+    padding-left: 35px;
+}
+.m_OrderBox_Check{ 
+    height: 100px;
+    color: #686767;   
+    font-size: 11px;
+    width: 100%;
+    display : flex;
+	justify-content : center;
+	align-items : center;
+    
+    
+
+}
+.m_OrderPay{
+    width: 500px;
+    height: 150px; 
+    margin-left: 20px;
+}
+.kakaoPay{
+    
+    height: 20px;
+    margin-left: 55px;
+   
+   
+}
+.TossPay{
+    
+    margin-top: 20px;
+    margin-left: 55px;
+    height: 15px;
+}
+.m_PayRadio{
+    margin-top: 20px;
+}
