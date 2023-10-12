@@ -2,13 +2,15 @@
     width: 100%;
     border-radius: 25px;
     height: auto;
+
     margin: auto;
+
     /* display: flex; */
     max-width: 380px;
     border: 1px solid gray;
     overflow: hidden;
     
-    
+
 
 }
 

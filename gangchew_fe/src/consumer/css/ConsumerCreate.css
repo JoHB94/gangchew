@@ -1,0 +1,41 @@
+.c_HeaderBlank{
+    height: 200px;    
+    display: flex;    
+}
+.c_Container{
+    height: 800px;    
+    display: flex;
+}
+.c_Left{
+    width: 20%;    
+}
+.c_Right{
+    width: 20%;   
+}
+.c_Center{
+    width: 60%;
+}
+.c_buttonContainer{
+    display: flex;
+    width: 100%;
+    justify-content: right;
+}
+.c_OkButton{
+    width: auto;
+    margin-right: 15px;
+}
+.c_CancelButton{
+    width: auto;
+}
+.c_height100{
+    height: 100px;
+}
+.c_Category{
+    margin-top: 20px;
+}
+.c_Content{
+    margin-top: 20px;
+}
+.c_Title{
+    width: 100%;
+}

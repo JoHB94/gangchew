@@ -1,0 +1,26 @@
+{
+  "id": 1,
+  "title": "Leanne Graham",
+  "content": "aaaaaaaaa",
+  "categoryId": "Bret",
+  "writer": "Sincere",
+  "likecount": 100,
+  "studentcount": 200 ,
+  "comments":[
+    {
+      "writer":"w1",
+      "writeDt":"20231011",
+      "content":"댓글내용1"
+    },
+    {
+      "writer":"w2",
+      "writeDt":"20231011",
+      "content":"댓글내용2"
+    },
+    {
+      "writer":"w3",
+      "writeDt":"20231011",
+      "content":"댓글내용3"
+    }
+  ]
+}

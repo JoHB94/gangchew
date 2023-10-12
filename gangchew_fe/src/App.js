@@ -5,12 +5,19 @@ import Header from './main/Header';
 import FundingList from './funding/FundingList';
 import FundingCreate from './funding/FundingCreate';
 import Login from './member/Login';
+import ConsumerCreate from './consumer/ConsumerCreate';
+import ConsumerDetail from './consumer/ConsumerDetail';
+import ConsumerList from './consumer/ConsumerList';
+import MyActivityDetail from './mypage/MyActivityDetail';
+import MyActivityPayment from './mypage/MyActivityPayment';
 import FundingInfo from './funding/FundingInfo';
 import FundingTest from './funding/FundingTest';
 import SelectRegistration from './member/SelectRegistration';
 import RegistrationForm from './member/RegistrationForm';
 import MainBoard from './main/MainBoard';
 import MainSlider from './component/inputs/MainSlider';
+
+
 
 
 function App() {
@@ -27,6 +34,11 @@ function App() {
         <Route exact path='/fundinginfo' element={<FundingInfo/>}/>
         <Route exact path='/fundingtest' element={<FundingTest/>}/>
         <Route exact path='/login' element={<Login/>}/>
+        <Route exact path='/consumercreate' element={<ConsumerCreate/>}/>        
+        <Route exact path='/consumerdetail' element={<ConsumerDetail/>}/>
+        <Route exact path='/consumerlist' element={<ConsumerList/>}/>
+        <Route exact path='/myactivitydetail' element={<MyActivityDetail/>}/>
+        <Route exact path='/myactivitypayment' element={<MyActivityPayment/>}/>
         <Route exact path='/selectRegistration' element={<SelectRegistration/>}/>
         <Route exact path='/registration' element={<RegistrationForm/>}/>
         <Route exact path='/mainSlider' element={<MainSlider/>}/>

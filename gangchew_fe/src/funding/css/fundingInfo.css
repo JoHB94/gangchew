@@ -5,41 +5,147 @@
 
 #f_left{
     width: 20%;
+    
 }
 
 #f_center{
+    height: 100%;
     width: 60%;
+    /* border: 1px solid black; */
+    overflow: auto;
+    flex: 1;
 }
 
 #f_right{
     width: 20%;
 }
 
-#f_headerarea{
-    height: 3.45rem;
-}
-
-
-
-
-#f_infoContainer{
+#f_bigBox{
     width: 100%;
     display: flex;
 }
 
-#f_infoTitle{
-    font-weight: 700;
+#f_headerarea{
+    height: 3.45rem;
 }
 
-#f_infoThumbContainer{
-    width: 60%;
+#f_contentBox{
+    width: 65%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+#f_payBox{
+    width: 35%;
+    height: 100%;
+    flex-direction: column;
+}
+
+#f_editor{
+    margin-right: 25px;
+}
+
+.fixed_element{
+    position: fixed;
+    top: 12rem;
+    margin-top: 40px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    width: 21.5%;
+    border-radius: 1%;
     overflow: hidden;
+    
 }
 
-#f_infoThumb{
+#f_info_li{
+    list-style: none;
+    font-size: medium;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+#f_title{
+    padding-bottom: 10px;
+    border-bottom: 1px solid gray;
+}
+
+#f_like_visit{
+    border-bottom: 1px solid rgb(207, 207, 207);
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #701edb;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+#f_infoLetter{
+    margin-left: 10px;
+    font-weight: 600;
+    align-items: center;
+    display: flex;
+}
+
+#f_info_buttonBox{
+    display: flex;
+}
+
+#f_heart_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    background-color: rgb(231, 231, 231);
+    border-radius: 5%;
+}
+
+#f_info_thumbnail{
+    width: 70%;
+}
+
+#f_img{
     object-fit: cover;
+    width: 80%;
 }
 
-#f_infoDetail{
-    width: 40%;
+.f_Dday{
+    color: rgb(253, 152, 0);
+    font-weight: 700;   
+}
+
+#f_rate_text{
+    margin-left: 15px;
+}
+
+#f_writer_buttons{
+    width: 63%;
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+#f_writer_msg{
+    border-radius: 5px;
+    border: 1px solid gray;
+    background-color:  rgb(231, 231, 231);
+    padding-bottom: 15px;
+    width: 63%;
+}
+
+#f_height150{
+    height: 150px;
+}
+
+#f_msg_title{
+    display: flex;
+    align-items: center;
+}
+
+#f_msg_content{
+    font-weight: 500;
 }

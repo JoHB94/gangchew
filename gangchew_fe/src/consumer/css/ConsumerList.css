@@ -1,0 +1,102 @@
+.c_HeaderBlank{
+    height: 200px;
+    
+    display: flex;
+    
+}
+
+.c_Container{
+    height: 800px;
+    
+    display: flex;
+}
+
+
+.c_Left{
+    width: 20%;
+   
+   
+    
+}
+
+.c_Right{
+    width: 20%;
+    
+   
+}
+
+.c_Center{
+    width: 60%;
+}
+.c_ListBox{
+    width: auto;
+    margin-top: 20px;
+    height: 80px;        
+    border-radius: 10px;    
+    border: solid 1px #d3d3d3;
+    
+}
+
+.c_ListName_1{    
+    width: 10%;
+}
+
+.c_ListName_2{    
+    width: 10%;
+}
+
+.c_ListName_3{    
+    width: 10%;
+}
+
+
+.c_BtnBox{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.c_ListBtn1{
+    display: flex;
+    align-items: center;
+    width: 5%;
+    
+}
+
+.c_ListBtn2{
+    display: flex;
+    align-items: center;
+    width: 5%;
+}
+
+.c_ListBtn3{
+    display: flex;
+    align-items: center;
+    width: 5%;
+}
+
+.c_Mid{
+    width: 80%;
+}
+
+
+.c_ListRowTop{
+    display: flex;
+    padding: 10px;
+    padding-left: 50px;
+}
+
+.c_ListBlank{
+    width: 80%;
+}
+
+.C_ListRowBottom{
+    display: flex;
+    
+    padding: 10px;
+    padding-left: 50px;
+       
+}
+.c_BottomBlank{
+    height: 100px;
+}

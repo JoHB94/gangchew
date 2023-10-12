@@ -9,9 +9,14 @@ import ToastEditor from '../component/inputs/ToastEditor';
 import OkButton from '../component/buttons/OkButton';
 import CancelButton from '../component/buttons/CancelButton';
 import SimpleSlider from '../component/SimpleSlider'
+import {FiAlertTriangle} from "react-icons/fi";
+
+import axios from 'axios';
 
 export default function FundingCreate() {
 
+//************************************states**************************************************** */
+  
     const [funding, setFunding] = useState({
         title: '',
         subtitle: '',
@@ -26,15 +31,63 @@ export default function FundingCreate() {
         thumbnail: '',
         content: ''
     });
+
+//************************************callBack*************************************************** */
+    
     // input 컴포넌트에서 호출할 함수
     const handleInputChange = (key, newValue) => {
-        setFunding((prevFunding) => ({
+        if (key === 'thumbnail' && newValue instanceof File) {
+          // 이미지 파일을 base64로 변환
+          convertImageToBase64(newValue)
+            .then((base64Image) => {
+              // base64로 변환된 이미지 데이터를 thumbnail 속성에 할당
+              setFunding((prevFunding) => ({
+                ...prevFunding,
+                thumbnail: base64Image,
+              }));
+            })
+            .catch((error) => {
+              console.error('이미지를 base64로 변환하는 중 오류 발생:', error);
+            });
+        } else {
+          // 다른 키의 변경이나 문자열 값의 변경은 그대로 처리
+          setFunding((prevFunding) => ({
             ...prevFunding,
-            [key]: newValue
-        }));
-        
-    };
+            [key]: newValue,
+          }));
+        }
+      };
+
+      // 파일을 base64로 변환하는 도우미 함수
+    const convertImageToBase64 = (imageFile) => {
+        return new Promise((resolve, reject) => {
+        const reader = new FileReader();
     
+        reader.onload = (e) => {
+            const base64Image = e.target.result;
+            resolve(base64Image);
+        };
+    
+        reader.onerror = (error) => {
+            reject(error);
+        };
+    
+        reader.readAsDataURL(imageFile);
+        });
+    };
+
+
+    /*submit 핸들러 : 버튼 클릭시 axios 통신을 합니다.*/ 
+    const submit = (e) => {
+       
+        axios.post('/funding/create',funding)
+        .then((res) => {
+            console.log(res);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
     return (
         <div>
             
@@ -50,7 +103,8 @@ export default function FundingCreate() {
                     <div id="p_createcontainer">
                         <div id="width30"></div>
                         <div id="projectNote">
-                            <div id="pn_title">! 반드시 읽어주세요</div>
+                            <div id="pn_title">
+                                <FiAlertTriangle style={{color :"red"}} size={28}/>&nbsp; 반드시 읽어주세요</div>
                             <div id="pn_content">
                                     작성자는 강사 본인 또는 대리인이며, 플랫폼은 강사의 선정과 자격증명에 관여하지 않습니다. <br/>
                                     허위사실 적발 시 고발을 당할 수 있으며 이는 작성자 본인의 책임입니다. <br/>
@@ -184,7 +238,7 @@ export default function FundingCreate() {
                     </div>
                     <div id="p_empty150"></div>
                     <div id="projectButton">
-                        <div id='ok'>
+                        <div id='ok' onClick={submit}>
                             <OkButton/>                       
                         </div>
                         <div>
