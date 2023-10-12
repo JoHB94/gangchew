@@ -15,6 +15,8 @@ import axios from 'axios';
 
 export default function FundingCreate() {
 
+//************************************states**************************************************** */
+  
     const [funding, setFunding] = useState({
         title: '',
         subtitle: '',
@@ -29,6 +31,9 @@ export default function FundingCreate() {
         thumbnail: '',
         content: ''
     });
+
+//************************************callBack*************************************************** */
+    
     // input 컴포넌트에서 호출할 함수
     const handleInputChange = (key, newValue) => {
         if (key === 'thumbnail' && newValue instanceof File) {

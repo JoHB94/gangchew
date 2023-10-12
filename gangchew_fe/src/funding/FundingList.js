@@ -49,7 +49,8 @@ export default function FundingList() {
 const handleInputChange = (newValue) => {
     console.log(newValue);
     setOrderby(newValue);
-
+    setCurrentPage(defaultPage);
+    //reqServer();
   };
 
 
@@ -130,25 +131,7 @@ const nexthandlePage =(event, page)=>{
     });
   },[])
 
-  // //카테고리 선택시 불러오기 위한 useEffect
-  // useEffect(()=>{
-  //   // reqServer();
-  // },[category])
-
-  //orderby 선택시 불러오기 위한 useEffect
-  useEffect(()=>{
-    // reqServer();
-  },[orderby])
-
-  //  //currentPage 선택시 불러오기 위한 useEffect
-  //  useEffect(()=>{
-  //   // reqServer();
-  // },[currentPage])
-
  
-
-
-
   return (
     <div>
       <div id="headerarea"></div>
