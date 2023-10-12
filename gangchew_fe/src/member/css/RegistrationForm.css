@@ -3,9 +3,7 @@ body {
 }
 
 .colorbase {
-  background-color: gray;
 }
-
 
 .baseDiv {
   display: flex;
@@ -15,11 +13,11 @@ body {
 }
 
 .registrationDiv {
-  width: 40%;
+  width: 840px;
   height: 950px;
   border-radius: 5px;
   padding-left: 30px;
-  box-shadow: 5px 5px 3px 3px gray;
+  box-shadow: 4px 4px 2px 2px rgb(160, 160, 160);
   background-color: white;
 }
 
@@ -32,17 +30,24 @@ body {
   height: 2.2rem;
   width: 7rem;
   border: none;
+  position: relative;
   border-radius: 10px;
   margin-left: 5px;
   color: white;
-  background-color: rgb(154, 14, 175);
+  background-color: #701edb;
 }
 
 label {
   font-weight: 700;
 }
 
-.id-input, .password-input, .passwordCheck-input, .name-input, .nickname-input, .email-input, .address-input {
+.username-input,
+.password-input,
+.passwordCheck-input,
+.fullname-input,
+.nickname-input,
+.email-input,
+.address-input {
   height: 2rem;
   width: 28rem;
   margin-top: 5px;
@@ -80,15 +85,33 @@ label {
 }
 
 .inputDiv9 {
-    margin-top: 45px; 
-    text-align: center;
-    padding-right: 30px;
+  margin-top: 45px;
+  text-align: center;
+  padding-right: 30px;
 }
 
 .inputDiv9 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
-.reg_height150{
+.reg_height150 {
   height: 150px;
 }
+
+.checkBtn:active,
+.addressFind:active {
+  box-shadow: inset 2px 2px 3px 2px rgb(72, 7, 82);
+}
+
+.validCheck {
+  color: rgb(22, 206, 15);
+  font-size: 0.75rem;
+  margin-left: 6px;
+}
+
+.validCheck-false {
+  color: red;
+  font-size: 0.8rem;
+  margin-left: 6px;
+}
+

@@ -22,7 +22,6 @@ export default function FundingTest(){
             <UpdateFunding/>
             <DeleteFunding/>
             <StartFunding/>
-            <Card/>
         </div>
     )
 }

@@ -1,0 +1,22 @@
+/*  headerarea, container100, list_left, list_right, carousel : 전역 변수를 따르기로 함  */
+body {
+    height: 100vh;
+}
+
+.base-center{
+    width: 70%;
+}
+
+.centerBoard {
+    width: 100%;
+}
+
+.content-left {
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(1100px, 1fr));
+    float: left;
+}
+
+
+
+

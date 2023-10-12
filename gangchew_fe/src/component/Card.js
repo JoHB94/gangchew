@@ -1,8 +1,17 @@
+
+
+
 import { useState } from 'react';
 import card from '../component/css/card.css';
 import EmptyHeart from './buttons/EmptyHeart';
 import FullHeart from './buttons/FullHeart';
 import { useEffect } from 'react';
+
+
+const Card = ({ posts, loading }) => {
+  return (
+    <div>
+      {loading && <div> loading... </div>}
 
 
 /**
@@ -37,10 +46,14 @@ export default function Card({funding}){
                     <img id="card_img" src="" alt="/replace.jpg" />
                 </div>
                 <div id="card_infoContainer">
+
                     {/**카드 정보 */}
                     <div id="card_info_line">
-                        <div id="card_infoTitle">
+                      <div id="card_infoTitle">
                         {/**제목 */}
+
+
+
                         <h3 id='card_title'>
                             {/* {funding.title} */}
                             제목
@@ -61,9 +74,13 @@ export default function Card({funding}){
                             진행률
                         </span>
                     </div>
-
+                  </div>
                 </div>
-            </div>
+              </span>
+          </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
+export default Card;

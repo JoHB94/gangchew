@@ -1,3 +1,4 @@
+
 import React, {useState} from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -6,6 +7,7 @@ import PaginationRounded from "./PaginationRounded";
 import SimpleSlider from "../component/SimpleSlider";
 import fundingList from "../funding/css/fundingList.css";
 import Card from "../component/Card";
+
 import { useEffect } from 'react';
 import axios from 'axios';
 import SortSelect from './SortSelect';
@@ -145,16 +147,28 @@ const nexthandlePage =(event, page)=>{
           
           <div id="category">
             <div id="category80">
-              <div id="cate_item" className="cate_item_border_right">운동&Life</div>
-              <div id="cate_item" className="cate_item_border_right">경제&금융</div>
-              <div id="cate_item" className="cate_item_border_right">n잡&부업</div>
-              <div id="cate_item" className="cate_item_border_right">커리어</div>
-              <div id="cate_item" className="cate_item_border_right">언어</div>
-              <div id="cate_item" className="cate_item_border_right">프로그래밍</div>
+              <div id="cate_item" className="cate_item_border_right">
+                운동&Life
+              </div>
+              <div id="cate_item" className="cate_item_border_right">
+                경제&금융
+              </div>
+              <div id="cate_item" className="cate_item_border_right">
+                n잡&부업
+              </div>
+              <div id="cate_item" className="cate_item_border_right">
+                커리어
+              </div>
+              <div id="cate_item" className="cate_item_border_right">
+                언어
+              </div>
+              <div id="cate_item" className="cate_item_border_right">
+                프로그래밍
+              </div>
               <div id="cate_item">비즈니스&마케팅</div>
             </div>
           </div>
-          
+
           <div id="options">
             <div id="title">
               <h2 id="p_h2">펀딩List</h2>
@@ -167,6 +181,7 @@ const nexthandlePage =(event, page)=>{
             </div>
           </div>
           <div>
+
             <div id="content">
               <div id="contentBox">
                 {data.map((funding) => (
@@ -176,14 +191,17 @@ const nexthandlePage =(event, page)=>{
                 ))}
                 </div>
             </div>
+
           </div>
           <div id="empty5"></div>
           <div id="pagination100">
             {/*------------페이지네이션 위치!!!!-----------*/}
+
             <Stack spacing={2}>
               <Pagination count={3} variant="outlined" shape="rounded" color="secondary" 
               page={currentPage} onChange={handlePage}/>
             </Stack>
+
           </div>
           <div id="empty5"></div>
         </div>
