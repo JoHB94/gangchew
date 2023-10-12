@@ -145,8 +145,14 @@ const nexthandlePage =(event, page)=>{
           
           <div id="category">
             <div id="category80">
-              <div id="cate_item" className="cate_item_border_right">운동&Life</div>
-              <div id="cate_item" className="cate_item_border_right">경제&금융</div>
+              <div id="cate_item" className="cate_item_border_right">
+                <input type='hidden' value={1}></input>
+                운동&Life
+              </div>
+              <div id="cate_item" className="cate_item_border_right">
+                <input type='hidden' value={1}></input>
+                경제&금융
+              </div>
               <div id="cate_item" className="cate_item_border_right">n잡&부업</div>
               <div id="cate_item" className="cate_item_border_right">커리어</div>
               <div id="cate_item" className="cate_item_border_right">언어</div>
