@@ -35,7 +35,7 @@ export default function TitleTextFields({size, text, name ,handleInputChange}) {
       autoComplete="off"
       
     >
-      <TextField color="secondary" id="outlined-basic" label={text} variant="outlined" value={childInputValue} onChange={handleChange}/>
+      <TextField color="secondary" id="outlined-basic" label={text} variant="outlined" value={childInputValue} onChange={handleChange} fullWidth/>
     </Box>
   );
 }
