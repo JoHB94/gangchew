@@ -1,0 +1,31 @@
+#search_headerarea{
+    height: 3.45rem;
+}
+
+#search_container{
+    width: 100%;
+    display: flex;
+    
+}
+
+#search_side{
+    width: 20%;
+    background-color: aqua;
+}
+
+#search_center{
+    width: 60%;
+}
+
+#search_height150{
+    height: 150px;
+}
+
+#search_list{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    
+}
+
