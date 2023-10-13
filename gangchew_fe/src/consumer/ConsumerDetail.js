@@ -9,41 +9,45 @@ import '../consumer/css/ConsumerDetail.css';
 import '../component/css/SimpleLine.css';
 import OkButton from '../component/buttons/OkButton';
 import CancelButton from '../component/buttons/CancelButton';
+import { useParams } from "react-router-dom";
 
 
-export default function ConsumerDetail(){
+export default function ConsumerDetail({ history, location, match }){
 
+    const {postId}  = useParams();
+
+    //**************************state*************************************** */    
+    const [consumer, setConsumer] = useState({
+        title: '',
+        category_id: 0,
+        writer: '',
+        content: ''
+    });
+
+    // consumer 조회 및 셋팅
+
+    useEffect(()=>{
+        console.log(postId)
+        axios.get(`http://localhost:9000/studentrequest/read?id=${postId}`)
+        .then((res)=>{
+            console.log(res.data);
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+
+    },[]);
+
+
+
+//**************************좋아요 버튼************************************** */    
     const [liked, setLiked] = useState(false);
 
     const handleLikeClick = () => {
         setLiked(!liked);
     }
    
-    const [consumer, setConsumer] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchConsumer = async () => {
-          try {
-            // 요청이 시작 할 때에는 error 와 consumers 를 초기화하고
-            setError(null);
-            setConsumer(null);
-            // loading 상태를 true 로 바꿉니다.
-            setLoading(true);
-            const response = await axios.get(
-              'consumer/ConsumerDetail.json'
-              //'https://www.gangchew.com//studentrequest/read?id={post_id}'
-            );
-            setConsumer(response.data); // 데이터는 response.data 안에 들어있습니다.
-          } catch (e) { 
-            setError(e);
-          }
-          setLoading(false);
-        };
-    
-        fetchConsumer();
-      }, []);
+   
 
 
     return (
@@ -99,6 +103,7 @@ export default function ConsumerDetail(){
         ):(
             <div></div>
         )}
+        
     </div>
     )
 }

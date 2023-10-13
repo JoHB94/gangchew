@@ -29,12 +29,13 @@ export default function ConsumerCreate() {
         }));
         
     };
-//************************onClick*************************************** */
+//************************onClick*************************************** */ 
     const submit=(e)=>{
         axios.post('http://localhost:9000/studentrequest/save',consumer)
         .then((res)=>{
             console.log(res);
-        }).catch((error)=>{
+        })
+        .catch((error)=>{
             console.log(error);
         })
     }

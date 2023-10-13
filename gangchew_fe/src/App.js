@@ -35,7 +35,7 @@ function App() {
         <Route exact path='/fundingtest' element={<FundingTest/>}/>
         <Route exact path='/login' element={<Login/>}/>
         <Route exact path='/consumercreate' element={<ConsumerCreate/>}/>        
-        <Route exact path='/consumerdetail' element={<ConsumerDetail/>}/>
+        <Route exact path='/consumerdetail/:postId' element={<ConsumerDetail/>}/>
         <Route exact path='/consumerlist' element={<ConsumerList/>}/>
         <Route exact path='/myactivitydetail' element={<MyActivityDetail/>}/>
         <Route exact path='/myactivitypayment' element={<MyActivityPayment/>}/>

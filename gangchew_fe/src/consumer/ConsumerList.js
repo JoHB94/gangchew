@@ -18,6 +18,7 @@ import Select from '@mui/material/Select';
 import { VscEye } from 'react-icons/vsc';
 import { FaHeart } from 'react-icons/fa';
 import { LiaCommentDots } from 'react-icons/lia';
+import { Link } from 'react-router-dom';
 
 
 
@@ -51,21 +52,38 @@ export default function ConsumerList(){
 
 //************************************ axios ************************************************** */
   
+
+
   const  reqServer=()=>{
-    axios.post('http://localhost:9000/')
+  /*  axios.post('http://localhost:9000/studentrequest/all')
     .then((res)=>{
       console.log("통신성공");
       setConsumers(res);
       setConsumers(res.state);
-    }).catch((error)=>{
+    }).catch((error)=>{ 
       console.log(error);
+    })*/
+
+    // Link 참고 싸이트 https://antdev.tistory.com/80               https://velog.io/@heesu0303/React-%ED%8E%98%EC%9D%B4%EC%A7%80-%EC%9D%B4%EB%8F%99%ED%95%98%EB%A9%B4%EC%84%9C-%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%EC%A0%84%EB%8B%AC%ED%95%98%EA%B8%B0
+
+    axios.get(
+      'consumer/ConsumerList.json'
+      //'https://www.gangchew.com/studentrequest/all'
+    )
+    .then((response)=>{
+      setConsumers(response.data); // 데이터는 response.data 안에 들어있습니다.
     })
+    .catch((error)=>{
+      console.log(error)
+    });
+    
+
   }
 
 /*************************************useEffect********************************* */
 //페이지가 렌더될 때 실행될 함수.
 useEffect(()=>{
-  // reqServer();
+  reqServer();
 },[])
 
 
@@ -137,17 +155,20 @@ const handleChange = (event) => {
                           <div className="c_ListNameBlank"/*빈공간 */></div>
                       </div>   
                       <div className="C_ListRowBottom">
-                          <div className="c_ListTitle"/*제목 */>{consumer.title}</div>
+                        {console.log(consumer.id)}
+                          <div className="c_ListTitle"/*제목 */><Link to={`/consumerdetail/${consumer.id}`}>{ consumer.title }</Link></div>
                           <div className="c_ListBlank"/*빈공간 */></div>
-                          <div className="c_ListBtn1"/*조회수 */><VscEye/>{consumer.viewcount}</div>
-                          <div className="c_ListBtn2"/*좋아요수 */><FaHeart style={{color:"red"}} />{consumer.likecount}</div>
-                          <div className="c_ListBtn3"/*댓글수 */><LiaCommentDots/>{consumer.commentcount}</div>
+                          <div className="c_ListBtnBox">
+                            <div className="c_ListBtn1"/*조회수 */><VscEye/>{consumer.viewcount}</div>
+                            <div className="c_ListBtn2"/*좋아요수 */><FaHeart style={{color:"red"}} />{consumer.likecount}</div>
+                            <div className="c_ListBtn3"/*댓글수 */><LiaCommentDots/>{consumer.commentcount}</div>
+                          </div>
                       </div>
                   </div>
                   ))}
                   <div className="c_Pagination" /*페이지네이션*/>
                     <Stack spacing={2}>
-                      <Pagination count={3} variant="outlined" shape="rounded" color="secondary" 
+                      <Pagination count={3} variant="outlined" shape="rounded" color="secondary"    
                       page={currentPage} onChange={handlePage}/>
                     </Stack>
                   </div>
