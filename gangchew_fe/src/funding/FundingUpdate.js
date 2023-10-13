@@ -21,7 +21,7 @@ import axios from 'axios';
 import AddressField from '../component/inputs/AddressField';
 import AddressButton from '../component/buttons/AdressButton';
 
-export default function FundingCreate() {
+export default function FundingUpdate() {
 
 //************************************states**************************************************** */
   
@@ -39,6 +39,19 @@ export default function FundingCreate() {
         thumbnail: '',
         content: ''
     });
+//************************************useEffect 추가 통신 후 funding 초기값 세팅******************* */
+
+    useEffect(()=>{
+        axios.post('')
+        .then((res)=>{
+            setFunding(res);
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+    })
+
+
 
 //************************************callBack*************************************************** */
     
@@ -160,7 +173,7 @@ export default function FundingCreate() {
                     <div id='p_carousel'>
                         {/* <SimpleSlider/> */}
                     </div>
-                    <h1>Project 생성하기</h1>
+                    <h1>Project 수정하기</h1>
                     <div id="p_createcontainer">
                         <div id="width30"></div>
                         <div id="projectNote">

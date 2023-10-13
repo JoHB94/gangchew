@@ -91,38 +91,6 @@ const handlePage =(event, page)=>{
   // reqServer();
 }
 
-const prevhandlePage =(event, page)=>{
-  console.log(page)
-  if(currentPage === 1){
-    return;
-  } else {
-    setCurrentPage(currentPage - 1);
-    // reqServer();
-  }
-  
-}
-
-const nexthandlePage =(event, page)=>{
-  console.log(page)
-  if(currentPage === itemsPerPage){
-    return;
-  }else{
-    setCurrentPage(currentPage + 1);
-    // reqServer();
-  }
-      
-}
-
-
-
-
-
-
-
-
-
-
-
 //****************************************useEffect******************************************** */
 
 

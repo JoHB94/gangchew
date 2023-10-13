@@ -48,7 +48,60 @@ export default function FundingInfo(){
     //     })
     // },[])
 
-   
+
+
+//**********************************************버튼 클릭 핸들러*********************************** */
+    // const fundingStartClick=()=>{
+    //     axios.post('')
+    //     .then((res)=>{
+    //         console.log(res);
+    //     })
+    //     .catch((error)=>{
+    //         console.log(error);
+    //     })
+    // }
+
+    // const fundingCancelClick=()=>{
+    //     axios.post('')
+    //     .then((res)=>{
+    //         console.log(res);
+    //     })
+    //     .catch((error)=>{
+    //         console.log(error);
+    //     })
+    // }
+
+    // const fundingLikeClick=()=>{
+    //     axios.post('')
+    //     .then((res)=>{
+    //         console.log(res);
+    //     })
+    //     .catch((error)=>{
+    //         console.log(error);
+    //     })
+    // }
+
+    // const fundingPartClick=()=>{
+    //     axios.post('')
+    //     .then((res)=>{
+    //         console.log(res);
+    //     })
+    //     .catch((error)=>{
+    //         console.log(error);
+    //     })
+    // }
+
+    // const reFundClick=()=>{
+    //     axios.post('')
+    //     .then((res)=>{
+    //         console.log(res);
+    //     })
+    //     .catch((error)=>{
+    //         console.log(error);
+    //     })
+    // }
+
+
 
     /**D-day timer함수 */
     function diffDay() {
@@ -176,9 +229,9 @@ export default function FundingInfo(){
                     </div>
                     <div id="f_writer_boxes">
                         <div id="f_writer_buttons">
-                            <StartFunding/>
-                            <UpdateFunding/>
-                            <CancelFunding/>
+                            <span><StartFunding/></span>
+                            <span><UpdateFunding/></span>
+                            <span><CancelFunding/></span>
                         </div>
                         <div id="f_writer_msg">
                             <h3 id="f_msg_title" style={{paddingLeft:"15px"}}>펀딩 시작하기 &nbsp; <FiAlertTriangle style={{color :"red"}} size={28}/></h3>
