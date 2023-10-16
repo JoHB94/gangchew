@@ -31,7 +31,9 @@
 .c_ListBox{
     width: auto;
     margin-top: 20px;
-    height: 80px;        
+    margin-bottom: 20px;
+    padding: 10px;
+    height: 120px;        
     border-radius: 10px;    
     border: solid 1px #d3d3d3;
     
@@ -48,31 +50,14 @@
 .c_ListName_3{    
     width: 10%;
 }
-
+.c_ListPostNumber{
+    width: 10%;
+}
 
 .c_BtnBox{
     display: flex;
-    justify-content: left;
+    justify-content: right;
     align-items: center;
-}
-
-.c_ListBtn1{
-    display: flex;
-    align-items: center;
-    width: 5%;
-    
-}
-
-.c_ListBtn2{
-    display: flex;
-    align-items: center;
-    width: 5%;
-}
-
-.c_ListBtn3{
-    display: flex;
-    align-items: center;
-    width: 5%;
 }
 
 .c_Mid{
@@ -84,19 +69,35 @@
     display: flex;
     padding: 10px;
     padding-left: 50px;
+    
 }
 
-.c_ListBlank{
-    width: 80%;
-}
+/* .c_ListBlank{
+    width: auto%;
+} */
 
 .C_ListRowBottom{
-    display: flex;
-    
-    padding: 10px;
-    padding-left: 50px;
+    width: auto;
+    height: 50px;
+    display: flex;    
+    margin-left: 30px;
+    padding: 20px;
+    border-radius: 10px;    
+   
        
 }
 .c_BottomBlank{
     height: 100px;
+}
+.c_ListBtnBox{
+    display: flex;
+    justify-content: right;
+    width: 50%;
+}
+.c_ListTitle{
+    width: 50%;
+}
+.c_Pagination{
+    display: flex;
+    justify-content: center;
 }
