@@ -6,6 +6,7 @@ import UseValidate from "../hooks/UseValidate";
 import Button from "@mui/material/Button";
 import "../member/css/RegistrationForm.css";
 
+
 function RegistrationForm() {
 
   const [signupData, setSignupData] = useState({
@@ -18,8 +19,10 @@ function RegistrationForm() {
     address: "",
   });
 
+
   const {validText, isValid} = UseValidate(signupData);
 
+  
   const handleInputChange = (key, value) => {
     setSignupData((prevData) => ({
       ...prevData,
@@ -27,12 +30,49 @@ function RegistrationForm() {
     }));
   };
 
+
+  const usernameCheck = (e) => {
+
+    const requestUrl = `http://localhost:9000/login?check-username=${signupData.username}`;
+    const requestMethod = "POST";
+    
+
+    axios({
+      method: requestMethod,
+      url: requestUrl,
+      
+    })
+    .then((response) => {
+      console.log("서버 응답 데이터:", response.data);
+      if (signupData.username === "") {
+        alert("아이디를 입력해주세요.")
+      } else if (!isValid.isUsername) {
+        alert("사용가능한 아이디가 아닙니다.")
+      } else if(response.data.code === 400) {
+         alert(response.data.message);
+      } else if(response.data.code === 200) {
+         alert(response.data.result);
+      }
+      
+
+    })
+    .catch((error) => {
+      console.error("오류 발생:", error);
+
+    });
+
+  } 
+
+  /* 양식 폼 제출 */
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    const serverUrl = "http://192.168.0.248:9000/signup";
+    const isValidAllTrue = Object.values(isValid).every(value => value === true); // isValid 객체의 모든 요소가 true인지 확인
+
+    const serverUrl = "http://138.2.114.150:9000/signup";
     const requestMethod = "POST";
 
+    if(isValidAllTrue) {
     axios({
       method: requestMethod,
       url: serverUrl,
@@ -43,12 +83,17 @@ function RegistrationForm() {
     })
       .then((response) => {
         console.log("서버 응답 데이터:", response.data);
-        // 로그인 성공 또는 실패에 따라 적절한 작업을 이곳에 추가
+        response.data.isSuccess === false ? alert(response.data.message) : alert("회원가입을 축하합니다!\n로그인을 진행해주세요.")
+        window.location.href = "/login";
       })
       .catch((error) => {
         console.error("오류 발생:", error);
-        // 오류 처리 코드를 추가
+
       });
+    } else {
+      console.log("회원가입 유효성 검증 실패");
+      alert("오류발생");
+    }
   };
 
   /* daum 주소 api 연결 */
@@ -59,20 +104,23 @@ function RegistrationForm() {
 
   const handleComplete = (data) => {
     let fullAddress = data.address;
+   // console.log(fullAddress); 테스트용 콘솔
     let extraAddress = "";
 
-    if (data.addressType === "R") {
+    if (data.addressType === "R") {// 도로명 주소인 경우만 추가정보 수집
       if (data.bname !== "") {
-        extraAddress += data.bname;
+        extraAddress += data.bname; // 법정동 이름
       }
       if (data.buildingName !== "") {
         extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName; // 건물 이름
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
     setaddress(fullAddress); // 주소 데이터 수집
+
+    //console.log(fullAddress); 테스트용 콘솔
   };
 
   const handleClick = () => {
@@ -103,7 +151,7 @@ function RegistrationForm() {
                   }
                   valid={!isValid.isUsername}
                 ></input>
-                <button type="button" className="checkBtn">
+                <button type="button" className="checkBtn" onClick={usernameCheck}>
                   중복확인
                 </button>
               </div>
@@ -224,7 +272,7 @@ function RegistrationForm() {
                 >
                   가입하기
                 </Button>
-                <Link to="/login">
+                <Link to="/main">
                   <Button
                     className="submit-button"
                     color="secondary"

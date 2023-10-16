@@ -3,7 +3,7 @@ body {
     height: 100vh;
 }
 
-.base-center{
+.base-center {
     width: 70%;
 }
 
@@ -11,12 +11,31 @@ body {
     width: 100%;
 }
 
-.content-left {
+.content {
     width: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(1100px, 1fr));
-    float: left;
+    display: grid;
+    grid-template-columns: 82% 29%;
 }
 
+.inner-content-right {
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    transform: translateX(-37.7%);
+}
 
+.inner-content-bottom {
+    grid-column: 1 / span 2;
+}
 
+.inner-content-bottom .SliderItem {
+    transform: scale(1.086) translateX(3.95%);
 
+}
+
+.inner-content-left {
+    float: auto;
+}
+
+.sliderTitle {
+    /* title과 게시물 사이의 간격 조정 */
+}
