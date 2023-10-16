@@ -1,51 +1,30 @@
 [
     {
-      "id": 1,
-      "title": "Leanne Graham",
-      "categoryId": "Bret",
-      "writer": "Sincere",
+      "postId": 1,
+      "title": "가나다라1",
+      "categoryId": "카테고리1",
+      "writer": "작성자1",
       "likecount": 100,
-      "viewcount": 200      
+      "viewcount": 200, 
+      "regDt":"2023-10-01"    
     },
     {
-      "id": 2,
-      "title": "Leanne Graham",
-      "categoryId": "Bret",
-      "writer": "Sincere",
-      "likecount": 102,
-      "viewcount": 202      
+      "postId": 2,
+      "title": "가나다라2",
+      "categoryId": "카테고리1",
+      "writer": "작성자1",
+      "likecount": 200,
+      "viewcount": 200,
+      "regDt":"2023-10-02"       
     },
     {
-      "id": 3,
-      "title": "Leanne Graham",
-      "categoryId": "Bret",
-      "writer": "Sincere",
-      "likecount": 103,
-      "viewcount": 203      
-    },
-    {
-      "id": 4,
-      "title": "Leanne Graham",
-      "categoryId": "Bret",
-      "writer": "Sincere",
-      "likecount": 104,
-      "viewcount": 204      
-    },
-    {
-      "id": 5,
-      "title": "Leanne Graham",
-      "categoryId": "Bret",
-      "writer": "Sincere",
-      "likecount": 105,
-      "viewcount": 205      
-    },
-    {
-      "id": 6,
-      "title": "Leanne Graham",
-      "categoryId": "Bret",
-      "writer": "Sincere",
-      "likecount": 100,
-      "viewcount": 200      
+      "postId": 3,
+      "title": "가나다라3",
+      "categoryId": "카테고리1",
+      "writer": "작성자1",
+      "likecount": 300,
+      "viewcount": 300,
+      "regDt":"2023-10-03"       
     }
-
+    
   ]

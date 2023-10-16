@@ -1,0 +1,40 @@
+#md_container{
+    width: 450px;
+    border: 2px solid gray;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: rgb(236, 236, 236);
+}
+
+#md_upside{
+    width: 100%;
+    display: flex;
+}
+
+#md_date{
+    padding-left: 15px;
+    border-bottom: 1px solid gray;
+    width: 100%;
+}
+
+#md_to{
+    font-weight: 600;
+    text-align: left;
+    padding-left: 15px;
+    width: 50%;
+}
+
+
+#md_from{
+    font-weight: 600;
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    
+}
+
+#md_content{
+    width: 100%;
+    min-width: 450px;
+    text-align: center;
+}

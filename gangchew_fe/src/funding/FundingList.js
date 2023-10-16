@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-import PaginationRounded from "./PaginationRounded";
 import SimpleSlider from "../component/SimpleSlider";
 import fundingList from "../funding/css/fundingList.css";
 import Card from "../component/Card";
@@ -31,19 +30,23 @@ export default function FundingList() {
     { id: 7, name: '비즈니스&마케팅'}
   ];
   
-  const [currentPage, setCurrentPage] = useState(defaultOrderby);
+  const [currentPage, setCurrentPage] = useState(defaultPage);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
   const [orderby, setOrderby] = useState(defaultOrderby);
   const [currentCategory, setCurrentCategory] = useState(defaultCategory);
   const [data, setData] = useState([]);
-  const [state,setState] = useState('');
+  const [state,setState] = useState('ACTIVE');
 
   
 
 //************************************ axios ************************************************** */
   /**default 요청 메소드 : 현재 페이지는 currentPage, category는 전체, orderby는 최신순 */
+
+  const cloudIP = ' http://138.2.114.150:9000/';
+  const URI = `funding/all?itemsPerPage=${itemsPerPage}&category=${currentCategory}&orderby=${orderby}&state=${state}&currentpage=${currentPage}`;
+
   const  reqServer=()=>{
-    axios.post('http://localhost:9000/funding/all?items={}&category={}&orderby={}&state={}&currentpage={currentPage}')
+    axios.create({headers:{'Content-Type': 'application/json',},}).post(cloudIP + URI)
     .then((res)=>{
       console.log("통신성공");
       setData(res);

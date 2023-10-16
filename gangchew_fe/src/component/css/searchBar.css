@@ -1,0 +1,35 @@
+#searchBar_container{
+    width: 80%;
+    height: 70%;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    background-color: white;
+}
+
+#search_button{
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: none;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
+    width: 20%;
+    
+}
+#search_input{
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: none;
+    outline: none;
+    box-shadow: none;
+    width: 80%;
+}
+
+.search_input_design{
+    
+    margin-right: 30px;
+    
+}

@@ -26,25 +26,18 @@
     width: 60%;
 }
 .m_FundingBox{
-    width: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 20px;
-    height: 300px;        
+    width: 100%;
+    height: auto;        
     border-radius: 10px;    
     border: solid 1px #d3d3d3;
     
 }
-.m_BoardList{
-    width: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 20px;
-    height: 200px;        
-    border-radius: 10px;    
-    border: solid 1px #d3d3d3;   
-    
+.m_LongCard{
+    margin-bottom: 10px;
+    justify-content: center;
+    display: flex;
 }
+
 .m_DetailBox{
     width: auto;
     margin-top: 20px;
