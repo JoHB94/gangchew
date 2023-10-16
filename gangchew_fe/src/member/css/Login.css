@@ -19,6 +19,10 @@ body {
   overflow: hidden;
 }
 
+.login-form {
+  transform: scale(1.2);
+}
+
 .logo-name {
   letter-spacing: 2px;
   margin-bottom: 10%;
