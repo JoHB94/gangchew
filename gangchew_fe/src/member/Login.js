@@ -8,6 +8,7 @@ import { SiNaver } from "react-icons/si";
 import MemberModal from "./MemberModal";
 
 import "../member/css/Login.css";
+import { getCookie, setCookie } from "./Cookie";
 
 /* 로그인 데이터 전송 */
 const Login = () => {
@@ -16,7 +17,6 @@ const Login = () => {
     password: "",
   });
 
-
   const handleInputChange = (key, value) => {
     setLoginData((prevData) => ({
       ...prevData,
@@ -24,10 +24,11 @@ const Login = () => {
     }));
   };
 
+  /* 로컬 로그인 */
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const serverUrl = "http://localhost:9000/authenticate"; // 서버의 URL을 여기에 넣으세요
+    const serverUrl = "http://138.2.114.150:9000/authenticate"; // 서버 URL
     const requestMethod = "POST";
 
     axios({
@@ -39,8 +40,14 @@ const Login = () => {
       data: loginData,
     })
       .then((response) => {
-        console.log("서버 응답 데이터:", response.data);
-        // 로그인 성공 또는 실패에 따라 적절한 작업을 이곳에 추가
+        const isSuccess = response.data.isSuccess;
+        console.log("서버 응답 데이터:", response);
+        if (isSuccess === true) {
+          setCookie("jwtToken" ,response.data.result); // 쿠키 저장
+          console.log(getCookie("jwtToken"))
+          alert("로그인 성공!");
+          window.location.href = "/main";
+        }
       })
       .catch((error) => {
         console.error("오류 발생:", error);
@@ -51,7 +58,27 @@ const Login = () => {
 
   /* 소셜 로그인 api연결 */
   const socialLogin = (identifier) => {
-    window.location.href = `http://localhost:9000/oauth2/authorization/${identifier}`;
+    const socialUrl = `http://138.2.114.150:9000/oauth2/authorization/${identifier}`; // 소셜 로그인 페이지로 리다이렉트
+    window.location.href = socialUrl;
+
+    const requestUrl = `http://138.2.114.150:9000/login/${identifier}/callback`;
+    const requestMethod = "GET";
+
+    axios({
+      method: requestMethod,
+      url: requestUrl,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        console.log("서버 응답 데이터:", response.data.isSuccess);
+        if (response.data.isSuccess === true);
+      })
+      .catch((error) => {
+        console.error("오류 발생:", error);
+        // 오류 처리 코드를 추가
+      });
   };
 
   return (
@@ -70,10 +97,9 @@ const Login = () => {
                       type="text"
                       className="input-id"
                       placeholder="Enter id"
-                      onChange={(e) => 
+                      onChange={(e) =>
                         handleInputChange("username", e.target.value)
                       }
-
                     />
                   </p>
                   <input

@@ -40,10 +40,7 @@ const MainBoard = () => {
                   <h2 className="sliderTitle">슬라이더3</h2>
                   <MainSlider isSecondSlider={true}/>
                 </div>
-                <div className="SliderItem">
-                  <h2 className="sliderTitle">슬라이더4</h2>
-                  <MainSlider isSecondSlider={true}/>
-                </div>
+                
               </div>
             </div>
           </div>
