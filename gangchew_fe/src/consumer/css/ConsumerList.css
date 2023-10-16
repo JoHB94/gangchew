@@ -50,7 +50,9 @@
 .c_ListName_3{    
     width: 10%;
 }
-
+.c_ListPostNumber{
+    width: 10%;
+}
 
 .c_BtnBox{
     display: flex;

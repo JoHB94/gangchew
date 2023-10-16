@@ -147,11 +147,12 @@ const handleChange = (event) => {
                       </div>
                   </div>
                   {consumers.map(consumer => (
-                  <div className="c_ListBox">
+                  <div className="c_ListBox" key={consumer.postId}>
                       <div className="c_ListRowTop">
+                          <div className="c_ListPostNumber"/**글번호 */>{consumer.postId}</div>
                           <div className="c_ListName_1"/*작성자*/>{consumer.writer}</div>
-                          <div className="c_ListName_2"/*작성일자*/>작성일자</div>
-                          <div className="c_ListName_3"/*카테고리명*/>{consumer.categoryId}</div>
+                          <div className="c_ListName_2"/*작성일자*/>{consumer.regDt}</div>
+                          <div className="c_ListName_3"/*카테고리명*/>{consumer.categoryId}</div>                          
                           <div className="c_ListNameBlank"/*빈공간 */></div>
                       </div>   
                       <div className="C_ListRowBottom">
