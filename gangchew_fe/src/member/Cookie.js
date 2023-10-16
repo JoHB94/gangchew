@@ -3,7 +3,7 @@ import { Cookies } from "react-cookie";
 const cookies = new Cookies();
 
 //쿠키에 값을 저장
-export const setCookie = (name, value, option) => { // 쿠키 이름 / 값 / 만료기간 설정
+export const setCookie = (name, value, option) => { // 쿠키 이름 / 값 /만료기간
   return cookies.set(name, value, { ...option });
 };
 

@@ -272,7 +272,7 @@ function RegistrationForm() {
                 >
                   가입하기
                 </Button>
-                <Link to="/login">
+                <Link to="/main">
                   <Button
                     className="submit-button"
                     color="secondary"

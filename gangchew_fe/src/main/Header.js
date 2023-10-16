@@ -2,36 +2,44 @@ import * as React from "react";
 import header from "../main/css/header.css";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
-import { getCookie } from "../member/Cookie";
+import { getCookie, removeCookie } from "../member/Cookie";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   /* 헤더 랜더링 구분 로직 */
   if (
-    window.location.pathname === "/login" ||
-    window.location.pathname === "/selectRegistration" ||
-    window.location.pathname === "/mainSlider" ||
-    window.location.pathname === "/bestRankingList" ||
-    window.location.pathname === "/registration"
+    window.location.pathname === "/selectRegistration"
   )
     return null;
-  
+
   /* 로그아웃 처리할 부분 */
   const logoutHandle = (event) => {
-    const requestUrl = "http://138.2.114.150:9000/authenticate/logout"; 
+    const requestUrl = "http://138.2.114.150:9000/authenticate/logout";
     const requestMethod = "POST";
-
+    const MyCookie = getCookie("jwtToken");
+    console.log(MyCookie);
+    if(window.confirm("로그아웃 하시겠습니까?")) {
     axios({
       method: requestMethod,
       url: requestUrl,
-      
-      withCredentials: true // 쿠키 정보를 요청 헤더에 포함
+      headers: {
+        Authorization: `Bearer ${MyCookie}`, // 쿠키 정보를 요청 헤더에 포함
+      },
     })
       .then((response) => {
         console.log("서버 응답 데이터:", response.data);
+
+        if (MyCookie != null) {
+          removeCookie("jwtToken"); // 쿠키 브라우저에서 삭제
+          window.location.href = "/main";
+        } else {
+          alert("로그인 시간이 만료되었습니다."); // 이미 쿠키가 만료된 경우
+        }
       })
       .catch((error) => {
         console.error("오류 발생:", error);
       });
+    };
   };
 
   return (
@@ -55,12 +63,15 @@ const Header = () => {
               <button>검색</button>
             </div>
             <div id="member">
-              <div id="container33">
-                <button>로그인</button>
-              </div>
-              <div id="container33" onClick={logoutHandle}>
-                <button>로그아웃</button>
-              </div>
+              {getCookie("jwtToken") == null ? (
+                <div id="container33">
+                  <Link to="/login"><button>로그인</button></Link>
+                </div>
+              ) : (
+                <div id="container33" onClick={logoutHandle}>
+                  <button>로그아웃</button>
+                </div>
+              )}
               <div id="container33">
                 <button>알 림</button>
               </div>
