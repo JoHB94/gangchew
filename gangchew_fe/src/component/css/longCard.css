@@ -5,6 +5,8 @@
     border-radius: 10px;
     overflow: hidden;
     height: 175px;
+    background-color: rgb(236, 236, 236);
+    
 }
 
 #search_funding{

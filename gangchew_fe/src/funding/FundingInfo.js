@@ -17,11 +17,16 @@ import axios from "axios";
 
 export default function FundingInfo(){
 
+//**********************************states**************************************** */
     const[funding, setFunding] = useState('');
     const[deadline,setDeadline] = useState('2023-10-25');
     const[diffDayValue, setDiffDayValue] = useState('');
     const[category,setCategory] = useState('');
 
+
+//***********************************axios**************************************** */
+
+    const cloudIP = ' http://138.2.114.150:9000/';
     /**페이지 렌더링시 통신 발생 : 현재 이 부분 funding_id 불러오지 못함! router추가 작업 필요*/
     // useEffect(()=>{
     //     axios.post('http://localhost:9000/fundingList?funding={funding_id}')

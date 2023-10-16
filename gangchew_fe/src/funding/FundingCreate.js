@@ -40,6 +40,19 @@ export default function FundingCreate() {
         content: ''
     });
 
+//*************************************axios***************************************************** */
+
+    const cloudIP = ' http://138.2.114.150:9000/';
+     
+    const submit = (e) => {
+        axios.post(cloudIP + '/funding/create',funding)
+        .then((res) => {
+            console.log(res);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+
 //************************************callBack*************************************************** */
     
     // input 컴포넌트에서 호출할 함수
@@ -85,19 +98,10 @@ export default function FundingCreate() {
     };
 
 
-    /*submit 핸들러 : 버튼 클릭시 axios 통신을 합니다.*/ 
-    const submit = (e) => {
-       
-        axios.post('/funding/create',funding)
-        .then((res) => {
-            console.log(res);
-        }).catch((error) => {
-            console.log(error);
-        })
-    }
+  
 
-
-        /* daum 주소 api 연결 */
+//*******************************daum 주소 API ************************************************** */
+        
     const [address, setaddress] = useState("");
     const [isAdressNull, setIsAddressNull] = useState(true);
     const scriptUrl =
@@ -127,6 +131,9 @@ export default function FundingCreate() {
         setIsAddressNull(false);
     };
 
+//******************************onClick Handler****************************************** */
+
+    //강의 형태 선택을 위한 라디오 버튼 클릭시 호출.
     const handleClick = () => {
         open({ onComplete: handleComplete });
         setIsAddressNull(!isAdressNull);
@@ -135,7 +142,6 @@ export default function FundingCreate() {
     };
 
     const offlineClick =()=>{
-        
         setIsAddressNull(false);
     }
 

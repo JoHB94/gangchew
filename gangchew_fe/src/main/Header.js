@@ -1,9 +1,18 @@
 import * as React from 'react';
 import header from '../main/css/header.css';
 import TextField from '@mui/material/TextField';
+import { useState } from 'react';
+import MessageBadge from '../component/MessageBadge';
+import {CgProfile} from 'react-icons/cg';
+import {BiSearch} from 'react-icons/bi';
+import SearchBar from '../component/inputs/SearchBar';
+import MessageDrop from './MessageDrop';
 
 
 const Header =()=> {
+
+    const [login, setLogin] = useState(false);
+
     if (window.location.pathname === '/login' || 
     window.location.pathname === '/selectRegistration' ||
     window.location.pathname === '/registration') 
@@ -26,14 +35,19 @@ const Header =()=> {
                         
                     </div>
                     <div id='container_right'>
-                        <div id='search'>
-                            <input type='text'></input>
-                            <button>검색</button>
+                        <div id='search'>                      
+                            <SearchBar/>
                         </div>
                         <div id='member'>
-                            <div id='container33'><button>로그인</button></div>
-                            <div id='container33'><button>알  림</button></div>
-                            <div id='container33'><button>프로필</button></div>
+                            <div id='container33'>
+                                {login?('로그아웃'):('로그인')}
+                            </div>
+                            <div id='container33'>
+                                <MessageDrop/>
+                            </div>
+                            <div id='container33'>
+                                <CgProfile size={32}/>
+                            </div>
                         </div>
                     </div>
                 </div>
