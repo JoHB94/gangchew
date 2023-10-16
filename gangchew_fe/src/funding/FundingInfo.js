@@ -19,9 +19,10 @@ export default function FundingInfo(){
 
 //**********************************states**************************************** */
     const[funding, setFunding] = useState('');
-    const[deadline,setDeadline] = useState('2023-10-25');
+    const[deadline,setDeadline] = useState('');
     const[diffDayValue, setDiffDayValue] = useState('');
     const[category,setCategory] = useState('');
+    const[isOffline,setIsOffline] = useState(false);
 
 
 //***********************************axios**************************************** */
@@ -163,6 +164,10 @@ export default function FundingInfo(){
                                 {/**문의사항 아코디언 props : funding.writer.name, funding.writer.email */}
                                 <FundingAccordion/>
                             </div>
+                            <div id="f_subtitle">{/**subtitle */}
+                                <h3>서브타이틀 부제목이 들어갑니다.</h3>
+                            </div>
+                            <div id="f_height150"/>
                             <div id="f_editor">{/**toastViewer */}
                             <p>
                                 {/**본문 내용 삽입 구절(funding.content) */}
@@ -201,6 +206,13 @@ export default function FundingInfo(){
                                     <li id="f_info_li">금액 150,000 원{/**funding.amount */}</li>
                                     <li id="f_info_li">최대 모집 인원 16명{/**funding.max_participants */}</li>
                                     <li id="f_info_li">현재 남은 인원 3명{/**funding.max_participants - 참여인원 */}</li>
+                                    {isOffline?(<div>
+                                        <li id="f_info_li">강의 형태 <b>offline</b></li>
+                                        <li id="f_info_li">강의 지역: 서울시</li>
+                                    </div>)
+                                    :(<li id="f_info_li">강의 형태 <b>online</b></li>
+                                    )}
+                                    
                                     <li id="f_info_li">
                                     <h2 style={{color:"#fa6363"}}>달성률 80%{/**목표인원/참여인원 */} <BsFire style={{color:"red"}}/></h2>
                                     </li>

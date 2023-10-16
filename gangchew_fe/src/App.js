@@ -17,6 +17,7 @@ import RegistrationForm from './member/RegistrationForm';
 import MainBoard from './main/MainBoard';
 import MainSlider from './component/inputs/MainSlider';
 import SearchList from './main/SearchList';
+import FundingUpdate from './funding/FundingUpdate';
 
 
 
@@ -32,6 +33,7 @@ function App() {
         <Route exact path='/main' element={<MainBoard/>}/>
         <Route exact path='/fundinglist' element={<FundingList/>}/>
         <Route exact path='/fundingcreate' element={<FundingCreate/>}/>
+        <Route exact path='/fundingupdate' element={<FundingUpdate/>}/>
         <Route exact path='/fundinginfo' element={<FundingInfo/>}/>
         <Route exact path='/fundingtest' element={<FundingTest/>}/>
         <Route exact path='/login' element={<Login/>}/>

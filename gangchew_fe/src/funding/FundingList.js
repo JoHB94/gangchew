@@ -35,18 +35,18 @@ export default function FundingList() {
   const [orderby, setOrderby] = useState(defaultOrderby);
   const [currentCategory, setCurrentCategory] = useState(defaultCategory);
   const [data, setData] = useState([]);
-  const [state,setState] = useState('ACTIVE');
+  const [state,setState] = useState('');
 
   
 
 //************************************ axios ************************************************** */
   /**default 요청 메소드 : 현재 페이지는 currentPage, category는 전체, orderby는 최신순 */
-
   const cloudIP = ' http://138.2.114.150:9000/';
-  const URI = `funding/all?itemsPerPage=${itemsPerPage}&category=${currentCategory}&orderby=${orderby}&state=${state}&currentpage=${currentPage}`;
+  const URI = `funding/all?itemsPerPage=${itemsPerPage}&category=${currentCategory}&orderby=${orderby}&state='IN_PROGRESS'&currentpage=${currentPage}`;
 
   const  reqServer=()=>{
-    axios.create({headers:{'Content-Type': 'application/json',},}).post(cloudIP + URI)
+    axios.create({headers:{'Content-Type': 'application/json',},})
+    .post(cloudIP+URI)
     .then((res)=>{
       console.log("통신성공");
       setData(res);
@@ -65,7 +65,7 @@ const handleInputChange = (newValue) => {
     console.log(newValue);
     setOrderby(newValue);
     setCurrentPage(defaultPage);
-    //reqServer();
+    reqServer();
   };
 
 
@@ -80,7 +80,7 @@ const selectCategory=(e)=>{
   setCurrentCategory(id);
   setCurrentPage(defaultPage);
   setOrderby(defaultOrderby);
-  //reqServer();
+  reqServer();
 
 }
 
@@ -91,7 +91,7 @@ const handlePage =(event, page)=>{
   console.log(page)
   setCurrentPage(page);
 
-  // reqServer();
+  reqServer();
 }
 
 //****************************************useEffect******************************************** */
@@ -99,20 +99,20 @@ const handlePage =(event, page)=>{
 
   //페이지 렌더시 default정보를 불러오기 위한 useEffect
   useEffect(()=>{
-    // reqServer();
+    reqServer();
 
     /**아래 fetch는 임시데이터인 json을 data배열에 담기 위한 코드 지워도 됩니다. */
-    fetch('/ListTest.json')
-    .then((res)=>res.json())
-    .then((data)=>{
+    // fetch('/ListTest.json')
+    // .then((res)=>res.json())
+    // .then((data)=>{
 
-      const jsonData = data;
-      console.log(jsonData);
-      setData(jsonData.data);
-    })
-    .catch((error) => {
-      console.error('데이터를 불러오는 중 오류 발생:', error);
-    });
+    //   const jsonData = data;
+    //   console.log(jsonData);
+    //   setData(jsonData.data);
+    // })
+    // .catch((error) => {
+    //   console.error('데이터를 불러오는 중 오류 발생:', error);
+    // });
   },[])
 
  
