@@ -12,9 +12,10 @@ import TextField from "@mui/material/TextField";
  * @returns 
  */
 
-export default function TitleTextFields({size, text, name ,handleInputChange}) { 
+export default function TitleTextFields({size, text, name ,handleInputChange, modValue ,multiline}) { 
 
-  const [childInputValue, setChildInputValue] = useState('');
+  const [childInputValue, setChildInputValue] = useState(modValue);
+ 
 
   const handleChange = (event) => {
     const key = name;
@@ -33,9 +34,12 @@ export default function TitleTextFields({size, text, name ,handleInputChange}) {
       }}
       noValidate
       autoComplete="off"
+
       
     >
-      <TextField color="secondary" id="outlined-basic" label={text} variant="outlined" value={childInputValue} onChange={handleChange}/>
+      <TextField color="secondary" id="outlined-basic" label={text} variant="outlined" 
+      value={childInputValue} onChange={handleChange} fullWidth
+      multiline = {multiline}/>
     </Box>
   );
 }

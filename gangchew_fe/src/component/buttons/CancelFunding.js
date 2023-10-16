@@ -10,7 +10,7 @@ export default function CancelFunding() {
     <Stack spacing={2} direction="row">
       
       <Button variant="contained" size='large' style={{backgroundColor: '#000', color:'#FFFFFF'}}>
-        <h3>펀딩 환불하기</h3>
+        <h3>펀딩 취소하기</h3>
         &nbsp;<MdCancel size={35}/>
         </Button>
       

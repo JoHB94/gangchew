@@ -19,7 +19,7 @@
 }
 
 #width70{
-    width: 70%;
+    width: 69%;
 }
 
 #p_createcontainer{
@@ -96,8 +96,14 @@
 }
 
 #p_nameInput{
+    width: 100%;
+}
+
+#p_locationInput{
     width: 70%;
 }
+
+
 
 #projectInfo{
     width: 100%;
