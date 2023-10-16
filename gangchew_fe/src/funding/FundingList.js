@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-import PaginationRounded from "./PaginationRounded";
 import SimpleSlider from "../component/SimpleSlider";
 import fundingList from "../funding/css/fundingList.css";
 import Card from "../component/Card";
