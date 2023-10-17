@@ -6,6 +6,10 @@ import BestRankingList from "../component/BestRankingList";
 import "../main/css/MainBoard.css";
 
 
+
+
+
+
 const MainBoard = () => {
   return (
     <div>

@@ -6,6 +6,7 @@ import { BsFacebook } from "react-icons/bs";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { SiNaver } from "react-icons/si";
 import MemberModal from "./MemberModal";
+import KakaoLoginApi from "./Kakao/KakaoLoginApi";
 
 import "../member/css/Login.css";
 import { setCookie } from "./Cookie";
@@ -28,7 +29,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const serverUrl = "http://138.2.114.150:9000/authenticate"; // 서버의 URL을 여기에 넣으세요
+    const serverUrl = "http://localhost:9000/authenticate"; // 서버의 URL을 여기에 넣으세요
     const requestMethod = "POST";
 
     axios({
@@ -44,7 +45,7 @@ const Login = () => {
         if(response.data.isSuccess === true) {
           setCookie("jwtToken", response.data.result, {maxAge: 60 * 60}); //만료기한 1시간 설정
           alert(response.data.message); // 차후 뷰에 맞는 메세지로 변경 필요
-          window.location.href = "/main"; // 로그인 성공시 메인페이지로 이동
+          window.location.href = "/"; // 로그인 성공시 메인페이지로 이동
         }else if(response.data.isSuccess === false) {
           alert("아이디나 비밀번호가 잘못되었습니다.");
         }
@@ -57,9 +58,22 @@ const Login = () => {
   /* --------- */
 
   /* 소셜 로그인 api연결 */
-  const socialLogin = (identifier) => {
-    window.location.href = `http://138.2.114.150:9000/oauth2/authorization/${identifier}`;
-  };
+  
+    // const requestUrl = `http://138.2.114.150:9000/login/${identifier}/callback`; // 소셜 로그인 콜백 요청 url
+    // const requestMethod = "GET";
+
+    // axios({
+    //   method: requestMethod,
+    //   url: requestUrl,
+    // })
+    // .then((response) => {
+    //   console.log("서버 응답 데이터:", response.data);
+    //   console.log("로그인");
+    // })
+    // .catch((error) => {
+    //   console.error("오류 발생:", error);
+    //   // 오류 처리 코드를 추가
+    // });
 
   return (
     <div>
@@ -119,27 +133,11 @@ const Login = () => {
               <p>SNS로 간편로그인</p>
               <ul className="api-login-button">
                 <li>
-                  <button
-                    className="socialLogButton"
-                    onClick={() => socialLogin("kakao")}
-                  >
-                    <div className="kakao-icon">
-                      <RiKakaoTalkFill
-                        size={45}
-                        style={{
-                          color: "#341808",
-                          backgroundColor: "yellow",
-                          borderRadius: "5px",
-                        }}
-                      />
-                      <li>kakao</li>
-                    </div>
-                  </button>
+                  <KakaoLoginApi />
                 </li>
                 <li>
                   <button
                     className="socialLogButton"
-                    onClick={() => socialLogin("naver")}
                   >
                     <div className="naver-icon">
                       <SiNaver size={25} style={{ color: "white" }} />
@@ -150,7 +148,6 @@ const Login = () => {
                 <li>
                   <button
                     className="socialLogButton"
-                    onClick={() => socialLogin("facebook")}
                   >
                     <div className="facebook-icon">
                       <BsFacebook
