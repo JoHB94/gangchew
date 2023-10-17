@@ -16,6 +16,7 @@ import MainBoard from "./main/MainBoard";
 import SearchList from "./main/SearchList";
 import Layout from "./component/Layout";
 import KakaoRedirect from "./member/Kakao/KakaoRedirect";
+import NaverRedirect from "./member/Naver/NaverRedirect";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route exact path='/login' element={<Login/>}/>
           <Route exact path='/registration' element={<RegistrationForm/>}/>
           <Route path="/login/kakao/callback" element={<KakaoRedirect/>}/>
+          <Route path='/login/naver/callback' element={<NaverRedirect/>}/>
 
           {/* 헤더를 포함하는 페이지 */}
         <Route element={<Layout />}>

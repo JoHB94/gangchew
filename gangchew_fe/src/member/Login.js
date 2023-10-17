@@ -7,6 +7,7 @@ import { RiKakaoTalkFill } from "react-icons/ri";
 import { SiNaver } from "react-icons/si";
 import MemberModal from "./MemberModal";
 import KakaoLoginApi from "./Kakao/KakaoLoginApi";
+import NaverLoginApi from "./Naver/NaverLoginApi";
 
 import "../member/css/Login.css";
 import { setCookie } from "./Cookie";
@@ -136,14 +137,7 @@ const Login = () => {
                   <KakaoLoginApi />
                 </li>
                 <li>
-                  <button
-                    className="socialLogButton"
-                  >
-                    <div className="naver-icon">
-                      <SiNaver size={25} style={{ color: "white" }} />
-                      <li className="">naver</li>
-                    </div>
-                  </button>
+                <NaverLoginApi/>
                 </li>
                 <li>
                   <button

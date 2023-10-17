@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { setCookie } from "../Cookie";
 import axios from "axios";
 
@@ -8,7 +7,6 @@ const KakaoRedirect = () => {
   const requestUrl = `http://localhost:9000/login/kakao/callback${code}`; // 소셜 로그인 콜백 요청 url
   const requestMethod = "GET";
   
-  const navigate = useNavigate();
 
   useEffect(() => {
 

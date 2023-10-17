@@ -38,28 +38,32 @@ const Header = () => {
       const requestMethod = "GET";
       console.log(MyCookie);
       if(window.confirm("로그아웃 하시겠습니까?")) {
-      
-        axios({
+      axios({
         method: requestMethod,
         url: requestUrl,
         headers: {
           Authorization: `Bearer ${MyCookie}`, // 쿠키 정보를 요청 헤더에 포함 -> 서버에서 검증
         },
       })
-        // .then((response) => {
-        //   console.log("서버 응답 데이터:", response.data);
-  
-        //   if (MyCookie != null) {
-        //     removeCookie("jwtToken"); // 브라우저에서 쿠키 삭제
-        //     setLogin(true);
-        //     alert("로그아웃 되었습니다.");
-        //   } else {
-        //     alert("로그인이 만료되었습니다."); // 이미 쿠키가 만료된 경우
-        //   }
-        // })
-        // .catch((error) => {
-        //   console.error("오류 발생:", error);
-        // });
+        .then((response) => {
+          console.log("서버 응답 데이터:", response.data);
+
+          if (MyCookie != null && response.data.result) { //api로그아웃
+            removeCookie("jwtToken"); // 브라우저에서 쿠키 삭제
+            const redirectUrl = response.data.result;
+            window.location.href = redirectUrl;
+
+          } else if(MyCookie != null) {
+            removeCookie("jwtToken"); // 브라우저에서 쿠키 삭제
+            setLogin(true);
+            alert("로그아웃 되었습니다.");
+          } else {
+            alert("로그인이 만료되었습니다."); // 이미 쿠키가 만료된 경우
+        }
+        })
+        .catch((error) => {
+          console.error("오류 발생:", error);
+        });
       };
     };
 
