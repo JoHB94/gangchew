@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const UseValidate = (changeValue) => {
+  
   const [validText, setValidText] = useState({
     validUsername: "",
     validPassword: "",
@@ -148,10 +149,6 @@ const UseValidate = (changeValue) => {
       setIsValid((prevState) => ({...prevState, isEmail: true}));
     }
   }, [changeValue.email, userEmail])
-
-  
-
-  
 
   return {
     validText,
