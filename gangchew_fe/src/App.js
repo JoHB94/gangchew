@@ -29,8 +29,8 @@ function App() {
           {/* 헤더 없는 페이지 */}
           <Route exact path='/login' element={<Login/>}/>
           <Route exact path='/registration' element={<RegistrationForm/>}/>
-          <Route path="/login/kakao/callback" element={<KakaoRedirect/>}/>
-          <Route path='/login/naver/callback' element={<NaverRedirect/>}/>
+          <Route path="/login/kakao/callback" element={<KakaoRedirect/>}/> {/* 카카오 로그인 ridirect처리용 페이지 */}
+          <Route path='/login/naver/callback' element={<NaverRedirect/>}/> {/* 네이버 로그인 ridirect처리용 페이지 */}
 
           {/* 헤더를 포함하는 페이지 */}
         <Route element={<Layout />}>

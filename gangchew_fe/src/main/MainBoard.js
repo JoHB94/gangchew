@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import SimpleSlider from "../component/SimpleSlider";
-import MainSlider from "../component/MainSlider";
-import MainSlider2 from "../component/MainSlider2";
-import MainSlider3 from "../component/MainSlider3";
+import FirstSlider from "../component/mainSlider/FirstSlider";
+import SecondSlider from "../component/mainSlider/SecondSlider";
+import ThirdSlider from "../component/mainSlider/ThirdSlider";
 import BestRankingList from "../component/BestRankingList";
 import axios from "axios";
 
@@ -35,50 +35,49 @@ const MainBoard = () => {
 
     requestData();
   }, []);
-  if (loading === true) {
-    console.log(loading);
-    return <div></div>;
-  
-  } else { // 통신 완료시 페이지 띄움
-    console.log(loading);
-    return (
-      <div>
-        <div id="headerarea"></div>
-        <div id="container100">
-          <div id="list_left"></div>
-          <div className="base-center">
-            <div id="carousel">
-              <SimpleSlider />
-            </div>
-            <div className="centerBoard">
+
+  console.log(loading);
+  return (
+    <div>
+      <div id="headerarea"></div>
+      <div id="container100">
+        <div id="list_left"></div>
+        <div className="base-center">
+          <div id="carousel">
+            <SimpleSlider />
+          </div>
+          <div className="centerBoard">
+            {loading ? (
+              <div></div>
+            ) : (
               <div className="content">
                 <div className="inner-content-left">
                   <div>
                     <h2 className="sliderTitle">슬라이더1</h2>
-                    <MainSlider dataArray={dataArray} />
+                    <FirstSlider dataArray={dataArray} />
                   </div>
                   <div>
                     <h2 className="sliderTitle">슬라이더2</h2>
-                    <MainSlider2 />
+                    <SecondSlider dataArray={dataArray} />
                   </div>
                 </div>
                 <div className="inner-content-right">
                   <h2>랭킹 리스트1</h2>
-                  <BestRankingList dataArray={dataArray} />
+                  <BestRankingList />
                 </div>
                 <div className="inner-content-bottom">
                   <div className="SliderItem">
                     <h2 className="sliderTitle">슬라이더3</h2>
-                    <MainSlider3 isSecondSlider={true} />
+                    <ThirdSlider isSecondSlider={true} dataArray={dataArray} />
                   </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
-          <div id="list_right"></div>
         </div>
+        <div id="list_right"></div>
       </div>
-    );
-  }
+    </div>
+  );
 };
 export default MainBoard;
