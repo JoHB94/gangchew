@@ -2,9 +2,9 @@
 
 
 import { useState } from 'react';
-import card from '../component/css/card.css';
-import EmptyHeart from './buttons/EmptyHeart';
-import FullHeart from './buttons/FullHeart';
+import card from '../../component/css/card.css';
+import EmptyHeart from '../buttons/EmptyHeart';
+import FullHeart from '../buttons/FullHeart';
 import { useEffect } from 'react';
 
 
@@ -18,7 +18,7 @@ import { useEffect } from 'react';
  * 필요 데이터: 좋아요 등록 여부,
  * 
  */
-export default function Card({props}){
+export default function SecondCard({props}){
     // const rate = Math.floor(funding.goal/funding.participants)
     const [like, setLike] = useState(false);
 

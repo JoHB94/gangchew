@@ -2,7 +2,17 @@ import "../member/css/SelectRegistration.css";
 import { Link } from "react-router-dom";
 
 
-function SelectRegistration() {
+function SelectRegistration(props) {
+  console.log(props.socialUrl);
+
+  const regKakao = () => {
+    window.location.href = props.socialUrl.kakaoUrl;
+  }
+
+  const regNaver = () => {
+    window.location.href = props.socialUrl.naverUrl;
+  }
+
   return (
     <div>
       <div className="center">
@@ -13,14 +23,11 @@ function SelectRegistration() {
             <Link to="/registration"><p className="regName">내 정보로 간편가입</p></Link>
             </button>
             <hr />
-            <button className="loginButton-kakao" id="regButton">
+            <button className="loginButton-kakao" id="regButton" onClick={regKakao}>
             <p className="regName">카카오로 간편가입</p>
             </button>
-            <button className="loginButton-naver" id="regButton">
+            <button className="loginButton-naver" id="regButton" onClick={regNaver}>
               <p className="regName">네이버로 간편가입</p>
-            </button>
-            <button className="loginButton-facebook" id="regButton">
-              <p className="regName">페이스북으로 간편가입</p>
             </button>
           </div>
         </div>

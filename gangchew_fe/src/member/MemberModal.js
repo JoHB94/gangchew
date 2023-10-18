@@ -27,7 +27,7 @@ const btnStyle = {
   color: "rgb(178, 8, 204)",
 };
 
-export default function MemberModal() {
+export default function MemberModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true); //열린 상태
   const handleClose = () => setOpen(false); // 닫힌 상태
@@ -45,7 +45,7 @@ export default function MemberModal() {
       >
         <Box sx={style}>
           <div>
-            <SelectRegistration />
+            <SelectRegistration socialUrl={props.socialUrlArray}/>
           </div>
         </Box>
       </Modal>

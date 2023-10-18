@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
-import FirstCard from "./card/FirstCard";
+import Card from "./Card";
 
 import "./css/MainSlider.css";
 import { SlideItem, SlideContainer } from "./MainSliderStyled";
 
-export default class MainSlider extends Component {
+export default class MainSlider2 extends Component {
   /* 반응형 속성 조건부 렌더링 */
   constructor(props) {
     super(props);
@@ -18,7 +18,6 @@ export default class MainSlider extends Component {
           slidesToScroll: 1,
           infinite: true,
           dots: false,
-          autoplaySpeed: 2600,
         },
       },
       {
@@ -90,7 +89,7 @@ export default class MainSlider extends Component {
   }
 
   render() {
-    const { dataArray } = this.props;
+    
     const settings = {
       className: "center",
       centerMode: true,
@@ -103,29 +102,13 @@ export default class MainSlider extends Component {
       dots: false,
       responsive: this.responsiveSettings,
     };
-
-    // const loopUI = () => {
-    //   const array = [];
-    //   for(let i=0; i < 20; i++) {
-    //      array.push( 
-    //      <SlideItem>
-    //         <Card />
-    //       </SlideItem>
-    //      )
-    //   }
-    //   return array;
-    // }
-    const ObArray = dataArray.map((item) => ( // 배열 개수만큼 컴포넌트
-      <SlideItem key={item.fundingId}>
-        <FirstCard key={item.fundingId} data={item}/>
-      </SlideItem>
-    ));
-
+    
     return (
       <SlideContainer>
         <Slider {...settings}>
-          {/* {loopUI()} */}
-          {ObArray}
+        <SlideItem>
+            {/* 카드 컴포넌트 넣을 자리 */}
+          </SlideItem>
         </Slider>
       </SlideContainer>
     );
