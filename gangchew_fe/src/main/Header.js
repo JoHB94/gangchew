@@ -32,7 +32,7 @@ const Header = () => {
       window.location.href = "/login";
     }
 
-
+    /* 로그아웃 로직 작동 - 로컬 및 소셜 통합처리 */
     const logoutHandle = (event) => {
       const requestUrl = "http://localhost:9000/authenticate/logout";
       const requestMethod = "GET";
@@ -47,18 +47,23 @@ const Header = () => {
       })
         .then((response) => {
           console.log("서버 응답 데이터:", response.data);
-
-          if (MyCookie != null && response.data.result) { //api로그아웃
+         
+          const result = response.data.result;
+          
+          if (MyCookie != null && result !== "로그아웃 되었습니다.") { //소셜 로그아웃 - 소셜 로그아웃 콜백 url에 따라 판단
+            console.log(response.data.result);
             removeCookie("jwtToken"); // 브라우저에서 쿠키 삭제
-            const redirectUrl = response.data.result;
-            window.location.href = redirectUrl;
+            const redirectUrl = result;
+            window.location.href = redirectUrl; // 소셜 로그아웃 콜백 url로 이동
 
           } else if(MyCookie != null) {
             removeCookie("jwtToken"); // 브라우저에서 쿠키 삭제
             setLogin(true);
             alert("로그아웃 되었습니다.");
+            window.location.href = "/main";
           } else {
             alert("로그인이 만료되었습니다."); // 이미 쿠키가 만료된 경우
+            window.location.href = "/main";
         }
         })
         .catch((error) => {

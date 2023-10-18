@@ -19,7 +19,6 @@ const Login = () => {
     password: "",
   });
 
-
   const handleInputChange = (key, value) => {
     setLoginData((prevData) => ({
       ...prevData,
@@ -27,6 +26,7 @@ const Login = () => {
     }));
   };
 
+  /* 로컬 로그인 */
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -43,11 +43,11 @@ const Login = () => {
     })
       .then((response) => {
         console.log("서버 응답 데이터:", response.data);
-        if(response.data.isSuccess === true) {
-          setCookie("jwtToken", response.data.result, {maxAge: 60 * 60}); //만료기한 1시간 설정
+        if (response.data.isSuccess === true) {
+          setCookie("jwtToken", response.data.result, { maxAge: 60 * 60 }); //만료기한 1시간 설정
           alert(response.data.message); // 차후 뷰에 맞는 메세지로 변경 필요
           window.location.href = "/"; // 로그인 성공시 메인페이지로 이동
-        }else if(response.data.isSuccess === false) {
+        } else if (response.data.isSuccess === false) {
           alert("아이디나 비밀번호가 잘못되었습니다.");
         }
       })
@@ -58,23 +58,25 @@ const Login = () => {
   };
   /* --------- */
 
-  /* 소셜 로그인 api연결 */
+  /* 카카오 로그인 데이터 */
+  const kakaoData = {
+    REST_API_KEY: "c6b9f677567dc977d7f9c94dd4cc157f",
+    REDIRECT_KAKAO_URI: "http://localhost:3000/login/kakao/callback",
+  }
   
-    // const requestUrl = `http://138.2.114.150:9000/login/${identifier}/callback`; // 소셜 로그인 콜백 요청 url
-    // const requestMethod = "GET";
-
-    // axios({
-    //   method: requestMethod,
-    //   url: requestUrl,
-    // })
-    // .then((response) => {
-    //   console.log("서버 응답 데이터:", response.data);
-    //   console.log("로그인");
-    // })
-    // .catch((error) => {
-    //   console.error("오류 발생:", error);
-    //   // 오류 처리 코드를 추가
-    // });
+  /* 네이버 로그인 데이터 */
+  const naverData = {
+    CLIENT_ID: "dLKPNhcR1nB4hOCwthgj",
+    REDIRECT_NAVER_URI: "http://localhost:3000/login/naver/callback",
+    STATE: "fake",
+  }
+  
+  //OAuth요청 URL
+  const socialOauthUrl = {
+    kakaoUrl: `https://kauth.kakao.com/oauth/authorize?grant_type=authorization_code&client_id=${kakaoData.REST_API_KEY}&redirect_uri=${kakaoData.REDIRECT_KAKAO_URI}&response_type=code&scope=account_email,profile_image,profile_nickname`,
+    naverUrl: `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naverData.CLIENT_ID}&state=${naverData.STATE}_STRING&redirect_uri=${naverData.REDIRECT_NAVER_URI}`,
+  }
+  /* ------------------ */
 
   return (
     <div>
@@ -92,10 +94,9 @@ const Login = () => {
                       type="text"
                       className="input-id"
                       placeholder="Enter id"
-                      onChange={(e) => 
+                      onChange={(e) =>
                         handleInputChange("username", e.target.value)
                       }
-
                     />
                   </p>
                   <input
@@ -109,7 +110,7 @@ const Login = () => {
                   <div className="join-link">
                     <p>
                       아직 회원이 아니신가요?
-                      <MemberModal />
+                      <MemberModal socialUrlArray={socialOauthUrl}/>
                     </p>
                   </div>
                 </div>
@@ -134,23 +135,10 @@ const Login = () => {
               <p>SNS로 간편로그인</p>
               <ul className="api-login-button">
                 <li>
-                  <KakaoLoginApi />
+                  <KakaoLoginApi kakaoUrl={socialOauthUrl.kakaoUrl}/>
                 </li>
                 <li>
-                <NaverLoginApi/>
-                </li>
-                <li>
-                  <button
-                    className="socialLogButton"
-                  >
-                    <div className="facebook-icon">
-                      <BsFacebook
-                        size={45}
-                        style={{ color: "blue", paddingBottom: "5px" }}
-                      />
-                      <li>facebook</li>
-                    </div>
-                  </button>
+                  <NaverLoginApi naverUrl={socialOauthUrl.naverUrl}/>
                 </li>
               </ul>
             </div>
