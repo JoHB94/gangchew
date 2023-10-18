@@ -7,8 +7,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 //writer를 prop으로 받는다.
 
-export default function FundingAccordion() {
+export default function FundingAccordion({user}) {
   const [expanded, setExpanded] = React.useState(false);
+  const writerName = user.fullname;
+  const writerEmail = user.email;
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -29,8 +31,8 @@ export default function FundingAccordion() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            <h3>UserName</h3>
-            <span>webdev1503@gmail.com</span>
+            <h3>{writerName}</h3>
+            <span>{writerEmail}</span>
           </Typography>
         </AccordionDetails>
       </Accordion>

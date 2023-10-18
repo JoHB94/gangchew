@@ -42,7 +42,7 @@
 }
 
 #cate_item{
-    width: 14%;
+    width: 12.5%;
     display: flex;
     align-items: center;
     
@@ -111,6 +111,11 @@
     height: 5rem;
 }
 
+#list_content{
+    display: flex;
+    justify-content: center;
+}
+
 #contentBox {
     display: grid;
     width: auto;
@@ -119,4 +124,5 @@
     place-items: center;
     padding-top: 30px;
 }
+
 

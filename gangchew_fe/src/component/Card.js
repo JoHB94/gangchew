@@ -21,9 +21,17 @@ import { useEffect } from 'react';
 export default function Card({props}){
     // const rate = Math.floor(funding.goal/funding.participants)
     const [like, setLike] = useState(false);
+    const [img,setImg] = useState('');
+    const [title,setTitle] = useState('');
+    const [num,setNum] = useState(0);
+    
+
 
     useEffect(()=>{
-        /**로그인 한 아이디와 해당 카드 번호를 기준으로 좋아요 여부를 반환하는 axios 통신 */
+        
+        setImg(funding.thumbnail);
+        setTitle(funding.title);
+        setNum(funding.fundingId);
     },[])
 
     const likeHandler =()=>{
@@ -36,7 +44,7 @@ export default function Card({props}){
             <div id="card_container">{/**카드 컨테이너 */}
                 <div id="card_imgContainer">
                     {/**카드 이미지 */}
-                    <img id="card_img" src="" alt="/replace.jpg" />
+                    <img id="card_img" src={img} alt="/replace.jpg" />
                 </div>
                 <div id="card_infoContainer">
 
@@ -48,8 +56,7 @@ export default function Card({props}){
 
 
                         <h3 id='card_title'>
-                            {/* {funding.title} */}
-                            제목
+                            {num}/{title}
                             </h3>
                         </div>
                         <div id="card_infoLike" onClick={likeHandler}> {/**좋아요 버튼 */}
@@ -69,6 +76,7 @@ export default function Card({props}){
                     </div>
                   </div>
                 </div>
+                
             </div>
   );
 };

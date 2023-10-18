@@ -35,6 +35,12 @@
     justify-content: center;
     align-items: center;
     display: flex;
+    
+}
+
+#f_subtitle{
+    text-align: left;
+    width: 100%;
 }
 
 #f_payBox{
