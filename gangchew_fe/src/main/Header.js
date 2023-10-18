@@ -99,10 +99,12 @@ const Header = () => {
                                 {login?('로그아웃'):('로그인')}
                             </div>
                             <div id='container33'>
-                                <MessageDrop/>
+                              {login?(<MessageDrop/>):('')}
+                                
                             </div>
                             <div id='container33'>
-                                <CgProfile size={32}/>
+                              {login?(<CgProfile size={32}/>):('')}
+                                
                             </div>
                         </div>
                     </div>

@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 export default function SortSelect({handleInputChange}) {
-  const [condition, setCondition] = useState('');
+  const [condition, setCondition] = useState('newest');
 
   const handleChange = (event) => {
 
