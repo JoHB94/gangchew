@@ -42,7 +42,7 @@
 }
 
 #cate_item{
-    width: 14%;
+    width: 12.5%;
     display: flex;
     align-items: center;
     
@@ -109,6 +109,11 @@
 
 #empty5{
     height: 5rem;
+}
+
+#list_content{
+    display: flex;
+    justify-content: center;
 }
 
 #contentBox {

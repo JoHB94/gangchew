@@ -95,6 +95,9 @@ export default class MainSlider extends Component {
 
   render() {
 
+    const { data } = this.props;
+    console.log(data);
+
     const settings = {
       className: "center",
       centerMode: true,
@@ -108,40 +111,11 @@ export default class MainSlider extends Component {
       responsive: this.responsiveSettings,
 
     };
-
+    
     return (
       <SlideContainer>
         <Slider {...settings}>
-          <SlideItem>
-            <Card />
-          </SlideItem>
-          <SlideItem>
-            <Card />
-          </SlideItem>
-          <SlideItem>
-            <Card />
-          </SlideItem>
-          <SlideItem>
-            <Card />
-          </SlideItem>
-          <SlideItem>
-            <Card />
-          </SlideItem>
-          <SlideItem>
-            <Card />
-          </SlideItem>
-          <SlideItem>
-            <Card />
-          </SlideItem>
-          <SlideItem>
-            <Card />
-          </SlideItem>
-          <SlideItem>
-            <Card />
-          </SlideItem>
-          <SlideItem>
-            <Card />
-          </SlideItem>
+          
         </Slider>
       </SlideContainer>
 

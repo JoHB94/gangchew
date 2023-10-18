@@ -22,7 +22,7 @@ const MainBoard = () => {
 
               <div className="inner-content-left">
                 <div>
-                  <h2 className="sliderTitle">슬라이더1</h2>
+                  <h2  className="sliderTitle">슬라이더1</h2>
                   <MainSlider/>
                 </div>
                 <div>
@@ -31,14 +31,14 @@ const MainBoard = () => {
                 </div>
                 
               </div>
-              <div className="inner-content-right">
+              <div  className="inner-content-right">
                 <h2>랭킹 리스트1</h2>
                 <BestRankingList />
               </div>
-              <div className="inner-content-bottom">
+              <div  className="inner-content-bottom">
                 <div className="SliderItem">
                   <h2 className="sliderTitle">슬라이더3</h2>
-                  <MainSlider isSecondSlider={true}/>
+                  <MainSlider isSecondSlider={true} />
                 </div>
                 
               </div>

@@ -5,14 +5,16 @@ import Stack from '@mui/material/Stack';
 import searchList from "../main/css/searchList.css";
 import LongCard from "../component/LongCard";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 
-export default function SearchList({keyword}){
+export default function SearchList(){
 
 //**********************************state********************************* */
     const defaultCurrentPage = 1;
     const itemsPerPage = 3;
-    
+    const {keyword} = useParams();
+
     const [fundingData, setFundingData] = useState([]);
     const [consumerData, setConsumerData] = useState([]);
     const [currentFundingPage, setCurrentFundingPage] = useState(defaultCurrentPage);
@@ -21,11 +23,13 @@ export default function SearchList({keyword}){
     
 //************************************axios ****************************** */
     const cloudIP = ' http://138.2.114.150:9000/';
+    const localIP = 'http://localhost:9000/';
+
     const fundingURI = `/fundingList?keyword=${keyword}&currentpage=${currentFundingPage}&itemsPerPage=${itemsPerPage}&name=funding`;
     const userURI = `/fundingList?keyword=${keyword}&currentpage=${currentFundingPage}&itemsPerPage=${itemsPerPage}&name=user`;
 
     const fundingReqServer=()=>{
-        axios.get(cloudIP+fundingURI)
+        axios.get(localIP+fundingURI)
         .then((res)=>{
             setFundingData(res);
             console.log("funding 조건 조회 완료");
@@ -49,6 +53,7 @@ export default function SearchList({keyword}){
 //*************************************useEffect************************** */
     useEffect(()=>{
         // fundingReqServer();
+        
     },[])
 
     useEffect(()=>{
@@ -71,6 +76,7 @@ export default function SearchList({keyword}){
 
     return(
         <div>
+            {console.log(keyword)}
             <div id="search_headerarea"></div>
             <div id="search_container">
                 <div id="search_side"></div>
@@ -79,7 +85,7 @@ export default function SearchList({keyword}){
                     <h1>검색 결과</h1><hr/>
                     <div id="search_funding">
                         <div id="search_title">
-                            <h3>Funding 게시판 내 검색 결과입니다.</h3>
+                            <h3>Funding 게시판 내 '{keyword}' 검색 결과입니다.</h3>
                         </div>
                         <div id="search_list">
                             <LongCard/>

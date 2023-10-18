@@ -18,6 +18,7 @@
     overflow: hidden;
     height: 214px;
     background-color: lightgray;
+    display: flex;
 }
 
 #card_img{

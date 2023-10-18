@@ -14,22 +14,16 @@ import { useEffect } from 'react';
 
 const Header = () => {
 
-    const [login, setLogin] = useState('');
+    const [login, setLogin] = useState(false);
     const MyCookie = getCookie("jwtToken");
     console.log(MyCookie);
     console.log(login);
 
     useEffect(() => { //화면 렌더링시 쿠키를 발급받았다면 로그인 처리된 것으로 인식
-      if(MyCookie === undefined && login === ''){
-        setLogin(false);
-        alert("로그인이 만료되었습니다.");
-        console.log(login);
-      }else if(MyCookie === undefined && login === false) {
-
-      }else if(MyCookie !== undefined) {
+      if(MyCookie !== undefined) {
         setLogin(true);
         console.log(login);
-      }
+      };
     }, [login])
 
     const loginHandle = () => { // 클릭시 로그인 페이지로 이동(비로그인의 경우)
@@ -79,7 +73,7 @@ const Header = () => {
                         </div>
                         
                         <ul id='list'>
-                            <Link to="/fundinglist"><li id='container33'>펀딩list</li></Link>
+                            <Link id='container33' to="/fundinglist"><li >펀딩list</li></Link>
                             <li id='container33'>펀딩작성</li>
                             <li id='container33'>요청list</li>
                         </ul>
@@ -94,10 +88,12 @@ const Header = () => {
                                 {login?('로그아웃'):('로그인')}
                             </div>
                             <div id='container33'>
-                                <MessageDrop/>
+                              {login?(<MessageDrop/>):('')}
+                                
                             </div>
                             <div id='container33'>
-                                <CgProfile size={32}/>
+                              {login?(<CgProfile size={32}/>):('')}
+                                
                             </div>
                         </div>
                     </div>
