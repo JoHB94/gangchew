@@ -18,9 +18,8 @@ body {
 }
 
 .inner-content-right {
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
-    transform: translateX(-37.7%);
+    transform: translateX(-38.3%) translateY(1%);
+    
 }
 
 .inner-content-bottom {

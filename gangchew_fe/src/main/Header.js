@@ -14,32 +14,28 @@ import { useEffect } from 'react';
 
 const Header = () => {
 
-    const [login, setLogin] = useState('');
+    const [login, setLogin] = useState(null);
+    const [kakaoLogin, setKakaoLogin] = useState(false);
+    const [naverLogin, setNaverLogin] = useState(false);
+
     const MyCookie = getCookie("jwtToken");
-    console.log(MyCookie);
-    console.log(login);
 
-    useEffect(() => { //화면 렌더링시 쿠키를 발급받았다면 로그인 처리된 것으로 인식
-      if(MyCookie === undefined && login === ''){
-        setLogin(false);
-        alert("로그인이 만료되었습니다.");
-        console.log(login);
-      }else if(MyCookie === undefined && login === false) {
-
-      }else if(MyCookie !== undefined) {
+    useEffect(() => {
+      if(MyCookie != null) {
         setLogin(true);
-        console.log(login);
+      }else {
+        setLogin(false);
       }
-    }, [login])
+    }, [])
 
     const loginHandle = () => { // 클릭시 로그인 페이지로 이동(비로그인의 경우)
       window.location.href = "/login";
     }
 
-
+    /* 로그아웃 로직 작동 - 로컬 및 소셜 통합처리 */
     const logoutHandle = (event) => {
-      const requestUrl = "http://138.2.114.150:9000/authenticate/logout";
-      const requestMethod = "POST";
+      const requestUrl = "http://localhost:9000/authenticate/logout";
+      const requestMethod = "GET";
       console.log(MyCookie);
       if(window.confirm("로그아웃 하시겠습니까?")) {
       axios({
@@ -51,15 +47,24 @@ const Header = () => {
       })
         .then((response) => {
           console.log("서버 응답 데이터:", response.data);
-  
-          if (MyCookie != null) {
+         
+          const result = response.data.result;
+          
+          if (MyCookie != null && result !== "로그아웃 되었습니다.") { //소셜 로그아웃 - 소셜 로그아웃 콜백 url에 따라 판단
+            console.log(response.data.result);
+            removeCookie("jwtToken"); // 브라우저에서 쿠키 삭제
+            const redirectUrl = result;
+            window.location.href = redirectUrl; // 소셜 로그아웃 콜백 url로 이동
+
+          } else if(MyCookie != null) {
             removeCookie("jwtToken"); // 브라우저에서 쿠키 삭제
             setLogin(true);
-            alert("로그아웃 되었습니다.")
+            alert("로그아웃 되었습니다.");
             window.location.href = "/main";
           } else {
             alert("로그인이 만료되었습니다."); // 이미 쿠키가 만료된 경우
-          }
+            window.location.href = "/main";
+        }
         })
         .catch((error) => {
           console.error("오류 발생:", error);
@@ -79,7 +84,7 @@ const Header = () => {
                         </div>
                         
                         <ul id='list'>
-                            <Link to="/fundinglist"><li id='container33'>펀딩list</li></Link>
+                            <Link id='container33' to="/fundinglist"><li >펀딩list</li></Link>
                             <li id='container33'>펀딩작성</li>
                             <li id='container33'>요청list</li>
                         </ul>

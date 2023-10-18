@@ -19,8 +19,11 @@ import MainSlider from './component/inputs/MainSlider';
 import SearchList from './main/SearchList';
 import FundingUpdate from './funding/FundingUpdate';
 import Layout from "./component/Layout";
+import KakaoRedirect from "./member/Kakao/KakaoRedirect";
+import NaverRedirect from "./member/Naver/NaverRedirect";
 
 function App() {
+  
   return (
     <div className="App">
     <BrowserRouter>
@@ -30,10 +33,12 @@ function App() {
           {/* 헤더 없는 페이지 */}
           <Route exact path='/login' element={<Login/>}/>
           <Route exact path='/registration' element={<RegistrationForm/>}/>
+          <Route path="/login/kakao/callback" element={<KakaoRedirect/>}/>
+          <Route path='/login/naver/callback' element={<NaverRedirect/>}/>
 
           {/* 헤더를 포함하는 페이지 */}
         <Route element={<Layout />}>
-          <Route exact path='/main' element={<MainBoard/>}/>
+          <Route exact path='/' element={<MainBoard/>}/>
           <Route exact path='/fundinglist' element={<FundingList/>}/>
           <Route exact path='/fundingcreate' element={<FundingCreate/>}/>
           <Route exact path='/fundinginfo' element={<FundingInfo/>}/>
