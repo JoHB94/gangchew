@@ -14,7 +14,7 @@ export default class SimpleSlider extends Component {
       slidesToScroll: 1
     };
 
-    const imgs = ['/carousel001.jpg','/carousel002.jpg','/carousel003.jpg',];
+    const imgs = ['/gangchewSlider01.png','/gangchewSlider02.png','/gangchewSlider03.png',];
     return (
       <div id="sliderSize">
         

@@ -7,17 +7,73 @@ import {CgProfile} from 'react-icons/cg';
 import {BiSearch} from 'react-icons/bi';
 import SearchBar from '../component/inputs/SearchBar';
 import MessageDrop from './MessageDrop';
+import axios from "axios";
+import { getCookie, removeCookie } from "../member/Cookie";
+import { Link } from "react-router-dom";
+import { useEffect } from 'react';
 
+const Header = () => {
 
-const Header =()=> {
+    const [login, setLogin] = useState(null);
+    const [kakaoLogin, setKakaoLogin] = useState(false);
+    const [naverLogin, setNaverLogin] = useState(false);
 
-    const [login, setLogin] = useState(false);
+    const MyCookie = getCookie("jwtToken");
 
-    if (window.location.pathname === '/login' || 
-    window.location.pathname === '/selectRegistration' ||
-    window.location.pathname === '/registration') 
-    return null;
+    useEffect(() => {
+      if(MyCookie != null) {
+        setLogin(true);
+      }else {
+        setLogin(false);
+      }
+    }, [])
+
+    const loginHandle = () => { // 클릭시 로그인 페이지로 이동(비로그인의 경우)
+      window.location.href = "/login";
+    }
+
+    /* 로그아웃 로직 작동 - 로컬 및 소셜 통합처리 */
+    const logoutHandle = (event) => {
+      const requestUrl = "http://localhost:9000/authenticate/logout";
+      const requestMethod = "GET";
+      console.log(MyCookie);
+      if(window.confirm("로그아웃 하시겠습니까?")) {
+      axios({
+        method: requestMethod,
+        url: requestUrl,
+        headers: {
+          Authorization: `Bearer ${MyCookie}`, // 쿠키 정보를 요청 헤더에 포함 -> 서버에서 검증
+        },
+      })
+        .then((response) => {
+          console.log("서버 응답 데이터:", response.data);
+         
+          const result = response.data.result;
+          
+          if (MyCookie != null && result !== "로그아웃 되었습니다.") { //소셜 로그아웃 - 소셜 로그아웃 콜백 url에 따라 판단
+            console.log(response.data.result);
+            removeCookie("jwtToken"); // 브라우저에서 쿠키 삭제
+            const redirectUrl = result;
+            window.location.href = redirectUrl; // 소셜 로그아웃 콜백 url로 이동
+
+          } else if(MyCookie != null) {
+            removeCookie("jwtToken"); // 브라우저에서 쿠키 삭제
+            setLogin(true);
+            alert("로그아웃 되었습니다.");
+            window.location.href = "/main";
+          } else {
+            alert("로그인이 만료되었습니다."); // 이미 쿠키가 만료된 경우
+            window.location.href = "/main";
+        }
+        })
+        .catch((error) => {
+          console.error("오류 발생:", error);
+        });
+      };
+    };
+
     
+
     return (
         <div>
             <div id ="scroll_wrapper">
@@ -28,7 +84,7 @@ const Header =()=> {
                         </div>
                         
                         <ul id='list'>
-                            <li id='container33'>펀딩list</li>
+                            <Link id='container33' to="/fundinglist"><li >펀딩list</li></Link>
                             <li id='container33'>펀딩작성</li>
                             <li id='container33'>요청list</li>
                         </ul>
@@ -39,20 +95,22 @@ const Header =()=> {
                             <SearchBar/>
                         </div>
                         <div id='member'>
-                            <div id='container33'>
+                            <div id='container33' onClick={login? logoutHandle : loginHandle}>
                                 {login?('로그아웃'):('로그인')}
                             </div>
                             <div id='container33'>
-                                <MessageDrop/>
+                              {login?(<MessageDrop/>):('')}
+                                
                             </div>
                             <div id='container33'>
-                                <CgProfile size={32}/>
+                              {login?(<CgProfile size={32}/>):('')}
+                                
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    )
+      </div>
+    </div>
+  );
 };
 export default Header;

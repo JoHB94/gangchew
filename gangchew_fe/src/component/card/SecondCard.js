@@ -2,9 +2,9 @@
 
 
 import { useState } from 'react';
-import card from '../component/css/card.css';
-import EmptyHeart from './buttons/EmptyHeart';
-import FullHeart from './buttons/FullHeart';
+import card from '../../component/css/card.css';
+import EmptyHeart from '../buttons/EmptyHeart';
+import FullHeart from '../buttons/FullHeart';
 import { useEffect } from 'react';
 
 
@@ -18,20 +18,12 @@ import { useEffect } from 'react';
  * 필요 데이터: 좋아요 등록 여부,
  * 
  */
-export default function Card({props}){
+export default function SecondCard({props}){
     // const rate = Math.floor(funding.goal/funding.participants)
     const [like, setLike] = useState(false);
-    const [img,setImg] = useState('');
-    const [title,setTitle] = useState('');
-    const [num,setNum] = useState(0);
-    
-
 
     useEffect(()=>{
-        
-        setImg(funding.thumbnail);
-        setTitle(funding.title);
-        setNum(funding.fundingId);
+        /**로그인 한 아이디와 해당 카드 번호를 기준으로 좋아요 여부를 반환하는 axios 통신 */
     },[])
 
     const likeHandler =()=>{
@@ -44,7 +36,7 @@ export default function Card({props}){
             <div id="card_container">{/**카드 컨테이너 */}
                 <div id="card_imgContainer">
                     {/**카드 이미지 */}
-                    <img id="card_img" src={img} alt="/replace.jpg" />
+                    <img id="card_img" src="" alt="/replace.jpg" />
                 </div>
                 <div id="card_infoContainer">
 
@@ -56,7 +48,8 @@ export default function Card({props}){
 
 
                         <h3 id='card_title'>
-                            {num}/{title}
+                            {/* {funding.title} */}
+                            제목
                             </h3>
                         </div>
                         <div id="card_infoLike" onClick={likeHandler}> {/**좋아요 버튼 */}
@@ -76,7 +69,6 @@ export default function Card({props}){
                     </div>
                   </div>
                 </div>
-                
             </div>
   );
 };

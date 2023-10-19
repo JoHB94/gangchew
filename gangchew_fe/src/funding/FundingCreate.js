@@ -43,9 +43,11 @@ export default function FundingCreate() {
 //*************************************axios***************************************************** */
 
     const cloudIP = ' http://138.2.114.150:9000/';
+    const localIP = 'http://localhost:9000/';
      
     const submit = (e) => {
-        axios.post(cloudIP + '/funding/create',funding)
+        axios.create({headers:{'Content-Type': 'application/json',},})
+        .post(localIP + 'funding/create',funding)
         .then((res) => {
             console.log(res);
         }).catch((error) => {

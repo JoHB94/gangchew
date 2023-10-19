@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const UseValidate = (changeValue) => {
+  
   const [validText, setValidText] = useState({
     validUsername: "",
     validPassword: "",
@@ -18,11 +19,6 @@ const UseValidate = (changeValue) => {
     isEmail: false,
   });
 
-  const usernameReg = /^[a-z0-9]+$/;
-  const passwordReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,20}$/;
-  const fullnameReg = /^[가-힣]{2,4}$/;
-  const nicknameReg = /^[가-힣a-zA-Z]{2,10}$/;
-  const emailReg = /^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$/;
 
   const username = changeValue.username;
   const userPassword = changeValue.password;
@@ -32,6 +28,7 @@ const UseValidate = (changeValue) => {
   const userEmail = changeValue.email;
 
   useEffect(() => {
+    const usernameReg = /^[a-z0-9]+$/;
     if (username.length === 0) {
       setValidText((prevState) => ({
         ...prevState,
@@ -54,9 +51,11 @@ const UseValidate = (changeValue) => {
       setValidText((prevState) => ({ ...prevState, validUsername: "올바른 형식입니다." }));
       setIsValid((prevState) => ({ ...prevState, isUsername: true }));
     }
-  }, [changeValue.username]);
+  }, [changeValue.username, username]);
 
   useEffect(() => {
+    const passwordReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,20}$/;
+
     if (userPassword.length === 0) {
       setValidText((prevState) => ({ ...prevState, validPassword: "" }));
       setIsValid((prevState) => ({ ...prevState, isPassword: false }));
@@ -71,9 +70,11 @@ const UseValidate = (changeValue) => {
       setValidText((prevState) => ({ ...prevState, validPassword: "" }));
       setIsValid((prevState) => ({ ...prevState, isPassword: true }));
     }
-  }, [changeValue.password]);
+  }, [changeValue.password, userPassword]);
 
   useEffect(() => {
+    const passwordReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,20}$/;
+
     if (userPasswordCheck.length === 0) {
       setValidText((prevState) => ({ ...prevState, validPasswordCheck: "" }));
       setIsValid((prevState) => ({ ...prevState, isPasswordCheck: false }));
@@ -89,14 +90,16 @@ const UseValidate = (changeValue) => {
         ...prevState,
         validPasswordCheck: "비밀번호가 일치하지 않습니다.",
       }));
-      setIsValid((prevState) => ({ ...prevState, isPasswordCheck: true }));
+      setIsValid((prevState) => ({ ...prevState, isPasswordCheck: false }));
     } else {
       setValidText((prevState) => ({ ...prevState, validPasswordCheck: "비밀번호가 일치합니다." }));
       setIsValid((prevState) => ({ ...prevState, isPasswordCheck: true }));
     }
-  }, [changeValue.passwordCheck]);
+  }, [changeValue.passwordCheck, userPassword, userPasswordCheck]);
 
   useEffect(() => {
+    const fullnameReg = /^[가-힣]{2,4}$/;
+
     if (userfullname.length === 0) {
       setValidText((prevState) => ({ ...prevState, validFullname: "" }));
       setIsValid((prevState) => ({ ...prevState, isFullname: false }));
@@ -111,9 +114,11 @@ const UseValidate = (changeValue) => {
       setValidText((prevState) => ({ ...prevState, validFullname: "올바른 형식입니다." }));
       setIsValid((prevState) => ({ ...prevState, isFullname: true }));
     }
-  }, [changeValue.fullname]);
+  }, [changeValue.fullname, userfullname]);
 
   useEffect(() => {
+    const nicknameReg = /^[가-힣a-zA-Z]{2,10}$/;
+
     if (userNickname.length === 0) {
       setValidText((prevState) => ({ ...prevState, validNickname: "" }));
       setIsValid((prevState) => ({ ...prevState, isNickname: false }));
@@ -128,9 +133,11 @@ const UseValidate = (changeValue) => {
       setValidText((prevState) => ({ ...prevState, validNickname: "올바른 형식입니다." }));
       setIsValid((prevState) => ({ ...prevState, isNickname: true }));
     }
-  });
+  }, [changeValue.nickname, userNickname]);
 
   useEffect(() => {
+    const emailReg = /^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$/;
+
     if (userEmail.length === 0) {
       setValidText((prevState) => ({...prevState, validEmail: ""}));
       setIsValid((prevState) => ({...prevState, isEmail: false}));
@@ -141,11 +148,7 @@ const UseValidate = (changeValue) => {
       setValidText((prevState) => ({...prevState, validEmail: "올바른 형식입니다."}));
       setIsValid((prevState) => ({...prevState, isEmail: true}));
     }
-  })
-
-  
-
-  
+  }, [changeValue.email, userEmail])
 
   return {
     validText,

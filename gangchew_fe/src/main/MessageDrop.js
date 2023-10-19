@@ -5,18 +5,22 @@ import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import MessageBadge from '../component/MessageBadge';
 import MessageDiv from './MessageDiv';
+import drop from '../main/css/drop.css';
 
 export default function MessageDrop() {
+
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">
       {(popupState) => (
         <React.Fragment>
           <Button variant="text" {...bindTrigger(popupState)}>
             <MessageBadge/>
+            
           </Button>
           <Menu {...bindMenu(popupState)}>
-            <MenuItem onClick={popupState.close} >
+            <MenuItem className='drop_menu' onClick={popupState.close}>
                 <MessageDiv/>
+                
             </MenuItem>
             
           </Menu>
