@@ -17,8 +17,8 @@ import RegistrationForm from './member/RegistrationForm';
 import MainBoard from './main/MainBoard';
 import MainSlider from './component/inputs/MainSlider';
 import SearchList from './main/SearchList';
-
-
+import ConsumerUpdate from './consumer/ConsumerUpdate';
+import ConsumerComment from './consumer/ConsumerComment';
 
 
 function App() {
@@ -35,8 +35,10 @@ function App() {
         <Route exact path='/fundinginfo' element={<FundingInfo/>}/>
         <Route exact path='/fundingtest' element={<FundingTest/>}/>
         <Route exact path='/login' element={<Login/>}/>
-        <Route exact path='/consumercreate' element={<ConsumerCreate/>}/>        
+        <Route exact path='/consumercreate' element={<ConsumerCreate/>}/>
+        <Route exact path='/consumerupdate/:postId' element={<ConsumerUpdate/>}/>        
         <Route exact path='/consumerdetail/:postId' element={<ConsumerDetail/>}/>
+        <Route exact path='/ConsumerComment' element={<ConsumerComment/>}/>     
         <Route exact path='/consumerlist' element={<ConsumerList/>}/>
         <Route exact path='/myactivitydetail' element={<MyActivityDetail/>}/>
         <Route exact path='/myactivitypayment' element={<MyActivityPayment/>}/>
