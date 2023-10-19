@@ -1,4 +1,5 @@
-import React from "react"
+import React from "react";
+
 import '../consumer/css/MyActivityDetail.css';
 import '../component/css/SimpleLine.css';
 import { FaLongArrowAltDown } from "react-icons/fa";
@@ -7,6 +8,9 @@ import ListBox from "../component/ListBox"
 
 
 export default function MyActivityDetail(){
+
+
+
     return (
     <div>
         <div className="m_HeaderBlank" /**헤더 */></div>
