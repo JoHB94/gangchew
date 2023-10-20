@@ -3,13 +3,13 @@ import '../consumer/css/ConsumerCreate.css';
 import '../component/css/SimpleLine.css';
 import TitleTextFields from '../component/inputs/TitleTextFields';
 import CategorySelect from '../component/inputs/CategorySelect';
-import { Viewer } from "@toast-ui/react-editor";
+
 import OkButton from '../component/buttons/OkButton';
 import DeleteButton from '../component/buttons/DeleteButton';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
-
+import ToastEditor from '../component/inputs/ToastEditor';
 
 
 
@@ -93,7 +93,7 @@ export default function ConsumerUpdate() {
                         <CategorySelect name={'categoryName'} handleInputChange={handleInputChange} text={consumer.categoryName} modValue={consumer.categoryId}/>
                     </div>
                     <div className='c_Content'>
-                        <Viewer initialValue={consumer.content}    name={'content'} handleInputChange={handleInputChange} text={consumer.content} modValue={consumer.content}/>
+                        <ToastEditor content={consumer.content}    name={'content'} handleInputChange={handleInputChange} text={consumer.content} modValue={consumer.content}/>
                     </div>
                 </div>
                 <div className='c_height100'>{/**에디터와 버튼사이 빈 공간 */}</div>

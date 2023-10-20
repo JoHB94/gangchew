@@ -16,6 +16,7 @@ export default function MyActivityPayment(){
     fundingContnet: '',        
     bank_account: '',
     contentparticipant_id:'',
+    paymentMethod:'',
     
 });
 const cloudIP = 'http://138.2.114.150:9000';
@@ -43,16 +44,30 @@ useEffect(()=>{
     })
 
 },[]);
-  const handlePayment = () => {
-    // 결제 버튼 클릭 이벤트를 처리하고 데이터를 서버로 보내는 코드
-    axios.post(localIP + '/payment/makePayment', payment)
-        .then((res) => {
-            console.log(res.data); // 응답 데이터 처리
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-  };
+
+const handlePayment = () => {
+  console.log("handlePayment {}", payment ); 
+  // 결제 버튼 클릭 이벤트를 처리하고 데이터를 서버로 보내는 코드
+  axios.post(localIP + '/payment/create', payment)
+      .then((res) => {
+          console.log(res.data); // 응답 데이터 처리
+      })
+      .catch((error) => {
+          console.log(error);
+      });
+};
+
+
+const handlePaymentMethodChange = (event) => {
+
+  const selectedMethod = event.target.value; // Assuming the value comes from the event
+  setPayment((prevPayment) => ({
+    ...prevPayment,
+    paymentMethod: selectedMethod,
+  }));
+
+};
+
 
 
     return (
@@ -88,7 +103,11 @@ useEffect(()=>{
                         <div className="m_OrderM">
                           <div className="m_OrderM_1">
                             <div className="m_PaymentItem">결제방법</div>
-                            <div className="m_OrderS" /*결제수단 셀렉트*/><PaymentOptions/></div>
+                            <div className="m_OrderS" /*결제수단 셀렉트*/> 
+                                <PaymentOptions
+                                  paymentMethod={payment.paymentMethod} 
+                                  handlePaymentMethodChange={handlePaymentMethodChange}
+                                /></div>
                             <div className="m_OrderPay" /*페이체크*/>
                               <label>
                                 <div className="m_KakaoPay"><img className="kakaoPay" src={process.env.PUBLIC_URL + '/logokakao.png' } alt="kakao"/></div>

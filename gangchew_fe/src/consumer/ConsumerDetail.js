@@ -8,6 +8,7 @@ import EditButton from '../component/buttons/EditButton';
 import DeleteButton from '../component/buttons/DeleteButton';
 import { useParams } from "react-router-dom";
 import ConsumerComment from './ConsumerComment';
+import { Viewer } from '@toast-ui/react-editor';
 
 export default function ConsumerDetail() {
     const { postId } = useParams();
@@ -19,10 +20,12 @@ export default function ConsumerDetail() {
         categoryId: 0,
         writer: '',
         content: '',
-        regDt: ''
+        regDt: '',
+        user_id:''
     });
     const cloudIP = 'http://138.2.114.150:9000';
     const localIP = 'http://localhost:9000';
+    const currentUserID = 'user123';
 
     // consumer 조회 및 셋팅
     useEffect(() => {
@@ -51,7 +54,22 @@ export default function ConsumerDetail() {
     const [liked, setLiked] = useState(false);
 
     const handleLikeClick = () => {
-        setLiked(!liked);
+
+        setConsumer((prevConsumer) => ({
+            ...prevConsumer,
+            user_id: currentUserID,
+          }));
+
+        axios.post(localIP +'http://localhost:9000/postlike/',consumer)
+        .then((res)=>{
+            console.log(res);
+            setLiked(!liked);
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+
+
     };
 
     return (
@@ -85,7 +103,8 @@ export default function ConsumerDetail() {
                             <div>
                                 <div className='c_TitleBox'>{consumer.title}</div>
                                 <div className='c_CategoryBox'>{consumer.categoryName}</div>
-                                <div className='c_ContentBox'>{consumer.content}</div>
+                                {/* 토스트 뷰어 영역 */}
+                                <div className='c_ContentBox'><Viewer initialValue={consumer.content} key={consumer.content} /></div>                               
                                 <div className="c_BtnBox_1">
                                     <div className="c_LikeBtn" onClick={handleLikeClick}>
                                         {liked ? <FaHeart size={23} color="red" /> : <FaHeart size={23} />}

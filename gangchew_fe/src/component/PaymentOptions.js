@@ -4,20 +4,26 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import RadioGroup from "@mui/material/RadioGroup";
 import Container from "@mui/material/Container";
 
-export default function PaymentOptions({ selectedPaymentMethod, handlePaymentMethodChange }) {
-  const [selectedValue, setSelectedValue] = useState(selectedPaymentMethod);
+export default function PaymentOptions({ paymentMethod, handlePaymentMethodChange }) {
+  // const [selectedValue, setSelectedValue] = useState(paymentMethod);
+
+  // const handleSelection = (event) => {
+  //   setSelectedValue(event.target.value);
+  //   handlePaymentMethodChange(event);
+  // };
 
   const handleSelection = (event) => {
-    setSelectedValue(event.target.value);
+    console.log("자식 js {}",event.target.value);
     handlePaymentMethodChange(event);
   };
+
 
   return (
     <Container>
       <RadioGroup
         row
         name="paymentMethods"
-        value={selectedValue}
+        value={paymentMethod}
         onChange={handleSelection}
       >
         <FormControlLabel value="creditCard" control={<Radio />} label="신용카드" />
@@ -26,7 +32,7 @@ export default function PaymentOptions({ selectedPaymentMethod, handlePaymentMet
         <FormControlLabel value="mobilePayment" control={<Radio />} label="휴대폰 결제" />
       </RadioGroup>
       <div className="m_PayRadio">
-        <RadioGroup name="otherPaymentMethods" value={selectedValue} onChange={handleSelection}>
+        <RadioGroup name="otherPaymentMethods" value={paymentMethod} onChange={handleSelection}>
           <FormControlLabel value="kakaoPay" control={<Radio />}  />
           <FormControlLabel value="tossPay" control={<Radio />}  />
         </RadioGroup>
