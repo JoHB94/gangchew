@@ -1,7 +1,7 @@
 #searchBar_container{
     width: 80%;
     height: 70%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 5px;
     display: flex;
     background-color: white;

@@ -18,18 +18,18 @@ import Select from '@mui/material/Select';
 import { VscEye } from 'react-icons/vsc';
 import { FaHeart } from 'react-icons/fa';
 import { LiaCommentDots } from 'react-icons/lia';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'
 
 
 
-function WriteButton() {
+function WriteButton({ onClick }) {
   const buttonStyle = {
     backgroundColor: '#701edb',
-    color: 'white', // You can change the text color to your preference
+    color: 'white',
   };   
 
   return (
-    <Button variant="contained" startIcon={<CreateIcon />} style={buttonStyle}>
+    <Button variant="contained" startIcon={<CreateIcon />} style={buttonStyle} onClick={onClick}>
       글쓰기
     </Button>
   );
@@ -46,6 +46,7 @@ export default function ConsumerList(){
   const [orderby, setOrderby] = useState(defaultOrderby);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
   const [currentPage,setCurrentPage] = useState(defaultCurrentPage);
+  const navigate = useNavigate();
 
 
 
@@ -110,6 +111,10 @@ const handleChange = (event) => {
   setCurrentPage(defaultCurrentPage);
   //reqServer();
 };
+
+const moveToWrite = () => {
+  navigate('/consumercreate');
+};
         
 
     return (
@@ -123,7 +128,7 @@ const handleChange = (event) => {
                       <div className="SimpleLine"></div>         
                   </div>
                   <div className="c_BtnBox">
-                      <div ><WriteButton/></div>
+                  <div><WriteButton onClick={moveToWrite} /></div>
                       <div className="c_Mid"></div>
                       <div>
                       <Box sx={{ minWidth: 120 }}>
