@@ -20,6 +20,7 @@ import { useDaumPostcodePopup } from "react-daum-postcode";
 import axios from 'axios';
 import AddressField from '../component/inputs/AddressField';
 import AddressButton from '../component/buttons/AdressButton';
+import { getCookie } from '../member/Cookie';
 
 export default function FundingCreate() {
 
@@ -44,10 +45,23 @@ export default function FundingCreate() {
 
     const cloudIP = ' http://138.2.114.150:9000/';
     const localIP = 'http://localhost:9000/';
+
+    const token = '';
+
+    if (getCookie("jwtToken") === !undefined){
+        token = getCookie("jwtToken");
+    }
+
+    const axiosInstance = axios.create({
+        headers:{
+          'Content-Type': 'application/json',
+        }
+      });
+    
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
      
     const submit = (e) => {
-        axios.create({headers:{'Content-Type': 'application/json',},})
-        .post(localIP + 'funding/create',funding)
+        axiosInstance.post(localIP + 'funding/create',funding)
         .then((res) => {
             console.log(res);
         }).catch((error) => {

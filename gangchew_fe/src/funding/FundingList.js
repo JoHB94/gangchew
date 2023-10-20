@@ -33,7 +33,7 @@ export default function FundingList() {
     { id: 7, name: '비즈니스&마케팅'}
   ];
   const [data, setData] = useState({});
-  const [totalItems, setTotalItems] = useState(0);
+  const [totalItems, setTotalItems] = useState(1);
   // const [isLoading, setIsLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(defaultPage);

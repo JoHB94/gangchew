@@ -20,15 +20,47 @@ const ConsumerComment = () => {
         writeDt: new Date().toLocaleString(),
         content: input,
       };
-
+///////////////////////////// real source
+/*     // post 요청
+      axios.post('http://localhost:9000/studentcomment/save',newComment)
+      .then((res)=>{
+        console.log(res);
+        alert('등록되었습니다.');
+        setComments([...comments, newComment]);
+        setInput('');
+      })
+      .catch((error)=>{
+          console.log(error);
+          alert('등록실패되었습니다.');
+      })
+*/
+///////////////////////////// test start 
       setComments([...comments, newComment]);
       setInput('');
+///////////////////////////// test end
     }
   };
 
   const handleDeleteComment = (id) => {
+///////////////////////////// real source    
+/*    // delete 요청
+    const deleteComment = comments.filter((comment) => comment.id === id);
+    axios.delete('http://localhost:9000/studentcomment/delete?id='+deleteComment.comment_id)
+    .then((res)=>{
+      console.log(res);
+      alert('삭제되었습니다');
+      // 화면 
+      const updatedComments = comments.filter((comment) => comment.id !== id);
+      setComments(updatedComments);
+    })
+    .catch((error)=>{
+        console.log(error);
+        alert('error');
+    })  */
+///////////////////////// test start   
     const updatedComments = comments.filter((comment) => comment.id !== id);
     setComments(updatedComments);
+//////////////////////// test end
   };
 
   useEffect(() => {
