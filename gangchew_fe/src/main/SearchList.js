@@ -6,6 +6,7 @@ import searchList from "../main/css/searchList.css";
 import LongCard from "../component/LongCard";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { getCookie } from '../member/Cookie';
 
 
 export default function SearchList(){
@@ -25,14 +26,29 @@ export default function SearchList(){
     const cloudIP = ' http://138.2.114.150:9000/';
     const localIP = 'http://localhost:9000/';
 
-    const fundingURI = `/fundingList?keyword=${keyword}&currentpage=${currentFundingPage}&itemsPerPage=${itemsPerPage}&name=funding`;
-    const userURI = `/fundingList?keyword=${keyword}&currentpage=${currentFundingPage}&itemsPerPage=${itemsPerPage}&name=user`;
+    const token = '';
+
+    if (getCookie("jwtToken") === !undefined){
+        token = getCookie("jwtToken");
+    }
+
+    const axiosInstance = axios.create({
+        headers:{
+        'Content-Type': 'application/json',
+        }
+    });
+
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+    const fundingURI = `fundingList?keyword=${keyword}&currentpage=${currentFundingPage}&itemsPerPage=${itemsPerPage}&name=funding`;
+    const userURI = `fundingList?keyword=${keyword}&currentpage=${currentFundingPage}&itemsPerPage=${itemsPerPage}&name=user`;
 
     const fundingReqServer=()=>{
-        axios.get(localIP+fundingURI)
+        axiosInstance.get(localIP+fundingURI)
         .then((res)=>{
-            setFundingData(res);
+            setFundingData(res.data.result);
             console.log("funding 조건 조회 완료");
+            console.log(res)
         })
         .catch((error)=>{
             console.log(error);
@@ -40,7 +56,7 @@ export default function SearchList(){
     }
 
     const consumerReqServer=()=>{
-        axios.get(cloudIP+userURI)
+        axiosInstance.get(localIP+userURI)
         .then((res)=>{
             setConsumerData(res);
             console.log("consumer 조건 조회 완료");
@@ -52,7 +68,7 @@ export default function SearchList(){
 
 //*************************************useEffect************************** */
     useEffect(()=>{
-        // fundingReqServer();
+        fundingReqServer();
         
     },[])
 
@@ -84,17 +100,18 @@ export default function SearchList(){
                     <div id="search_height150"></div>
                     <h1>검색 결과</h1><hr/>
                     <div id="search_funding">
+
                         <div id="search_title">
                             <h3>Funding 게시판 내 '{keyword}' 검색 결과입니다.</h3>
                         </div>
-                        <div id="search_list">
-                            <LongCard/>
-                        </div>
-                        <div id="search_list">
-                            <LongCard/>  
-                        </div>
-                        <div id="search_list">
-                            <LongCard/>  
+                        <div>
+
+                        {fundingData && fundingData.length > 0 && fundingData.map((fundingData) => (
+                            <div id="search_list"  key={fundingData.fundingId} >
+                                <LongCard funding={fundingData}/>
+                            </div>
+                            ))}
+                        
                         </div>
                         <div id="pagination100">
                         {/*------------페이지네이션 위치!!!!-----------*/}

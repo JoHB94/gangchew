@@ -36,6 +36,8 @@ function App() {
 
           {/* 헤더를 포함하는 페이지 */}
         <Route element={<Layout />}>
+          
+
           <Route exact path='/' element={<MainBoard/>}/>
           <Route exact path='/fundinglist' element={<FundingList/>}/>
           <Route exact path='/fundingcreate' element={<FundingCreate/>}/>
@@ -52,6 +54,7 @@ function App() {
         </Route>
       </Routes>
     {/* 푸터 컴포넌트 들어갈 부분*/}
+    
     </BrowserRouter>
   </div>
   );

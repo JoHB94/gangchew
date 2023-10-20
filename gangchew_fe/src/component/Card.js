@@ -18,7 +18,7 @@ import { useEffect } from 'react';
  * 필요 데이터: 좋아요 등록 여부,
  * 
  */
-export default function Card({props}){
+export default function Card({funding}){
     // const rate = Math.floor(funding.goal/funding.participants)
     const [like, setLike] = useState(false);
     const [img,setImg] = useState('');

@@ -1,4 +1,8 @@
 import React,{useState,useEffect} from "react";
+
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
+import { Viewer } from '@toast-ui/react-editor';
+
 import fundingInfo from "../funding/css/fundingInfo.css";
 import InfoTop from "./InfoTop";
 import DoFunding from "../component/buttons/DoFunding";
@@ -15,7 +19,7 @@ import CancelFunding from "../component/buttons/CancelFunding";
 import { getCookie } from '../member/Cookie';
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import ToastView from "../component/ToastView";
+import ToastViewer from "../component/ToastViewer";
 import Progress from "../component/Progress";
 import FullHeart from "../component/buttons/FullHeart";
 
@@ -23,6 +27,8 @@ import FullHeart from "../component/buttons/FullHeart";
 export default function FundingInfo(){
 
 //**********************************states**************************************** */
+    const [html,setHtml] = useState('');
+    const [show, setShow] = useState(false);
     const[isLoading, setIsLoading] = useState(true);
     const[data, setData] = useState({
         achievementrate : 0,
@@ -38,6 +44,7 @@ export default function FundingInfo(){
             thumbnail : '',
             title : '',
             viewCount : 0,
+            content : '',
             writer : {},
         },
         fundingCategory : {
@@ -60,7 +67,11 @@ export default function FundingInfo(){
     const cloudIP = ' http://138.2.114.150:9000/';
     const localIP = 'http://localhost:9000/';
 
-    const token = getCookie("jwtToken");
+    const token = '';
+
+    if (getCookie("jwtToken") === !undefined){
+        token = getCookie("jwtToken");
+    }
 
     const axiosInstance = axios.create({
         headers:{
@@ -77,12 +88,14 @@ export default function FundingInfo(){
             setData(res.data.result);
             setDeadline(res.data.result.funding.deadline);
             setLiked(res.data.result.liked);
-            console.log(data.funding.deadline)
+            setHtml(res.data.result.funding.content);
+       
         }).catch((error)=>{
             console.log(error)
             
         })
     },[])
+
 
 
 
@@ -212,7 +225,7 @@ export default function FundingInfo(){
                             <div id="f_editor">{/**toastViewer */}
                             <div>
                                 {/**본문 내용 삽입 구절(funding.content) */}
-                                <ToastView content={data.funding.content}/>                 
+                                {<Viewer initialValue={html} key={html} />}              
                             </div>
                             <hr/>
                             </div>
