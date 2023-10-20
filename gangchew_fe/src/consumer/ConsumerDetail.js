@@ -9,6 +9,7 @@ import DeleteButton from '../component/buttons/DeleteButton';
 import { useParams } from "react-router-dom";
 import ConsumerComment from './ConsumerComment';
 import { Viewer } from '@toast-ui/react-editor';
+import { getCookie } from "../member/Cookie";
 
 export default function ConsumerDetail() {
     const { postId } = useParams();
@@ -23,14 +24,29 @@ export default function ConsumerDetail() {
         regDt: '',
         user_id:''
     });
+
+    const [isLiked,setIsLiked] = useState(false);
     const cloudIP = 'http://138.2.114.150:9000';
     const localIP = 'http://localhost:9000';
-    const currentUserID = 'user123';
+    
+    const token = '';
+
+    if (getCookie("jwtToken") === !undefined){
+        token = getCookie("jwtToken");
+    }
+
+    const axiosInstance = axios.create({
+        headers:{
+          'Content-Type': 'application/json',
+        }
+      });
+    
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     // consumer 조회 및 셋팅
     useEffect(() => {
         console.log(postId);
-        axios.get(localIP + `/studentrequest/read?id=${postId}`)
+        axiosInstance.get(localIP + `/studentrequest/read?id=${postId}`)
             .then((res) => {
                 console.log(res);
                 // setConsumer(res.data.)
@@ -51,24 +67,17 @@ export default function ConsumerDetail() {
     // ************************onClick***************************************
 
     // **************************좋아요 버튼***************************************
-    const [liked, setLiked] = useState(false);
 
     const handleLikeClick = () => {
 
-        setConsumer((prevConsumer) => ({
-            ...prevConsumer,
-            user_id: currentUserID,
-          }));
-
-        axios.post(localIP +'http://localhost:9000/postlike/',consumer)
+        axios.post(localIP +'funding/toggle-like?id={funding_id}')
         .then((res)=>{
             console.log(res);
-            setLiked(!liked);
+            setIsLiked(!isLiked);
         })
         .catch((error)=>{
             console.log(error);
         })
-
 
     };
 
@@ -76,49 +85,49 @@ export default function ConsumerDetail() {
         <div>
             {consumer ? (
                 <div>
-                    <div className="c_HeaderBlank" />
+                    <div className="c_DetailHeaderBlank" />
                     {/* 헤더 */}
-                    <div className="c_Container">
-                        <div className="c_Left" />
+                    <div className="c_DetailContainer">
+                        <div className="c_DetailLeft" />
                         {/* 왼쪽빈공간 */}
-                        <div className="c_Center">
+                        <div className="c_DetailCenter">
                             <div>
                                 <h2>수요자 게시판</h2>
                                 <div className="SimpleLine"></div>
                             </div>
                             <div>
-                                <div className="c_Writer_DateBox">
-                                    <span className="c_Writer">{consumer.writer}</span>
-                                    <span className="c_Date">{consumer.regDt}</span>
+                                <div className="c_DetailWriter_DateBox">
+                                    <span className="c_DetailWriter">{consumer.writer}</span>
+                                    <span className="c_DetailDate">{consumer.regDt}</span>
                                 </div>
-                                <div className="c_BtnContainer">
-                                    <div className="c_EditButton">
+                                <div className="c_DetailBtnContainer">
+                                    <div className="c_DetailEditButton">
                                         <EditButton />
                                     </div>
-                                    <div className="c_DeleteButton">
+                                    <div className="c_DetailDeleteButton">
                                         <DeleteButton />
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <div className='c_TitleBox'>{consumer.title}</div>
-                                <div className='c_CategoryBox'>{consumer.categoryName}</div>
+                                <div className='c_DetailTitleBox'>{consumer.title}</div>
+                                <div className='c_DetailCategoryBox'>{consumer.categoryName}</div>
                                 {/* 토스트 뷰어 영역 */}
-                                <div className='c_ContentBox'><Viewer initialValue={consumer.content} key={consumer.content} /></div>                               
-                                <div className="c_BtnBox_1">
-                                    <div className="c_LikeBtn" onClick={handleLikeClick}>
-                                        {liked ? <FaHeart size={23} color="red" /> : <FaHeart size={23} />}
+                                <div className='c_DetailContentBox'><Viewer initialValue={consumer.content} key={consumer.content} /></div>                               
+                                <div className="c_DetailBtnBox_1">
+                                    <div className="c_DetailLikeBtn" onClick={handleLikeClick}>
+                                        {isLiked ? <FaHeart size={23} color="red" /> : <FaHeart size={23} />}
                                     </div>
-                                    <div className="c_CommentBtn"><LiaCommentDots size={30} /></div>
+                                    <div className="c_DetailCommentBtn"><LiaCommentDots size={30} /></div>
                                 </div>
-                                <div className="c_CommentBox">
+                                <div className="c_DetailCommentBox">
                                     <ConsumerComment />
                                 </div>
                             </div>
                         </div>
-                        <div className="c_Right" />
+                        <div className="c_DetailRight" />
                         {/* 오른쪽빈공간 */}
-                        <div className="c_BottomEmptBox"></div>
+                        <div className="c_DetailBottomEmptBox"></div>
                     </div>
                     
                 </div>

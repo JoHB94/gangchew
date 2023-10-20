@@ -29,9 +29,9 @@ export default function Card({funding}){
 
     useEffect(()=>{
         
-        //setImg(funding.thumbnail);
-        //setTitle(funding.title);
-        //setNum(funding.fundingId);
+        setImg(funding.thumbnail);
+        setTitle(funding.title);
+        setNum(funding.fundingId);
     },[])
 
     const likeHandler =()=>{

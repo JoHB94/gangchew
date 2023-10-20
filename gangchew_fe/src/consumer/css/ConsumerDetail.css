@@ -1,73 +1,65 @@
-.c_HeaderBlank{
-    height: 200px;
-    
-    display: flex;
-    
+.c_DetailHeaderBlank{
+    height: 200px;    
+    display: flex;    
 }
 
-.c_Container{
-    height: 800px;
-    
+.c_DetailContainer{
+    height: auto;    
     display: flex;
 }
-
-
-.c_Left{
+.c_DetailLeft{
+    width: 20%;  
+    height: 100%; 
+}
+.c_DetailRight{
     width: 20%;
-   
-   
-    
+    height: 100%;
 }
 
-.c_Right{
-    width: 20%;
-    
-   
-}
-
-.c_Center{
+.c_DetailCenter{
     width: 60%;
+    height: 100%;
      
 }
-.c_buttonContainer{
+.c_DetailbuttonContainer{
     display: flex;
     width: 100%;
     justify-content: right;
 }
 
-.c_Category{
+.c_DetailCategory{
     margin-top: 20px;
 }
 
-.c_Content{
+.c_DetailContent{
     margin-top: 20px;
     
 }
-.c_BtnContainer{
+.c_DetailBtnContainer{
     display: flex;
     width: 100%;
     justify-content: right;
 }
-.c_EditButton{
+.c_DetailEditButton{
     width:auto;
     margin-right: 15px;
 }
 .c_DeleteButton{
     width:auto;
 }
-.c_BtnBox_1{
+.c_DetailBtnBox_1{
     display: flex;
     width: 100%;
     margin-top: 20px;
     justify-content: right;
 }
-.c_LikeBtn{
+.c_DetailLikeBtn{
     width: auto;
     margin-right: 15px;
     display: flex;
     align-items: center;
 }
-.c_CommentBtn{
+.c_DetailCommentBtn{
     width: auto;
     margin-left: 10px;
     display: flex;
@@ -75,13 +67,13 @@
 }
 
 
-.c_CommentSaveBtn{
+.c_DetailCommentSaveBtn{
     display: flex;
     width: auto;
     justify-content: right;
     
 }
-.c_TitleBox{
+.c_DetailTitleBox{
     width: auto;
     margin-top: 20px;
     height: 50px;        
@@ -92,7 +84,7 @@
     align-items: center;
     
   }
-  .c_CategoryBox{
+  .c_DetailCategoryBox{
     width: auto;
     margin-top: 20px;
     height: 50px;        
@@ -102,7 +94,7 @@
     display: flex;
     align-items: center;
   }
-  .c_ContentBox{
+  .c_DetailContentBox{
     width: auto;
     margin-top: 20px;
     height: 350px;        
@@ -112,8 +104,9 @@
     padding: 20px;
    
   }
+  
 
-.c_CommentDetail{
+.c_DetailCommentDetail{
     width: auto;
     margin-top: 20px;
     height: auto;        
@@ -124,46 +117,46 @@
     padding: 20px;
     
 }
-.c_CommentBox{
+.c_DetailCommentBox{
        
-    height: 600px;
+    height: 100%;
    
    
 }
 
 
-.c_CommentBtnBox{
+.c_DetailCommentBtnBox{
     display: flex;
     justify-content: right;
 }
-.c_CommentBtn1{
+.c_DetailCommentBtn1{
     width: 4%;
     display: flex;
     align-items: center;
 }
-.c_CommentBtn2{
+.c_DetailCommentBtn2{
     width: 4%;
     display: flex;
     align-items: center;
 }
-.c_CommentBtn3{
+.c_DetailCommentBtn3{
     width: 4%;
     display: flex;
     align-items: center;
 }
-.c_CommentWriter{
+.c_DetailCommentWriter{
     width: 10%;
 }
-.c_CommentContent{
+.c_DetailCommentContent{
     margin-top: 20px;
 }
-.c_BottomBlank{
+.c_DetailBottomBlank{
     height: 100px;
 }
-.c_Writer_DateBox{
+.c_DetailWriter_DateBox{
     display: flex;
     padding-left: 20px;
 }
-.c_Date{
+.c_DetailDate{
     padding-left: 20px;
 }

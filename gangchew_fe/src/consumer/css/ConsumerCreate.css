@@ -1,41 +1,46 @@
-.c_HeaderBlank{
+.c_CreateHeaderBlank{
     height: 200px;    
     display: flex;    
 }
-.c_Container{
-    height: 800px;    
+.c_CreateContainer{
+    height: auto;    
     display: flex;
+    
 }
-.c_Left{
-    width: 20%;    
+.c_CreateLeft{
+    width: 20%;
+    height: 100%;    
 }
-.c_Right{
-    width: 20%;   
+.c_CreateRight{
+    width: 20%; 
+    height: 100%;  
 }
-.c_Center{
+.c_CreateCenter{
     width: 60%;
+    height: 100%;
 }
-.c_buttonContainer{
+.c_CreatebuttonContainer{
     display: flex;
     width: 100%;
     justify-content: right;
+    margin-bottom: 500px;
 }
-.c_OkButton{
+.c_CreateOkButton{
     width: auto;
     margin-right: 15px;
 }
-.c_CancelButton{
+.c_CreateCancelButton{
     width: auto;
 }
-.c_height100{
+.c_Createheight100{
     height: 100px;
 }
-.c_Category{
+.c_CreateCategory{
     margin-top: 20px;
 }
-.c_Content{
+.c_CreateContent{
     margin-top: 20px;
 }
-.c_Title{
+.c_CreateTitle{
     width: 100%;
 }
