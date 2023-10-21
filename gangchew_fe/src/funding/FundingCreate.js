@@ -20,6 +20,7 @@ import { useDaumPostcodePopup } from "react-daum-postcode";
 import axios from 'axios';
 import AddressField from '../component/inputs/AddressField';
 import AddressButton from '../component/buttons/AdressButton';
+import { getCookie } from '../member/Cookie';
 
 export default function FundingCreate() {
 
@@ -44,9 +45,25 @@ export default function FundingCreate() {
 
     const cloudIP = ' http://138.2.114.150:9000/';
     const localIP = 'http://localhost:9000/';
+
+    let token = '';
+
+    if (getCookie("jwtToken") !== undefined){
+        token = getCookie("jwtToken");
+    }
+
+    const axiosInstance = axios.create({
+        headers:{
+          'Content-Type': 'application/json',
+        }
+      });
+    
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+    
      
     const submit = (e) => {
-        axios.create({headers:{'Content-Type': 'application/json',},})
+        axiosInstance.create({headers:{'Content-Type': 'application/json',},})
         .post(localIP + 'funding/create',funding)
         .then((res) => {
             console.log(res);
@@ -234,29 +251,6 @@ export default function FundingCreate() {
                         <h2>세부 사항</h2>
                         <div id="p_infocontainer">
                             <div id='left10'></div>
-                            <div id="p_infoname">카테고리</div>
-                            <div id='left10'></div>
-                            <div id="p_infoname">금액</div>
-                            <div id='left10'></div>
-                            <div id="p_infoname">마감날짜</div>
-                        </div>
-                        <div id="p_infocontainer">
-                            <div id='left10'></div>
-                            <div id="p_infocontent">
-                                <CategorySelect name={'category_id'} handleInputChange={handleInputChange}/>
-                                {/* {console.log(funding.category_id)} */}
-                            </div> 
-                            <div id='left10'></div>
-                            <div id="p_infocontent">
-                                <TitleTextFilelds text={'원'} name={'amount'} handleInputChange={handleInputChange} modValue=''/>
-                            </div>
-                            <div id='left10'></div>
-                            <div id="p_infocontent">
-                                <InputDate name={'deadline'} handleInputChange={handleInputChange}/>
-                            </div>
-                        </div>
-                        <div id="p_infocontainer">
-                            <div id='left10'></div>
                             <div id="p_infoname">목표인원</div>
                             <div id='left10'></div>
                             <div id="p_infoname">최소인원</div>
@@ -278,7 +272,33 @@ export default function FundingCreate() {
                                 <TitleTextFilelds text={'최대인원'} name={'max_participants'} handleInputChange={handleInputChange} modValue=''/>
                             </div>
                         </div>
-                        <div id='p_infocontainer'>
+                        
+                        <div id="p_infocontainer">
+                            <div id='left10'></div>
+                            <div id="p_infoname">카테고리</div>
+                            <div id='left10'></div>
+                            <div id="p_infoname">금액</div>
+                            <div id='left10'></div>
+                            <div id="p_infoname">마감날짜</div>
+                        </div>
+                        <div id="p_infocontainer">
+                            <div id='left10'></div>
+                            <div id="p_infocontent">
+                                <CategorySelect name={'category_id'} handleInputChange={handleInputChange}/>
+                                {/* {console.log(funding.category_id)} */}
+                            </div> 
+                            <div id='left10'></div>
+                            <div id="p_infocontent">
+                                <TitleTextFilelds text={'원'} name={'amount'} handleInputChange={handleInputChange} modValue=''/>
+                            </div>
+                            <div id='left10'></div>
+                            <div id="p_infocontent">
+                                <InputDate name={'deadline'} handleInputChange={handleInputChange}/>
+                            </div>
+                            
+                        </div>
+
+                                                <div id='p_infocontainer'>
                             <div id='left10'></div>
                             <div id='p_infoname'>강의 형태</div>
                         </div>

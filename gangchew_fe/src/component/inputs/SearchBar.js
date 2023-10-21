@@ -31,6 +31,7 @@ export default function SearchBar() {
                 placeholder='검색어를 입력해주세요.'
                 onChange={getKeyword}
                 onKeyDown={handleKeyPress}
+                
             />
             <button
                 id='search_button'

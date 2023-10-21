@@ -32,6 +32,7 @@ export default function Card({funding}){
         setImg(funding.thumbnail);
         setTitle(funding.title);
         setNum(funding.fundingId);
+        setLike(funding.liked);
     },[])
 
     const likeHandler =()=>{
@@ -71,7 +72,7 @@ export default function Card({funding}){
                         {/**진행률 */}
                         <span id='card_rate'>
                             {/* 현재 진행률 {rate}% */}
-                            진행률
+                            진행률 {funding.achievementrate} &nbsp;
                         </span>
                     </div>
                   </div>

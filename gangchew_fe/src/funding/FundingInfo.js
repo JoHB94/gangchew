@@ -67,9 +67,9 @@ export default function FundingInfo(){
     const cloudIP = ' http://138.2.114.150:9000/';
     const localIP = 'http://localhost:9000/';
 
-    const token = '';
+    let token = '';
 
-    if (getCookie("jwtToken") === !undefined){
+    if (getCookie("jwtToken") !== undefined){
         token = getCookie("jwtToken");
     }
 
