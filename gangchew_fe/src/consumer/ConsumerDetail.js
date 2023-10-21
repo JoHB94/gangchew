@@ -12,7 +12,6 @@ import { Viewer } from '@toast-ui/react-editor';
 import { getCookie } from "../member/Cookie";
 
 export default function ConsumerDetail() {
-    const { postId } = useParams();
 
     // **************************state***************************************
     const [consumer, setConsumer] = useState({
@@ -25,6 +24,8 @@ export default function ConsumerDetail() {
         user_id:''
     });
 
+    const { postId } = useParams();
+
     const [isLiked,setIsLiked] = useState(false);
     const cloudIP = 'http://138.2.114.150:9000';
     const localIP = 'http://localhost:9000';
@@ -33,6 +34,7 @@ export default function ConsumerDetail() {
 
     if (getCookie("jwtToken") === !undefined){
         token = getCookie("jwtToken");
+        console.log(token);
     }
 
     const axiosInstance = axios.create({
@@ -41,7 +43,7 @@ export default function ConsumerDetail() {
         }
       });
     
-      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     // consumer 조회 및 셋팅
     useEffect(() => {
@@ -49,11 +51,13 @@ export default function ConsumerDetail() {
         axiosInstance.get(localIP + `/studentrequest/read?id=${postId}`)
             .then((res) => {
                 console.log(res);
-                // setConsumer(res.data.)
+                setConsumer(res);
             })
             .catch((error) => {
                 console.log(error);
             });
+        
+        // json test
         // axios.get('/consumer/ConsumerDetail.json')
         // .then((res)=>{
         //     console.log(res.data);

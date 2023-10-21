@@ -10,11 +10,13 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import ToastEditor from '../component/inputs/ToastEditor';
-
-
+import { getCookie } from '../member/Cookie';
 
 export default function ConsumerUpdate() {   
-   
+
+    const cloudIP = 'http://138.2.114.150:9000';
+    const localIP = 'http://localhost:9000';
+
     const {postId}  = useParams();
 
     const navigate = useNavigate();
@@ -30,17 +32,28 @@ export default function ConsumerUpdate() {
     // consumer 조회 및 셋팅
     useEffect(()=>{
         console.log(postId)
-        //axios.get(`http://localhost:9000/studentrequest/read?postId=${postId}`)
-        axios.get('/consumer/ConsumerDetail.json')
+        axios.get(localIP+`/studentrequest/read?postId=${postId}`)
         .then((res)=>{
-            console.log(res.data);
-            setConsumer(res.data);
+            console.log(res);
+            setConsumer(res);
         })
         .catch((error)=>{
             console.log(error);
         })
-
     },[]);
+
+    // // json test -----------
+    // useEffect(()=>{
+    //     console.log(postId)
+    //     axios.get('/consumer/ConsumerDetail.json')
+    //     .then((res)=>{
+    //         console.log(res.data);
+    //         setConsumer(res.data);
+    //     })
+    //     .catch((error)=>{
+    //         console.log(error);
+    //     })
+    // },[]);    
 
 //**************************callBack************************************* */
     // input 컴포넌트에서 호출할 함수
@@ -52,8 +65,21 @@ export default function ConsumerUpdate() {
         
     };
 //************************onClick*************************************** */ 
+    var token = '';
+
+    if (getCookie("jwtToken") !== undefined){
+        token = getCookie("jwtToken");
+        console.log(token);
+    }
+
+    const axiosInstance = axios.create({
+        headers:{
+        'Content-Type': 'application/json',
+        }
+    });    
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`
     const submit=(e)=>{
-        axios.post('http://localhost:9000/studentrequest/save',consumer)
+        axiosInstance.post(localIP+'/studentrequest/save',consumer)
         .then((res)=>{
             alert('등록되었습니다.');
             navigate('/consumerdetail');
@@ -66,12 +92,12 @@ export default function ConsumerUpdate() {
     }
     const deleteBoard = async () => {
         if (window.confirm('게시글을 삭제하시겠습니까?')) {
-          await axios.delete(`http://localhost:9000/studentrequest/read?id=${postId}`).then((res) => {
+          await axiosInstance.delete(localIP+`/studentrequest/read?id=${postId}`).then((res) => {
             alert('삭제되었습니다.');
             navigate('/consumerlist');
           });
         }
-      };  
+    };  
 
     return (
     <div>

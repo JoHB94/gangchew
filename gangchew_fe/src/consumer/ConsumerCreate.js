@@ -58,6 +58,7 @@ const axiosInstance = axios.create({
         .then((res)=>{
             alert('등록되었습니다.');
             navigate('/consumerdetail');
+            console.log(consumer);
             console.log(res);
         })
         
