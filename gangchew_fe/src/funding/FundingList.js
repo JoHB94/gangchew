@@ -13,6 +13,7 @@ import SortSelect from './SortSelect';
 import CategoryButton from '../component/buttons/CategoryButton';
 import { getCookie } from '../member/Cookie';
 import Progress from '../component/Progress';
+import { Link } from 'react-router-dom';
 
 export default function FundingList() {
 
@@ -33,9 +34,9 @@ export default function FundingList() {
     { id: 7, name: '비즈니스&마케팅'}
   ];
   const [data, setData] = useState({});
-  const [totalItems, setTotalItems] = useState(1);
   // const [isLoading, setIsLoading] = useState(true);
-
+  
+  const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(defaultPage);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
   const [orderby, setOrderby] = useState(defaultOrderby);
@@ -50,9 +51,9 @@ export default function FundingList() {
   const localIP = 'http://localhost:9000/';
   const URI = `funding/all?itemsPerPage=${itemsPerPage}&category=${currentCategory}&orderby=${orderby}&currentpage=${currentPage}`;
   
-  const token = '';
+  let token = '';
 
-    if (getCookie("jwtToken") === !undefined){
+    if (getCookie("jwtToken") !== undefined){
         token = getCookie("jwtToken");
     }
 
@@ -197,7 +198,9 @@ const handlePage =(event, page)=>{
             <div id="contentBox">
               {data && data.length > 0 && data.map((data) => (
               <span key={data.fundingId} id="cardBoard">
-                <Card funding={data}/>
+                <Link to={`/fundinginfo/${data.fundingId}` } style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Card funding={data}/>
+                </Link>
               </span>
               ))}
               </div>

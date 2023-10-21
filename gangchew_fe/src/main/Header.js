@@ -85,8 +85,12 @@ const Header = () => {
                         </div>
                         
                         <ul id='list'>
-                            <Link id='container33' to="/fundinglist"><li >펀딩list</li></Link>
-                            <li id='container33'>펀딩작성</li>
+                            <Link id='container33' to="/fundinglist">
+                              <li >펀딩list</li>
+                            </Link>
+                            <Link id='container33' to={"/fundingcreate"}>
+                              <li>펀딩작성</li>
+                            </Link>
                             <li id='container33'>요청list</li>
                         </ul>
                         

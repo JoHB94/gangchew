@@ -27,7 +27,14 @@
 
 #lc_title{
     width: 100%;
+    display: flex;
     border-bottom: 1px solid gray;
+}
+
+#lc_category{
+    width: 30%;
+    display: flex;
+    align-items: center;
 }
 
 #lc_content{
