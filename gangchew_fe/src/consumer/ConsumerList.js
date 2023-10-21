@@ -47,49 +47,54 @@ export default function ConsumerList(){
   const [orderby, setOrderby] = useState(defaultOrderby);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
   const [currentPage,setCurrentPage] = useState(defaultCurrentPage);
+  //페이지네이션 count 수
+  const [totalItems, setTotalItems] = useState(0);
+  const [count, setCount] = useState(0);
   const navigate = useNavigate();
 
+  
 
 
 
 //************************************ axios ************************************************** */
 const cloudIP = ' http://138.2.114.150:9000/';
 const localIP = 'http://localhost:9000/';
-const token = '';
 
-if (getCookie("jwtToken") === !undefined){
-    token = getCookie("jwtToken");
-}
 
-const axiosInstance = axios.create({
-    headers:{
-      'Content-Type': 'application/json',
-    }
-  });
 
 
   const  reqServer=()=>{
+    let token = '';
+      if (getCookie("jwtToken") !== undefined){
+        token = getCookie("jwtToken");
+        
+    }
+    
+    const axiosInstance = axios.create({
+        headers:{
+          'Content-Type': 'application/json',
+        }
+      });
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     axiosInstance.post(localIP+'studentrequest/all')
     .then((res)=>{
-      console.log("통신성공");
+      console.log("통신성공 {}",res);
       setConsumers(res);
-      setConsumers(res.state);
+      //setConsumers(res.state);
     }).catch((error)=>{ 
       console.log(error);
     })
 
-    // Link 참고 싸이트 https://antdev.tistory.com/80               https://velog.io/@heesu0303/React-%ED%8E%98%EC%9D%B4%EC%A7%80-%EC%9D%B4%EB%8F%99%ED%95%98%EB%A9%B4%EC%84%9C-%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%EC%A0%84%EB%8B%AC%ED%95%98%EA%B8%B0
-
-    axios.get(
-      'consumer/ConsumerList.json'
-      //'https://www.gangchew.com/studentrequest/all'
-    )
-    .then((response)=>{
-      setConsumers(response.data); // 데이터는 response.data 안에 들어있습니다.
-    })
-    .catch((error)=>{
-      console.log(error)
-    });
+    // // json test
+    // axios.get(
+    //   'consumer/ConsumerList.json'
+    // )
+    // .then((response)=>{
+    //   setConsumers(response.data); // 데이터는 response.data 안에 들어있습니다.
+    // })
+    // .catch((error)=>{
+    //   console.log(error)
+    // });
     
 
   }
@@ -100,7 +105,9 @@ useEffect(()=>{
   reqServer();
 },[])
 
-
+useEffect(()=>{
+  setCount(Math.ceil(totalItems/itemsPerPage));
+},[totalItems])
 
 
 
@@ -116,7 +123,7 @@ const handlePage =(event, page)=>{
 }
 
 
-
+//*******************************정렬값에 의해 통신하는 함수 ************************************* */
 const handleChange = (event) => {
   const newValue = event.target.value;
   console.log(newValue);
@@ -157,7 +164,7 @@ const moveToWrite = () => {
                             
                           >
                             <MenuItem value={1}>최신순</MenuItem> 
-                            <MenuItem value={2}>인기순</MenuItem>               
+                            <MenuItem value={2}>마감임박</MenuItem>               
                           </Select>
                         </FormControl>
                       </Box>
@@ -187,7 +194,7 @@ const moveToWrite = () => {
                   ))}
                   <div className="c_ListPagination" /*페이지네이션*/>
                     <Stack spacing={2}>
-                      <Pagination count={3} variant="outlined" shape="rounded" color="secondary"    
+                      <Pagination count={count} variant="outlined" shape="rounded" color="secondary"    
                       page={currentPage} onChange={handlePage}/>
                     </Stack>
                   </div>

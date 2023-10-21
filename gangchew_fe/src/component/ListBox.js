@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import '../component/css/SimpleLine.css';
 
 import { Link } from 'react-router-dom';
+import { getCookie } from "../member/Cookie";
 
 export default function ListBox() {
 
@@ -21,18 +22,34 @@ export default function ListBox() {
   const [currentPage,setCurrentPage] = useState(defaultCurrentPage);
 //************************************ axios ************************************************** */
 
-const  reqServer=()=>{
-    axios.get(
-        'consumer/ConsumerList.json'
-        //'https://www.gangchew.com/studentrequest/all'
-      )
-      .then((response)=>{
-        setConsumers(response.data); // 데이터는 response.data 안에 들어있습니다.
-      })
-      .catch((error)=>{
-        console.log(error)
-      });
-    }
+  const cloudIP = 'http://138.2.114.150:9000';
+  const localIP = 'http://localhost:9000';
+
+  const token = '';
+
+  if (getCookie("jwtToken") === !undefined){
+      token = getCookie("jwtToken");
+      console.log(token);
+  }
+
+  const axiosInstance = axios.create({
+      headers:{
+        'Content-Type': 'application/json',
+      }
+    });
+
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+  const  reqServer=()=>{
+    axiosInstance.get(localIP+'studentrequest/all')
+    .then((res)=>{
+      console.log("통신성공 {}",res);
+      setConsumers(res);
+      //setConsumers(res.state);
+    }).catch((error)=>{ 
+      console.log(error);
+    })
+  }
   
   /*************************************useEffect********************************* */
   //페이지가 렌더될 때 실행될 함수.
@@ -44,8 +61,7 @@ const  reqServer=()=>{
 const handlePage =(event, page)=>{
     console.log(page)
     setCurrentPage(page);
-  
-    // reqServer();
+    reqServer();
   } 
   
   const handleChange = (event) => {
@@ -53,7 +69,7 @@ const handlePage =(event, page)=>{
     console.log(newValue);
     setOrderby(newValue);
     setCurrentPage(defaultCurrentPage);
-    //reqServer();
+
   };  
   const ListBoxStyle ={
     width: 'auto',
