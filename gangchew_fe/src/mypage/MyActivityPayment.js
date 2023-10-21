@@ -6,53 +6,116 @@ import { PiWarningOctagonDuotone } from 'react-icons/pi';
 import PaymentOptions from "../component/PaymentOptions";
 import axios from "axios";   
 import Card from "../component/Card";
+import { getCookie } from '../member/Cookie';
+import { useParams } from "react-router-dom";
 
 export default function MyActivityPayment(){
 
 //**************************state*************************************** */  
-  const [payment, setPayment] = useState({
-    fundingId: 0,
-    fundingPay : 0,
-    fundingContnet: '',        
-    bank_account: '',
-    contentparticipant_id:'',
-    
+const [funding, setFunding] = useState({
+  id :0 ,
+  title :'' ,
+  amount: 0 ,  
+  thumbnail:'',
+  
 });
+
+const [payment, setPayment] = useState({
+  id:0,//결제key
+  funding: 0,//펀딩번호
+  participant:'',
+  bankName:'',
+  bankAccount:'',
+  paymentMethod:'', // 결제수단
+  
+});
+
+const [flag, setFlag] = useState(false);
+
+const { fundingId } = useParams();
+const fundingIdAsNumber = parseInt(fundingId);
+
 const cloudIP = 'http://138.2.114.150:9000';
 const localIP = 'http://localhost:9000';
+const currentUserID = 'user123';
+
+var token = '';
+
+if (getCookie("jwtToken") !== undefined){
+    token = getCookie("jwtToken");
+    console.log(token);
+}
+
+const axiosInstance = axios.create({
+    headers:{
+      'Content-Type': 'application/json',
+    }
+  });
+
 
 // consumer 조회 및 셋팅
 useEffect(()=>{
-    // console.log(payment)
-    // axios.get(localIP + '/payment/create',payment)
-    // .then((res)=>{
-    //     console.log(res);
-    //     // setConsumer(res.data.)
-    // })
-    // .catch((error)=>{
-    //     console.log(error);
-    // })
-    //**************************테스트중*************************************** */ 
-    axios.get('/consumer/MyActivityPayment.json')
+    //axiosInstance.get(localIP + `/funding/detail?funding=${fundingIdAsNumber}`) // 번호가져오기 log string
+    var token = '';
+
+  if (getCookie("jwtToken") !== undefined){
+      token = getCookie("jwtToken");
+      console.log(token);
+  }
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    axiosInstance.get(localIP + `/funding/detail?funding=${fundingId}`)
     .then((res)=>{
-        console.log(res.data);
-        setPayment(res.data);
+        console.log(res);
+        setFunding(res.data.result.funding);
+        
+        console.log(funding);
     })
     .catch((error)=>{
         console.log(error);
     })
+    //**************************테스트중*************************************** */ 
+    // axios.get('/consumer/MyActivityPayment.json')
+    // .then((res)=>{
+    //     console.log(res.data);
+    //     setPayment(res.data);
+    // })
+    // .catch((error)=>{
+    //     console.log(error);
+    // })
 
 },[]);
-  const handlePayment = () => {
-    // 결제 버튼 클릭 이벤트를 처리하고 데이터를 서버로 보내는 코드
-    axios.post(localIP + '/payment/makePayment', payment)
-        .then((res) => {
-            console.log(res.data); // 응답 데이터 처리
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-  };
+
+useEffect(()=>{
+  setFlag(true);
+},[funding])
+
+const handlePayment = () => {
+  console.log("handlePayment {}", payment ); 
+  payment.participant = currentUserID;
+  payment.bankName = funding.fundingId;
+  payment.funding = funding.id;
+
+  // 결제 버튼 클릭 이벤트를 처리하고 데이터를 서버로 보내는 코드
+  axiosInstance.post(localIP + '/payment/create', payment)
+      .then((res) => {
+          console.log(res.data); // 응답 데이터 처리
+      })
+      .catch((error) => {
+          console.log(error);
+      });
+};
+
+
+const handlePaymentMethodChange = (event) => {
+
+  const selectedMethod = event.target.value; // Assuming the value comes from the event
+  setPayment((prevPayment) => ({
+    ...prevPayment,
+    paymentMethod: selectedMethod,
+  }));
+
+};
+
 
 
     return (
@@ -63,21 +126,23 @@ useEffect(()=>{
                 <div className="m_Center">
                   <h2>결제 하기</h2>
                     <div className="SimpleLine"></div>
-                    {console.log(payment.fundingId)}
+                    {/* {console.log(payment.fundingId)} */}
                     <div className="m_OrderBox">
                         <div className="m_OrderBox_1">                        
                             <span className="m_OrderB1">주문내역</span>                           
-                            <div className="m_OrderB2" /*펀딩타이틀 */>{payment.fundingId}</div>
-                            <div className="m_OrderB3" /*펀딩카드 , 결제금액 */><Card/></div>
+                            <div className="m_OrderB2" /*펀딩타이틀 */>{funding.title}</div>
+                            <div className="m_OrderB3" >
+                                <Card funding={funding}></Card>
+                            </div> 
                             <div className="SimpleLine"></div>  
-                            <div className="m_OrderB4" /*결제금액*/>{payment.fundingPay}원</div>                                
+                            <div className="m_OrderB4" /*결제금액*/>{funding.amount}원</div>                                
                         </div>
                         <div className="m_OrderBox_2">
-                            <div className="m_OrderBox_21">{payment.fundingId}</div>
+                            <div className="m_OrderBox_21">{funding.title}</div>
                             <div className="m_Line"></div>
                             <div className="m_OrderBox_22">
                                 <div className="m_OrderBox_22a">vat포함</div>
-                                <div className="m_OrderBox_22b">{payment.fundingPay}원</div>                                
+                                <div className="m_OrderBox_22b">{funding.amount}원</div>                                
                             </div>
                             <div className="m_OrderBox_Check">위 내용을 확인하였고, 결제에 동의합니다.</div>
                               
@@ -88,7 +153,11 @@ useEffect(()=>{
                         <div className="m_OrderM">
                           <div className="m_OrderM_1">
                             <div className="m_PaymentItem">결제방법</div>
-                            <div className="m_OrderS" /*결제수단 셀렉트*/><PaymentOptions/></div>
+                            <div className="m_OrderS" /*결제수단 셀렉트*/> 
+                                <PaymentOptions
+                                  paymentMethod={payment.paymentMethod} 
+                                  handlePaymentMethodChange={handlePaymentMethodChange}
+                                /></div>
                             <div className="m_OrderPay" /*페이체크*/>
                               <label>
                                 <div className="m_KakaoPay"><img className="kakaoPay" src={process.env.PUBLIC_URL + '/logokakao.png' } alt="kakao"/></div>

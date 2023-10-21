@@ -46,10 +46,10 @@ function App() {
           <Route exact path='/consumerupdate/:postId' element={<ConsumerUpdate/>}/> 
           <Route exact path='/consumercreate' element={<ConsumerCreate/>}/>        
           <Route exact path='/consumerdetail/:postId' element={<ConsumerDetail/>}/>
-          <Route exact path='/ConsumerComment' element={<ConsumerComment/>}/>
+          <Route exact path='/consumerComment' element={<ConsumerComment/>}/>
           <Route exact path='/consumerlist' element={<ConsumerList/>}/>
           <Route exact path='/myactivitydetail' element={<MyActivityDetail/>}/>
-          <Route exact path='/myactivitypayment' element={<MyActivityPayment/>}/>
+          <Route exact path='/myactivitypayment/:fundingId' element={<MyActivityPayment/>}/>
           <Route exact path='/searchlist' element={<SearchList/>}/>
         </Route>
       </Routes>

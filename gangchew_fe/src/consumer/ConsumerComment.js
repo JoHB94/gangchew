@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
 const ConsumerComment = () => {
+
+  const cloudIP = 'http://138.2.114.150:9000';
+  const localIP = 'http://localhost:9000';
+  const currentUserID = 'user123';
+
   const [comments, setComments] = useState([]);
   const [input, setInput] = useState('');
-
-  const currentUserID = 'user123';
 
   const handleInputChange = (event) => {
     setInput(event.target.value);
@@ -20,29 +23,68 @@ const ConsumerComment = () => {
         writeDt: new Date().toLocaleString(),
         content: input,
       };
-
-      setComments([...comments, newComment]);
-      setInput('');
+      ///////////////////////////// real source
+      // post 요청
+      axios.post(localIP+'/studentcomment/save',newComment)
+      .then((res)=>{
+        console.log(res);
+        alert('등록되었습니다.');
+        setComments([...comments, newComment]);
+        setInput('');
+      })
+      .catch((error)=>{
+          console.log(error);
+          alert('등록실패되었습니다.');
+      })
+      ///////////////////////////// test start 
+      //setComments([...comments, newComment]);
+      //setInput('');
+      ///////////////////////////// test end
     }
   };
 
   const handleDeleteComment = (id) => {
-    const updatedComments = comments.filter((comment) => comment.id !== id);
-    setComments(updatedComments);
+      ///////////////////////////// real source    
+      // delete 요청
+      const deleteComment = comments.filter((comment) => comment.id === id);
+      axios.delete(localIP+'/studentcomment/delete?id='+deleteComment.comment_id)
+      .then((res)=>{
+        console.log(res);
+        alert('삭제되었습니다');
+        // 화면 
+        const updatedComments = comments.filter((comment) => comment.id !== id);
+        setComments(updatedComments);
+      })
+      .catch((error)=>{
+          console.log(error);
+          alert('error');
+      })  
+      ///////////////////////// test start   
+      const updatedComments = comments.filter((comment) => comment.id !== id);
+      setComments(updatedComments);
+      //////////////////////// test end
   };
 
   useEffect(() => {
-    const localIP = 'http://localhost:9000';
-    const userId = '';
-
-    axios.get('/consumer/ConsumerComment.json')
+      axios.get(localIP+'/studentcomment')
       .then((res) => {
         console.log(res);
-        setComments(res.data);
+        setComments(res);
       })
       .catch((error) => {
         console.log(error);
       });
+
+      // // json test
+      // axios.get('/consumer/ConsumerComment.json')
+      // .then((res) => {
+      //   console.log(res);
+      //   setComments(res.data);
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+      // });      
+
   }, []);
 
   return (
