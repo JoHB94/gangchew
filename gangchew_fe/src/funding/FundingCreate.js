@@ -30,7 +30,6 @@ export default function FundingCreate() {
         title: '',
         subtitle: '',
         category_id: 0,
-        writer: '',
         location: '',
         deadline: '',
         goal: 0,
@@ -40,6 +39,9 @@ export default function FundingCreate() {
         thumbnail: '',
         content: ''
     });
+
+    const [validTitle, setValidTitle] = useState(false);
+    const [validSubtitle, setValidSubtitle] = useState(false);
 
 //*************************************axios***************************************************** */
 
@@ -63,10 +65,15 @@ export default function FundingCreate() {
     
      
     const submit = (e) => {
+        checkFunding();
         axiosInstance.create({headers:{'Content-Type': 'application/json',},})
         .post(localIP + 'funding/create',funding)
         .then((res) => {
             console.log(res);
+            if(res.data.message === "요청에 성공하였습니다."){
+                alert('작성완료');
+                window.location.href = 'fundinglist'
+            }
         }).catch((error) => {
             console.log(error);
         })
@@ -172,7 +179,94 @@ export default function FundingCreate() {
         setaddress('');
         setIsAddressNull(true);
     }
-    /* --------- */
+    /* **************************************유효성 검증*********************************************/
+   const checkTitle=()=>{
+        const titleLength = (funding.title).length;
+        if (titleLength === 0){
+            
+            return <span style={{color:"red"}}>제목을 입력해 주세요.</span>;
+        }
+        if (titleLength > 0 && titleLength <=30){
+            return <span style={{color:"blue"}}>사용이 가능한 제목입니다.</span>
+        }
+        if(titleLength > 0 && titleLength > 30){
+            return <span style={{color:"red"}}>제목은 30글자를 초과할 수 없습니다.</span>
+        }
+        
+   }
+
+   const checkSubtitle=()=>{
+    const subtitleLength = (funding.subtitle).length;
+    if (subtitleLength === 0)
+    return <span style={{color:"red"}}>부제목을 입력해 주세요.</span>;
+    if (subtitleLength > 0 && subtitleLength <=50){
+        return <span style={{color:"blue"}}>사용이 가능한 부제목입니다.</span>
+    }
+    if(subtitleLength > 0 && subtitleLength > 50){
+    return <span style={{color:"red"}}>부제목은 50글자를 초과할 수 없습니다.</span>
+    }
+    
+    }
+
+    const checkFunding=()=>{
+        if(funding.title === ''){
+            alert('제목을 입력하세요.');
+            return
+        }
+        if(funding.title !== '' && funding.title > 30){
+            alert('제목은 30자 이내여야 합니다.');
+            return
+        }
+    
+        if(funding.subtitle === ''){
+            alert('부제목을 입력하세요.');
+            return
+        }
+        if(funding.subtitle !== '' && funding.subtitle > 50){
+            alert('부제목은 50자 이내여야 합니다.');
+            return
+        }
+        
+        if(funding.category_id === ''){
+            alert('카테고리를 선택하세요.')
+            return
+        }
+        if(funding.deadline === ''){
+            alert('마감일을 입력하세요.');
+            return          
+        }
+        if(funding.min_participants === 0){
+            alert('최소인원을 입력하세요.');
+            return
+        }
+        if(funding.max_participants === 0){
+            alert('최대인원을 입력하세요.');
+            return
+        }
+        
+        if(funding.goal === 0){
+            alert('목표인원을 입력하세요.');
+            return
+        }
+        if(funding.goal < funding.min_participants){
+            alert('목표인원은 최소인원보다 커야합니다.');
+            return
+        }
+        if(funding.goal > funding.max_participants){
+            alert('최대인원은 목표인원보다 커야합니다.');
+            return
+        }
+    
+        if(funding.thumbnail === ''){
+            alert('썸내일을 추가하세요.');
+            return
+        }
+        if(funding.content === ''){
+            alert('내용을 입력하세요.');
+            return
+        }
+    }
+
 
     return (
         <div>
@@ -209,6 +303,7 @@ export default function FundingCreate() {
                             <div id="p_nameInput">
                                 <TitleTextFilelds  text={'프로젝트 이름'} name={'title'} handleInputChange={handleInputChange} modValue=''/>
                                 {/* {console.log(funding.title)} */}
+                                {checkTitle()}
                             </div>
                         </div>
                         <div id="p_note">
@@ -230,7 +325,7 @@ export default function FundingCreate() {
                             <div id='left10'></div>
                             <div id="p_nameInput">
                                 <TitleTextFilelds  text={'부 제목'} name={'subtitle'} handleInputChange={handleInputChange} modValue='' multiline={true}/>
-                               
+                                {checkSubtitle()}
                             </div>
                         </div>
                         <div id="p_note">

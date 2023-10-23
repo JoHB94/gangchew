@@ -10,6 +10,10 @@ import { getCookie } from "../member/Cookie";
 
 export default function MyActivityDetail(){
 
+    const myFundingListURL = '';
+    const myConsumerListURL = '';
+    const myRefundURL = '';
+
 
     return (
     <div>

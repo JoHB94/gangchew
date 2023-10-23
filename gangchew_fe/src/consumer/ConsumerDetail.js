@@ -30,9 +30,9 @@ export default function ConsumerDetail() {
     const cloudIP = 'http://138.2.114.150:9000';
     const localIP = 'http://localhost:9000';
     
-    const token = '';
+    let token = '';
 
-    if (getCookie("jwtToken") === !undefined){
+    if (getCookie("jwtToken") !== undefined){
         token = getCookie("jwtToken");
         console.log(token);
     }
@@ -125,7 +125,7 @@ export default function ConsumerDetail() {
                                     <div className="c_DetailCommentBtn"><LiaCommentDots size={30} /></div>
                                 </div>
                                 <div className="c_DetailCommentBox">
-                                    <ConsumerComment />
+                                    {/* <ConsumerComment /> */}
                                 </div>
                             </div>
                         </div>

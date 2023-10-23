@@ -24,10 +24,7 @@ export default function Card({funding}){
     const [img,setImg] = useState('');
     const [title,setTitle] = useState('');
     const [num,setNum] = useState(0);
-    const [flag,setFlag] = useState(false);
-    
-
-
+ 
     useEffect(()=>{
         console.log(funding);
         setImg(funding.thumbnail);
@@ -35,11 +32,6 @@ export default function Card({funding}){
         setNum(funding.fundingId);
         setLike(funding.liked);
     },[])
-
-    useEffect(()=>{
-        setFlag(true);
-        console.log(flag);
-    },[img]);
 
     const likeHandler =()=>{
         setLike(!like);
@@ -49,7 +41,7 @@ export default function Card({funding}){
     return(
         
         <div>
-            {flag && 
+            
             <div id="card_container">{/**카드 컨테이너 */}
                 <div id="card_imgContainer">
                     {/**카드 이미지 */}
@@ -85,7 +77,7 @@ export default function Card({funding}){
                     </div>
                   </div>
                 </div>
-                    }
+                
             </div>
   );
 };

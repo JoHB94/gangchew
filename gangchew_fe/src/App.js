@@ -43,6 +43,7 @@ function App() {
           <Route exact path='/fundingcreate' element={<FundingCreate/>}/>
           <Route exact path='/fundinginfo/:fundingId' element={<FundingInfo/>}/>
           <Route exact path='/searchlist/:keyword' element={<SearchList/>}/>
+
           <Route exact path='/consumerupdate/:postId' element={<ConsumerUpdate/>}/> 
           <Route exact path='/consumercreate' element={<ConsumerCreate/>}/>        
           <Route exact path='/consumerdetail/:postId' element={<ConsumerDetail/>}/>
@@ -50,6 +51,7 @@ function App() {
           <Route exact path='/consumerlist' element={<ConsumerList/>}/>
           <Route exact path='/myactivitydetail' element={<MyActivityDetail/>}/>
           <Route exact path='/myactivitypayment/:fundingId' element={<MyActivityPayment/>}/>
+          
           <Route exact path='/searchlist' element={<SearchList/>}/>
         </Route>
       </Routes>
