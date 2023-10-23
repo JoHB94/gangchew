@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 export default function CategorySelect({name,handleInputChange}) {
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState(1);
 
   const handleChange = (event) => {
     const key = name;
