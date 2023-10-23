@@ -8,6 +8,8 @@ import axios from "axios";
 import Card from "../component/Card";
 import { getCookie } from '../member/Cookie';
 import { useParams } from "react-router-dom";
+import PaymentForm from "../consumer/PaymentForm";
+import KakaoPayment from "../consumer/KakaoPayment";
 
 export default function MyActivityPayment(){
 
@@ -24,13 +26,13 @@ const [payment, setPayment] = useState({
   id:0,//결제key
   funding: 0,//펀딩번호
   participant:'',
-  bankName:'',
-  bankAccount:'',
+  bank_name:'',
+  bank_account:'',
   paymentMethod:'', // 결제수단
   
 });
 
-const [flag, setFlag] = useState(false);
+const [kakaoPay, setKakaoPay] = useState(false);
 
 const { fundingId } = useParams();
 const fundingIdAsNumber = parseInt(fundingId);
@@ -39,29 +41,36 @@ const cloudIP = 'http://138.2.114.150:9000';
 const localIP = 'http://localhost:9000';
 const currentUserID = 'user123';
 
-var token = '';
+let token = '';
 
 if (getCookie("jwtToken") !== undefined){
     token = getCookie("jwtToken");
     console.log(token);
 }
-
 const axiosInstance = axios.create({
     headers:{
       'Content-Type': 'application/json',
     }
   });
 
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+
 
 // consumer 조회 및 셋팅
 useEffect(()=>{
     //axiosInstance.get(localIP + `/funding/detail?funding=${fundingIdAsNumber}`) // 번호가져오기 log string
-    var token = '';
 
-  if (getCookie("jwtToken") !== undefined){
-      token = getCookie("jwtToken");
+    if (getCookie("jwtToken") !== undefined){
+      const token = getCookie("jwtToken");
       console.log(token);
-  }
+    }
+    const axiosInstance = axios.create({
+        headers:{
+          'Content-Type': 'application/json',
+        }
+      });
+  
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     axiosInstance.get(localIP + `/funding/detail?funding=${fundingId}`)
     .then((res)=>{
@@ -85,20 +94,42 @@ useEffect(()=>{
 
 },[]);
 
-useEffect(()=>{
-  setFlag(true);
-},[funding])
+const [open, setOpen] = useState(false);
+
+const handleOpen = () => {
+  // setOpen(true);
+  setKakaoPay(true);
+};
+
+const handleClose = () => {
+  setOpen(false);
+};
+
+
+
+
 
 const handlePayment = () => {
   console.log("handlePayment {}", payment ); 
-  payment.participant = currentUserID;
-  payment.bankName = funding.fundingId;
+  payment.participant_id = currentUserID;
+  payment.bank_name = funding.fundingId;
   payment.funding = funding.id;
 
   // 결제 버튼 클릭 이벤트를 처리하고 데이터를 서버로 보내는 코드
+  if (getCookie("jwtToken") !== undefined){
+    const token = getCookie("jwtToken");
+    console.log(token);
+  }
+  const axiosInstance = axios.create({
+      headers:{
+        'Content-Type': 'application/json',
+      }
+    });
+
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   axiosInstance.post(localIP + '/payment/create', payment)
       .then((res) => {
-          console.log(res.data); // 응답 데이터 처리
+          console.log("응답 {}",res.data); // 응답 데이터 처리
       })
       .catch((error) => {
           console.log(error);
@@ -118,6 +149,9 @@ const handlePaymentMethodChange = (event) => {
 
 
 
+
+
+
     return (
         <div>
             <div className="m_HeaderBlank" /**헤더 */></div>
@@ -132,7 +166,7 @@ const handlePaymentMethodChange = (event) => {
                             <span className="m_OrderB1">주문내역</span>                           
                             <div className="m_OrderB2" /*펀딩타이틀 */>{funding.title}</div>
                             <div className="m_OrderB3" >
-                                <Card funding={funding}></Card>
+                                {funding.thumbnail && <Card funding={funding}></Card>}
                             </div> 
                             <div className="SimpleLine"></div>  
                             <div className="m_OrderB4" /*결제금액*/>{funding.amount}원</div>                                
@@ -146,7 +180,12 @@ const handlePaymentMethodChange = (event) => {
                             </div>
                             <div className="m_OrderBox_Check">위 내용을 확인하였고, 결제에 동의합니다.</div>
                               
-                            <div className="m_OrderBox_Btn"><PayButton onClick={handlePayment} /></div>
+                            <div className="m_OrderBox_Btn">
+                                <PayButton/>
+
+                                {/* <PaymentForm open={open} handleClose={handleClose} /> */}
+                                
+                              </div>
                           </div>
                     </div>
                 

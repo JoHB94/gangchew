@@ -40,7 +40,7 @@ function WriteButton({ onClick }) {
 export default function ConsumerList(){  
 //*****************************state********************************************* */
   const defaultItemsPerPage = 6;
-  const defaultOrderby = 'newest';
+  const defaultOrderby = 'newPosts';
   const defaultCurrentPage = 1;
   
   const [consumers, setConsumers] = useState([]);
@@ -70,17 +70,19 @@ const localIP = 'http://localhost:9000/';
         
     }
     
-    const axiosInstance = axios.create({
+    let axiosInstance = axios.create({
         headers:{
           'Content-Type': 'application/json',
         }
       });
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    axiosInstance.post(localIP+'studentrequest/all')
+    axiosInstance.get(localIP+`studentrequest/all?orderby=${orderby}&postsPerPage=6&currentpage=${currentPage}`)
     .then((res)=>{
       console.log("통신성공 {}",res);
-      setConsumers(res);
-      //setConsumers(res.state);
+      setConsumers(res.data.result);
+      setTotalItems(res.data.result[0].totalItems);
+      console.log("orderby {}",orderby);
+      console.log(`studentrequest/all?orderby=${orderby}&postsPerPage=6&currentpage=${currentPage}`)
     }).catch((error)=>{ 
       console.log(error);
     })
@@ -107,6 +109,7 @@ useEffect(()=>{
 
 useEffect(()=>{
   setCount(Math.ceil(totalItems/itemsPerPage));
+  
 },[totalItems])
 
 
@@ -118,9 +121,12 @@ useEffect(()=>{
 const handlePage =(event, page)=>{
   console.log(page)
   setCurrentPage(page);
-
-  // reqServer();
 }
+
+useEffect(()=>{
+  reqServer();
+  console.log('통신')
+},[currentPage])
 
 
 //*******************************정렬값에 의해 통신하는 함수 ************************************* */
@@ -129,12 +135,49 @@ const handleChange = (event) => {
   console.log(newValue);
   setOrderby(newValue);
   setCurrentPage(defaultCurrentPage);
-  //reqServer();
 };
 
+useEffect(()=>{
+  reqServer();
+},[orderby])
+
 const moveToWrite = () => {
-  navigate('/consumercreate');
+  if (getCookie("jwtToken")) {
+    navigate('/consumercreate');
+  } else {
+    navigate('/login'); // 사용자가 로그인하지 않은 경우 로그인 페이지로 이동
+  }
 };
+
+const handleLike = (id) => {
+
+  console.log('like {id}',id);
+
+  let token = '';
+
+    if (getCookie("jwtToken") === !undefined){
+        token = getCookie("jwtToken");
+    }
+
+  let axiosInstance = axios.create({
+    headers:{
+      'Content-Type': 'application/json',
+    }
+  });
+
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+
+  axiosInstance.get(localIP+`studentrequest/likeclick?id=${id}`)
+  .then((res)=>{
+    console.log("통신성공 {}",res);
+    alert(res.data.message);
+    // 하트 표시/미표시
+  }).catch((error)=>{ 
+    console.log(error);
+  })
+
+}
         
 
     return (
@@ -157,14 +200,14 @@ const moveToWrite = () => {
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value="1"
+                            value={orderby}
                             label="Category"
                             onChange={handleChange}
                             color='secondary'
                             
                           >
-                            <MenuItem value={1}>최신순</MenuItem> 
-                            <MenuItem value={2}>마감임박</MenuItem>               
+                            <MenuItem value={'newPosts'}>최신순</MenuItem> 
+                            <MenuItem value={'mostLike'}>인기순</MenuItem>               
                           </Select>
                         </FormControl>
                       </Box>
@@ -172,9 +215,9 @@ const moveToWrite = () => {
                       </div>
                   </div>
                   {consumers.map(consumer => (
-                  <div className="c_ListListBox" key={consumer.postId}>
+                  <div className="c_ListListBox" key={consumer.id}>
                       <div className="c_ListListRowTop">
-                          <div className="c_ListListPostNumber"/**글번호 */>{consumer.postId}</div>
+                          <div className="c_ListListPostNumber"/**글번호 */>{consumer.id}</div>
                           <div className="c_ListListName_1"/*작성자*/>{consumer.writer}</div>
                           <div className="c_ListListName_2"/*작성일자*/>{consumer.regDt}</div>
                           <div className="c_ListListName_3"/*카테고리명*/>{consumer.categoryId}</div>                          
@@ -186,7 +229,7 @@ const moveToWrite = () => {
                           <div className="c_ListListBlank"/*빈공간 */></div>
                           <div className="c_ListListBtnBox">
                             <div className="c_ListListBtn1"/*조회수 */><VscEye/>{consumer.viewcount}</div>
-                            <div className="c_ListListBtn2"/*좋아요수 */><FaHeart style={{color:"red"}} />{consumer.likecount}</div>
+                            <div className="c_ListListBtn2"/*좋아요수 */><FaHeart onClick={() => handleLike(consumer.id)} style={{color:"red"}} />{consumer.likecount}</div>
                             <div className="c_ListListBtn3"/*댓글수 */><LiaCommentDots/>{consumer.commentcount}</div>
                           </div>
                       </div>

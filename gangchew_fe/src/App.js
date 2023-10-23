@@ -18,7 +18,7 @@ import ConsumerComment from './consumer/ConsumerComment';
 import Layout from "./component/Layout";
 import KakaoRedirect from "./member/Kakao/KakaoRedirect";
 import NaverRedirect from "./member/Naver/NaverRedirect";
-
+import PaymentForm  from "./consumer/PaymentForm";
 
 function App() {
   
@@ -51,6 +51,7 @@ function App() {
           <Route exact path='/myactivitydetail' element={<MyActivityDetail/>}/>
           <Route exact path='/myactivitypayment/:fundingId' element={<MyActivityPayment/>}/>
           <Route exact path='/searchlist' element={<SearchList/>}/>
+          <Route exact path='/paymentform/' element={<PaymentForm/>}/>
         </Route>
       </Routes>
     {/* 푸터 컴포넌트 들어갈 부분*/}
