@@ -1,142 +1,132 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from 'react';
 import '../consumer/css/ConsumerCreate.css';
 import '../component/css/SimpleLine.css';
-import TitleTextFields from '../component/inputs/TitleTextFields';
+import ConsumerTitleTextFields from '../component/inputs/ConsumerTitleTextFields';
 import CategorySelect from '../component/inputs/CategorySelect';
-
+import ToastEditor from '../component/inputs/ToastEditor';
 import OkButton from '../component/buttons/OkButton';
-import DeleteButton from '../component/buttons/DeleteButton';
+import CancelButton from '../component/buttons/CancelButton';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useParams } from "react-router-dom";
-import ToastEditor from '../component/inputs/ToastEditor';
 import { getCookie } from '../member/Cookie';
 
+
+
+
 export default function ConsumerUpdate() {   
-
-    const cloudIP = 'http://138.2.114.150:9000';
-    const localIP = 'http://localhost:9000';
-
-    const {postId}  = useParams();
-
+   
     const navigate = useNavigate();
+   
 //**************************state*************************************** */
     const [consumer, setConsumer] = useState({
-        postId: 0,
         title: '',
         category_id: 0,
-        writer: '',
         content: ''
     });
-
-    // consumer 조회 및 셋팅
-    useEffect(()=>{
-        console.log(postId)
-        axios.get(localIP+`/studentrequest/read?postId=${postId}`)
-        .then((res)=>{
-            console.log(res);
-            setConsumer(res);
-        })
-        .catch((error)=>{
-            console.log(error);
-        })
-    },[]);
-
-    // // json test -----------
-    // useEffect(()=>{
-    //     console.log(postId)
-    //     axios.get('/consumer/ConsumerDetail.json')
-    //     .then((res)=>{
-    //         console.log(res.data);
-    //         setConsumer(res.data);
-    //     })
-    //     .catch((error)=>{
-    //         console.log(error);
-    //     })
-    // },[]);    
-
 //**************************callBack************************************* */
     // input 컴포넌트에서 호출할 함수
-    const handleInputChange = (key,newValue) => {
-        setConsumer((prevFunding) => ({
-            ...prevFunding,
-            [key]: newValue
-        }));
-        
+    const handleInputChange = (key, newValue) => {
+        if (newValue === '') {
+            // 값을 확인하고 내용이 비어있으면 경고창 또는 오류 메시지를 추가하세요.
+            alert('내용을 입력해주세요');
+        } else {
+            setConsumer((prevFunding) => ({
+                ...prevFunding,
+                [key]: newValue
+            }));
+        }
     };
 //************************onClick*************************************** */ 
-    var token = '';
 
-    if (getCookie("jwtToken") !== undefined){
-        token = getCookie("jwtToken");
-        console.log(token);
-    }
 
-    const axiosInstance = axios.create({
-        headers:{
-        'Content-Type': 'application/json',
-        }
-    });    
-    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    const submit=(e)=>{
-        axiosInstance.post(localIP+'/studentrequest/save',consumer)
-        .then((res)=>{
-            alert('등록되었습니다.');
-            navigate('/consumerdetail');
-            console.log(res);
-        })
-        
-        .catch((error)=>{
-            console.log(error);
-        })
+
+const cloudIP = ' http://138.2.114.150:9000/';
+const localIP = 'http://localhost:9000/';
+
+var token = '';
+
+if (getCookie("jwtToken") !== undefined){
+    token = getCookie("jwtToken");
+    console.log(token);
+}
+
+const axiosInstance = axios.create({
+    headers:{
+      'Content-Type': 'application/json',
     }
-    const deleteBoard = async () => {
-        if (window.confirm('게시글을 삭제하시겠습니까?')) {
-          await axiosInstance.delete(localIP+`/studentrequest/read?id=${postId}`).then((res) => {
-            alert('삭제되었습니다.');
-            navigate('/consumerlist');
-          });
-        }
-    };  
+  });
+
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  const submit = (e) => {
+    if (consumer.title.trim() === ''){
+        alert('제목을 입력해주세요.');
+        return;
+    }  else if(consumer.content.trim() === ''){
+        alert('내용을 입력해주세요.');
+        return;
+    }  else {
+        axiosInstance
+            .post(localIP + 'studentrequest/save', consumer)
+            .then((res) => {
+                if(res.data.message === "로그인 상태가 아닙니다."){
+                    alert('로그인 상태가 아닙니다.')
+                    navigate('/login');
+                    return;
+                }
+                if(res.data.message ==="일치하는 카테고리가 없습니다."){
+                    alert('카테고리를 선택해주세요');
+                    return
+                }
+                if(res.data.message === "요청에 성공하였습니다."){
+                    alert('저장되었습니다.')
+                    navigate('/consumerdetail');
+                }
+                console.log(consumer);
+                console.log(res);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+};
+    const backToList = () => {
+        navigate('/consumerlist');
+      };
+    
+
+
 
     return (
     <div>
-    {consumer ? (
-        <div>
-        <div className="c_HeaderBlank" /*헤더 */></div>
-        <div className="c_Container">
-            <div className="c_Left" /*왼쪽빈공간 */></div>
-            <div className="c_Center" >
-                <div> 
+        <div className="c_CreateHeaderBlank" /*헤더 */></div>
+        <div className="c_CreateContainer">
+            <div className="c_CreateLeft" /*왼쪽빈공간 */></div>
+            <div className="c_CreateCenter" >
+                <div>
                     <h2>수요자 게시판</h2>     
                     <div className="SimpleLine"></div>        
                 </div>
                 <div>
-                    <div className='c_Title'>
-                        <TitleTextFields name={'title'} handleInputChange={handleInputChange} text={consumer.title} modValue={consumer.title}/>
+                    <div className='c_CreateTitle'>
+                        <ConsumerTitleTextFields  text={'제목'} name={'title'} value={consumer.title} handleInputChange={handleInputChange} />
                     </div>
-                    <div className='c_Category'>
-                        <CategorySelect name={'categoryName'} handleInputChange={handleInputChange} text={consumer.categoryName} modValue={consumer.categoryId}/>
+                    <div className='c_CreateCategory'>
+                        <CategorySelect name={'category_id'} handleInputChange={handleInputChange}/>
                     </div>
                     <div className='c_Content'>
-                        <ToastEditor content={consumer.content}    name={'content'} handleInputChange={handleInputChange} text={consumer.content} modValue={consumer.content}/>
+                        <ToastEditor name={'content'} value={consumer.content} handleInputChange={handleInputChange}/>
                     </div>
                 </div>
-                <div className='c_height100'>{/**에디터와 버튼사이 빈 공간 */}</div>
-                <div className='c_buttonContainer'>
-                    <div className='c_OkButton' onClick={submit}><OkButton/></div>
-                    <div className='c_CancelButton' onClick={deleteBoard}><DeleteButton/></div> 
-                
-                </div>
-                <div className='c_height100'>{/**에디터와 버튼사이 빈 공간 */}</div>
+                <div className='c_Createheight100'>{/**에디터와 버튼사이 빈 공간 */}</div>
+                <div className='c_CreatebuttonContainer'>
+                    <div className='c_CreateOkButton' onClick={submit}><OkButton/></div>
+                    <div className='c_CreateCancelButton' onClick={backToList}><CancelButton/></div>
+                </div>                
             </div>
-            <div className="c_Right" /*오른쪽빈공간 */></div>
+            <div className="c_CreateRight" /*오른쪽빈공간 */></div>
+            <div className='c_CreateBottomBlank'>{/**하단끝 빈공간 */}</div>
         </div>
         {console.log(consumer)}
-        </div>
-    ):(
-        <div></div>
-    )}
     </div>
     )
 }

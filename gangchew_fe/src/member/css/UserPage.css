@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+  }
+  
+  .colorbase-user {
+  }
+  
+  .baseDiv-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(10%);
+    margin-bottom: 100px;
+    height: 850px;
+  }
+  
+  .registrationDiv-user {
+    width: 800px;
+    height: 750px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding-left: 30px;
+    box-shadow: 3px 3px 2px 2px rgb(199, 199, 199);
+    background-color: white;
+  }
+  
+  .formDiv-user {
+    margin-top: 55px;
+  }

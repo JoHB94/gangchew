@@ -97,7 +97,13 @@
 .c_ListListTitle{
     width: 50%;
 }
+
 .c_ListPagination{
+    display: flex;
+    justify-content: center;
+}
+
+.c_Pagination{
     display: flex;
     justify-content: center;
 }

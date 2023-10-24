@@ -7,7 +7,7 @@ const Layout = () => {
         <>
         <Header />
         <Outlet /> {/* 중첩 레이아웃이 들어가는 부분 */}
-        <Footer/>
+        {/* <Footer/> */}
         </>
     )
 }

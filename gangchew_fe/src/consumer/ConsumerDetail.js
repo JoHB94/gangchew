@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import ConsumerComment from './ConsumerComment';
 import { Viewer } from '@toast-ui/react-editor';
 import { getCookie } from "../member/Cookie";
+import { useNavigate } from 'react-router-dom'
 
 export default function ConsumerDetail() {
 
@@ -17,22 +18,23 @@ export default function ConsumerDetail() {
     const [consumer, setConsumer] = useState({
         postId: 0,
         title: '',
-        categoryId: 0,
+        fundingCategory:{},
         writer: '',
         content: '',
         regDt: '',
         user_id:''
     });
+    const [loginId, setLoginId] = useState('');
 
     const { postId } = useParams();
-
+    const navigate = useNavigate();
     const [isLiked,setIsLiked] = useState(false);
     const cloudIP = 'http://138.2.114.150:9000';
     const localIP = 'http://localhost:9000';
     
-    const token = '';
+    let token = '';
 
-    if (getCookie("jwtToken") === !undefined){
+    if (getCookie("jwtToken") !== undefined){
         token = getCookie("jwtToken");
         console.log(token);
     }
@@ -51,11 +53,25 @@ export default function ConsumerDetail() {
         axiosInstance.get(localIP + `/studentrequest/read?id=${postId}`)
             .then((res) => {
                 console.log(res);
-                setConsumer(res);
+                setConsumer(res.data.result);
+                setIsLiked(res.data.result.like);
             })
             .catch((error) => {
                 console.log(error);
             });
+
+        axiosInstance.post(localIP + '/user/myinfo')
+            .then((res)=>{
+                console.log('유저정보 반환')
+                console.log(res);
+                if(res.data.message === "요청에 성공하였습니다."){
+                    setLoginId(res.data.result.username);
+                }
+                
+            }).catch((error)=>{
+                console.log(error);
+            })
+        
         
         // json test
         // axios.get('/consumer/ConsumerDetail.json')
@@ -66,18 +82,29 @@ export default function ConsumerDetail() {
         // .catch((error)=>{
         //     console.log(error);
         // })
-    }, [postId]);
+    }, []);
 
     // ************************onClick***************************************
 
     // **************************좋아요 버튼***************************************
 
     const handleLikeClick = () => {
-
-        axios.post(localIP +'funding/toggle-like?id={funding_id}')
+        setIsLiked(!isLiked);
+        axiosInstance.get(localIP +`/studentrequest/toggle-like?id=${postId}`)
         .then((res)=>{
             console.log(res);
-            setIsLiked(!isLiked);
+            if(res.data.message === "좋아요가 등록되었습니다."){
+                alert('좋아요가 등록되었습니다.');
+            }
+            
+            if(res.data.message === "좋아요 취소가 완료하였습니다."){
+                alert('좋아요가 등록되었습니다.');
+            }
+            
+            if(res.data.message === "로그인 상태가 아닙니다."){
+                alert('로그인을 해주세요');
+                navigator('/login');
+            }
         })
         .catch((error)=>{
             console.log(error);
@@ -101,31 +128,37 @@ export default function ConsumerDetail() {
                             </div>
                             <div>
                                 <div className="c_DetailWriter_DateBox">
-                                    <span className="c_DetailWriter">{consumer.writer}</span>
+                                    <span className="c_DetailWriter">작성자: {consumer.writer}</span>
                                     <span className="c_DetailDate">{consumer.regDt}</span>
                                 </div>
                                 <div className="c_DetailBtnContainer">
-                                    <div className="c_DetailEditButton">
+                                   {(loginId === consumer.writer) &&
+                                   <div className="c_DetailEditButton">
                                         <EditButton />
                                     </div>
+                                   
+                                   } 
+                                    {
+                                    (loginId === consumer.writer) &&
                                     <div className="c_DetailDeleteButton">
                                         <DeleteButton />
                                     </div>
+                                    }
                                 </div>
                             </div>
                             <div>
                                 <div className='c_DetailTitleBox'>{consumer.title}</div>
-                                <div className='c_DetailCategoryBox'>{consumer.categoryName}</div>
+                                <div className='c_DetailCategoryBox'>{consumer.fundingCategory.categoryName}</div>
                                 {/* 토스트 뷰어 영역 */}
                                 <div className='c_DetailContentBox'><Viewer initialValue={consumer.content} key={consumer.content} /></div>                               
                                 <div className="c_DetailBtnBox_1">
                                     <div className="c_DetailLikeBtn" onClick={handleLikeClick}>
-                                        {isLiked ? <FaHeart size={23} color="red" /> : <FaHeart size={23} />}
+                                       { isLiked ? (<FaHeart size={23} color="red" />) : (<FaHeart size={23} />)}
                                     </div>
                                     <div className="c_DetailCommentBtn"><LiaCommentDots size={30} /></div>
                                 </div>
                                 <div className="c_DetailCommentBox">
-                                    <ConsumerComment />
+                                    <ConsumerComment postId={postId}/>
                                 </div>
                             </div>
                         </div>

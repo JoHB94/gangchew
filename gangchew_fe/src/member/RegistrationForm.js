@@ -53,7 +53,6 @@ function RegistrationForm() {
       } else if(response.data.code === 200) {
          alert(response.data.result);
       }
-      
 
     })
     .catch((error) => {
@@ -97,7 +96,6 @@ function RegistrationForm() {
   };
 
   /* daum 주소 api 연결 */
-  const [address, setaddress] = useState("");
   const scriptUrl =
     "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
   const open = useDaumPostcodePopup(scriptUrl); //open함수 정의
@@ -118,7 +116,10 @@ function RegistrationForm() {
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
 
-    setaddress(fullAddress); // 주소 데이터 수집
+    setSignupData((prevData) => ({
+      ...prevData,
+      address: fullAddress,
+    })); // 주소 데이터 수집
 
     //console.log(fullAddress); 테스트용 콘솔
   };
@@ -241,7 +242,7 @@ function RegistrationForm() {
                   className="address-input"
                   placeholder="주소"
                   id="address"
-                  value={address}
+                  value={signupData.address}
                   onChange={(e) => handleInputChange("address", e.target.value)}
                   readOnly
                 ></input>
