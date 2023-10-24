@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import "../consumer/css/MyActivityDetail.css";
 import "../component/css/SimpleLine.css";
@@ -13,23 +12,12 @@ import MyFundingListBox from "./mypageComponent/MyFundingListBox";
 import MyLikePostListBox from "./mypageComponent/MyLikePostListBox";
 import MyPostListBox from "./mypageComponent/MyPostListBox";
 import MyRefundListBox from "./mypageComponent/MyRefundListBox";
-=======
-import React from "react";
-
-import '../consumer/css/MyActivityDetail.css';
-import '../component/css/SimpleLine.css';
-import { FaLongArrowAltDown } from "react-icons/fa";
-import LongCard from "../component/LongCard";
-import ListBox from "../component/ListBox"
-import { getCookie } from "../member/Cookie";
->>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
 
 export default function MyActivityDetail() {
   const [myUsername, setMyUsername] = useState("");
   const [myUserNickname, setMyUserNickname] = useState("");
   const [postData, setPostData] = useState("");
 
-<<<<<<< HEAD
   const LOCAL_IP = "http://localhost:9000";
   const token = getCookie("jwtToken");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -59,12 +47,6 @@ export default function MyActivityDetail() {
   }, [myUsername]);
   
   return (
-=======
-export default function MyActivityDetail(){
-
-
-    return (
->>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
     <div>
       <div className="m_HeaderBlank" /**헤더 */></div>
       <div className="m_ContainerDetail">
@@ -76,20 +58,6 @@ export default function MyActivityDetail(){
             <div className="SimpleLine"></div>
             <h3>펀딩 참여 내역</h3>
             <MyactivityListBox myUsername={myUsername} myUserNickname={myUserNickname}/>{/* 확인 */}
-            {/* <div className="m_FundingBox">
-                    <div>
-                        <div className="m_LongCard" /**<LongCard/> */>
-                           
-                        </div >
-                        <div className="m_LongCard" /**<LongCard/> */>
-                            
-                        </div>
-                        <div className="m_LongCard" /**<LongCard/> */>
-                            
-                        </div>
-                    </div>
-                    <div className="m_Pagination1"></div>
-               </div> */}
             <div className="m_BoardList">
             </div>
             <h3>내가 작성한 요청 게시글</h3>
@@ -110,9 +78,9 @@ export default function MyActivityDetail(){
             </div>
             <div className="m_BottomBlank" /*바텀빈공간 */></div>
           </div>
-        </div>
       </div>
       <div className="m_RightDetail" /**오른쪽빈공간 */></div>
+    </div>
     </div>
   );
 };

@@ -6,12 +6,8 @@ import Stack from "@mui/material/Stack";
 
 import "../component/css/SimpleLine.css";
 
-<<<<<<< HEAD
-import { Link } from "react-router-dom";
-=======
 import { Link } from 'react-router-dom';
 import { getCookie } from "../member/Cookie";
->>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
 
 export default function ListBox() {
   //*****************************state********************************************* */
@@ -25,22 +21,6 @@ export default function ListBox() {
   const [currentPage, setCurrentPage] = useState(defaultCurrentPage);
   //************************************ axios ************************************************** */
 
-<<<<<<< HEAD
-  const reqServer = () => {
-    axios
-      .get(
-        "consumer/ConsumerList.json"
-        //'https://www.gangchew.com/studentrequest/all'
-      )
-      .then((response) => {
-        setConsumers(response.data); // 데이터는 response.data 안에 들어있습니다.
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-=======
   const cloudIP = 'http://138.2.114.150:9000';
   const localIP = 'http://localhost:9000';
 
@@ -70,7 +50,6 @@ export default function ListBox() {
     })
   }
   
->>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
   /*************************************useEffect********************************* */
   //페이지가 렌더될 때 실행될 함수.
   useEffect(() => {
@@ -81,24 +60,14 @@ export default function ListBox() {
   const handlePage = (event, page) => {
     console.log(page);
     setCurrentPage(page);
-<<<<<<< HEAD
-
-    // reqServer();
-  };
-
-=======
     reqServer();
   } 
   
->>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
   const handleChange = (event) => {
     const newValue = event.target.value;
     console.log(newValue);
     setOrderby(newValue);
     setCurrentPage(defaultCurrentPage);
-<<<<<<< HEAD
-    //reqServer();
-=======
 
   };  
   const ListBoxStyle ={
@@ -112,19 +81,8 @@ export default function ListBox() {
     borderRadius: '10px',    
     border: 'solid 1px #d3d3d3',
 
->>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
   };
-  const ListBoxStyle = {
-    width: "auto",
-    marginTop: "20px",
-    marginBottom: "20px",
-    padding: "20px",
-    paddingLeft: "50px",
-    paddingRight: "50px",
-    height: "auto",
-    borderRadius: "10px",
-    border: "solid 1px #d3d3d3",
-  };
+  
 
   const List_Map_Style = {
   }

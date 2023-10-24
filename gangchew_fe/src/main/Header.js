@@ -45,7 +45,7 @@ const Header = () => {
       })
         .then((response) => {
           console.log("서버 응답 데이터:", response.data);
-          removeCookie("jwtToken", {path : '/'});
+          removeCookie("jwtToken", { path: "/" });
           setLogin(false);
           const result = response.data.result;
 
@@ -54,7 +54,7 @@ const Header = () => {
             console.log(response.data.result);
             const redirectUrl = result;
             window.location.href = redirectUrl; // 소셜 로그아웃 콜백 url로 이동
-          } else if(result === "로그아웃 되었습니다."){
+          } else if (result === "로그아웃 되었습니다.") {
             alert(result);
             window.location.reload();
           } else {
@@ -69,17 +69,16 @@ const Header = () => {
   };
   const clickHandle = () => {
     window.location.href = "/";
-  }
+  };
+
   return (
     <div>
       <div id="scroll_wrapper">
         <div id="container80">
           <div id="container_left">
-              <div id="h_title" onClick={clickHandle}>
-                <h2 id="h_h2">GangChew</h2>
-              </div>
-
-<<<<<<< HEAD
+            <div id="h_title">
+              <h2 id="h_h2">GangChew</h2>
+            </div>
             <ul id="list">
               <Link id="container33" to="/fundinglist">
                 <li>펀딩list</li>
@@ -104,46 +103,6 @@ const Header = () => {
             </div>
           </div>
         </div>
-=======
-    
-
-    return (
-        <div>
-            <div id ="scroll_wrapper">
-                <div id='container80'>
-                    <div id='container_left'>
-                        <div id='h_title'>
-                            <h2 id='h_h2'>GangChew</h2>
-                            
-                        </div>
-                        
-                        <ul id='list'>
-                            <Link id='container33' to="/fundinglist"><li >펀딩list</li></Link>
-                            <li id='container33'>펀딩작성</li>
-                            <li id='container33'>요청list</li>
-                        </ul>
-                        
-                    </div>
-                    <div id='container_right'>
-                        <div id='search'>                      
-                            <SearchBar/>
-                        </div>
-                        <div id='member'>
-                            <div id='container33' onClick={login? logoutHandle : loginHandle}>
-                                {login?('로그아웃'):('로그인')}
-                            </div>
-                            <div id='container33'>
-                              {login?(<MessageDrop/>):('')}
-                                
-                            </div>
-                            <div id='container33'>
-                              {login?(<CgProfile size={32}/>):('')}
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
->>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
       </div>
     </div>
   );

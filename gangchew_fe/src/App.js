@@ -12,22 +12,16 @@ import MyActivityPayment from './mypage/MyActivityPayment';
 import FundingInfo from './funding/FundingInfo';
 import RegistrationForm from './member/RegistrationForm';
 import MainBoard from './main/MainBoard';
-<<<<<<< HEAD
 import FirstSlider from './component/mainSlider/FirstSlider';
-=======
->>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
 import SearchList from './main/SearchList';
 import ConsumerUpdate from './consumer/ConsumerUpdate';
 import ConsumerComment from './consumer/ConsumerComment';
 import Layout from "./component/Layout";
 import KakaoRedirect from "./member/Kakao/KakaoRedirect";
 import NaverRedirect from "./member/Naver/NaverRedirect";
-<<<<<<< HEAD
 import UserPage from './member/UserPage';
 import FundingPayment from './payment/FundingPayment';
-=======
 import PaymentForm  from "./consumer/PaymentForm";
->>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
 
 function App() {
   

@@ -122,7 +122,7 @@ export default function MyactivityListBox(props) {
           ))}
         </>
       )}
-      <div className="c_Pagination" /*페이지네이션*/>
+      <div className="c_Pagination" /*페이지네이션*/ >
         <Stack spacing={2}>
           <Pagination
             count={Math.ceil(consumers.length / PostPerpage)} // 전체 게시물 수
