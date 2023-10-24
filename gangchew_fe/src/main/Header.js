@@ -10,7 +10,8 @@ import MessageDrop from "./MessageDrop";
 import axios from "axios";
 import { getCookie, removeCookie } from "../member/Cookie";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect } from 'react';
+import MyPageDrop from './MyPageDrop';
 
 const Header = () => {
   const [login, setLogin] = useState(false);
@@ -107,7 +108,7 @@ const Header = () => {
                                 
                             </div>
                             <div id='container33'>
-                              {login?(<CgProfile size={32}/>):('')}
+                              {login?(<MyPageDrop/>):('')}
                                 
                             </div>
                         </div>

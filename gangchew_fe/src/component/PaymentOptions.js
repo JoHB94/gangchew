@@ -14,7 +14,8 @@ export default function PaymentOptions({ paymentMethod, handlePaymentMethodChang
 
   const handleSelection = (event) => {
     console.log("자식 js {}",event.target.value);
-    handlePaymentMethodChange(event);
+    const newValue = event.target.value;
+    handlePaymentMethodChange(newValue);
   };
 
 

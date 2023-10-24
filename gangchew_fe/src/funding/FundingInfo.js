@@ -4,7 +4,6 @@ import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Viewer } from '@toast-ui/react-editor';
 
 import fundingInfo from "../funding/css/fundingInfo.css";
-import InfoTop from "./InfoTop";
 import DoFunding from "../component/buttons/DoFunding";
 import EmptyHeart from "../component/buttons/EmptyHeart";
 import Card from "../component/Card";
@@ -19,7 +18,6 @@ import CancelFunding from "../component/buttons/CancelFunding";
 import { getCookie } from '../member/Cookie';
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import ToastViewer from "../component/ToastViewer";
 import Progress from "../component/Progress";
 import FullHeart from "../component/buttons/FullHeart";
 
@@ -29,7 +27,7 @@ export default function FundingInfo(){
 //**********************************states**************************************** */
     const [html,setHtml] = useState('');
     const [show, setShow] = useState(false);
-    const[isLoading, setIsLoading] = useState(true);
+    const[isWriter, setIsWriter] = useState(false);
     const[data, setData] = useState({
         achievementrate : 0,
         funding : {
@@ -56,6 +54,7 @@ export default function FundingInfo(){
     const[deadline,setDeadline] = useState('');
     const[diffDayValue, setDiffDayValue] = useState('');
     const[isOffline,setIsOffline] = useState(false);
+    const[userId, setUserId] = useState('');
     // const [token, setToken] = useState('');
     const {fundingId} = useParams();
     // const[title, setTitle] = useState('');
@@ -91,10 +90,25 @@ export default function FundingInfo(){
             setHtml(res.data.result.funding.content);
        
         }).catch((error)=>{
-            console.log(error)
+            console.log(error);
             
         })
+
+        axiosInstance.post(localIP + `user/myinfo`)
+        .then((res)=>{
+            console.log(res);
+            setUserId(res.data.result.fullname);
+        }).catch((error)=>{
+            console.log(error);
+        })
     },[])
+
+    useEffect(()=>{
+        if(userId === data.funding.writer.fullname){
+            setIsWriter(true);
+            console.log("작성자와 로그인 아이디 일치여부"+isWriter);
+        }
+    },[userId,data])
 
 
 
@@ -105,10 +119,19 @@ export default function FundingInfo(){
     const fundingStartClick=()=>{
         const userRes = window.confirm("펀딩이 시작되면 수정할 수 없습니다. 정말로 시작하시겠습니까?");
             if(userRes){
-                axiosInstance.post(localIP + 'funding/update?state=IN_PROGRESS')
+                axiosInstance.post(localIP + `funding/update?state=IN_PROGRESS&id=${fundingId}`)
                 .then((res)=>{
                     console.log(res);
-                    alert("펀딩이 시작되었습니다.");
+                    if(res.data.message === "로그인 상태가 아닙니다."){
+                        alert('로그인 상태가 아닙니다.');
+                        
+                    }else if(res.data.result === "좋아요가 등록되었습니다."){
+                        alert("좋아요가 등록되었습니다.");
+                        setLiked(!liked);
+                    }else if(res.data.result === "좋아요 취소가 완료하였습니다."){
+                        alert("좋아요 취소가 완료하였습니다.");
+                        setLiked(!liked);
+                    }
                 })
                 .catch((error)=>{
                     console.log(error);
@@ -116,36 +139,52 @@ export default function FundingInfo(){
             } 
     }
 
-    // const fundingCancelClick=()=>{
-    //     axios.post('')
-    //     .then((res)=>{
-    //         console.log(res);
-    //     })
-    //     .catch((error)=>{
-    //         console.log(error);
-    //     })
-    // }
-
-    const fundingLikeClick=()=>{
-        axiosInstance.get(localIP+`funding/toggle-like?id=${data.funding.id}`)
+    const fundingCancelClick=()=>{
+        axiosInstance.get(localIP + `funding/delete?id=${fundingId}`)
         .then((res)=>{
             console.log(res);
-            setLiked(!liked);
         })
         .catch((error)=>{
             console.log(error);
         })
     }
 
-    // const fundingPartClick=()=>{
-    //     axios.post('')
-    //     .then((res)=>{
-    //         console.log(res);
-    //     })
-    //     .catch((error)=>{
-    //         console.log(error);
-    //     })
-    // }
+    const fundingLikeClick=()=>{
+        axiosInstance.get(localIP+`funding/toggle-like?id=${fundingId}`)
+        .then((res)=>{
+            if(res.data.message === "로그인 상태가 아닙니다."){
+                alert('로그인 상태가 아닙니다.');
+                
+            }else if(res.data.result === "좋아요가 등록되었습니다."){
+                alert("좋아요가 등록되었습니다.");
+                setLiked(!liked);
+            }else if(res.data.result === "좋아요 취소가 완료하였습니다."){
+                alert("좋아요 취소가 완료하였습니다.");
+                setLiked(!liked);
+            }
+            console.log(res);
+        })
+        .catch((error)=>{
+            console.log(error);
+            
+            
+        })
+    }
+
+    const fundingPartClick=()=>{
+        axiosInstance.get(localIP + `participants/join?funding=${fundingId}`)
+        .then((res)=>{
+            console.log("펀딩참여 url: " + `participants/currentuser?funding=${fundingId}` )
+            console.log(res);
+            if(res.data.result ==="펀딩에 참여되었습니다. "){
+                alert('펀딩에 참여되었습니다.')
+            }
+        })
+        .catch((error)=>{
+            console.log("펀딩참여 url: " + `participants/currentuser?funding=${fundingId}` )
+            console.log(error);
+        })
+    }
 
     // const reFundClick=()=>{
     //     axios.post('')
@@ -258,8 +297,8 @@ export default function FundingInfo(){
                                 </div>
 
                                 <div id="f_info_buttonBox">
-                                    <div>
-                                        <DoFunding/>
+                                    <div onClick={fundingPartClick}>
+                                        <DoFunding />
                                     </div>
                                     <div id="f_heart_button" onClick={fundingLikeClick}>
                                         {liked ? (<FullHeart size={45}/>):(<EmptyHeart size={45}/>)}
@@ -282,15 +321,15 @@ export default function FundingInfo(){
                         </div>
                     </div>
                     <div id="f_writer_boxes">
-                        <div id="f_writer_buttons">
-                            <span><StartFunding/></span>
+                        {isWriter && <div id="f_writer_buttons">
+                            <span onClick={fundingStartClick}><StartFunding/></span>
                             <span><UpdateFunding/></span>
-                            <span><CancelFunding/></span>
-                        </div>
-                        <div id="f_writer_msg">
+                            <span onClick={fundingCancelClick}><CancelFunding/></span>
+                        </div>}
+                        {isWriter && <div id="f_writer_msg">
                             <h3 id="f_msg_title" style={{paddingLeft:"15px"}}>펀딩 시작하기 &nbsp; <FiAlertTriangle style={{color :"red"}} size={28}/></h3>
                             <div id="f_msg_content" style={{paddingLeft:"15px"}}>펀딩 시작하기 버튼을 클릭시 펀딩이 시작됩니다.<br/>펀딩이 시작되면 내용 수정이 불가능합니다.</div>
-                        </div>
+                        </div>}
                     </div>
                     <div id="f_height150"></div>
                 </div>

@@ -8,22 +8,23 @@ import axios from "axios";
 import Card from "../component/Card";
 import { getCookie } from '../member/Cookie';
 import { useParams } from "react-router-dom";
+import { partition } from "@jest/expect-utils";
 import PaymentForm from "../consumer/PaymentForm";
 import KakaoPayment from "../consumer/KakaoPayment";
 
 export default function MyActivityPayment(){
-
-//**************************state*************************************** */  
+    //**************************state*************************************** */  
 const [funding, setFunding] = useState({
-  id :0 ,
-  title :'' ,
-  amount: 0 ,  
-  thumbnail:'',
-  
+  amount : 0,
+  id : 0,       
+  subtitle : '',
+  thumbnail : '',
+  title : '',
+  viewCount : 0,
+         
 });
 
 const [payment, setPayment] = useState({
-  id:0,//결제key
   funding: 0,//펀딩번호
   participant:'',
   bank_name:'',
@@ -77,7 +78,7 @@ useEffect(()=>{
         console.log(res);
         setFunding(res.data.result.funding);
         
-        console.log(funding);
+        
     })
     .catch((error)=>{
         console.log(error);
@@ -94,6 +95,16 @@ useEffect(()=>{
 
 },[]);
 
+// const handlePayment = () => {
+//   console.log("handlePayment {}", payment ); 
+  
+//   setPayment((prevPayment) => ({
+//     ...prevPayment,
+//     funding : fundingId,
+//     // bankName : 
+//     // bankAccount :
+
+//   }));
 const [open, setOpen] = useState(false);
 
 const handleOpen = () => {
@@ -109,22 +120,22 @@ const handleClose = () => {
 
 
 
-const handlePayment = () => {
-  console.log("handlePayment {}", payment ); 
-  payment.participant_id = currentUserID;
-  payment.bank_name = funding.fundingId;
-  payment.funding = funding.id;
+// const handlePayment = () => {
+//   console.log("handlePayment {}", payment ); 
+//   payment.participant_id = currentUserID;
+//   payment.bank_name = funding.fundingId;
+//   payment.funding = funding.id;
 
-  // 결제 버튼 클릭 이벤트를 처리하고 데이터를 서버로 보내는 코드
-  if (getCookie("jwtToken") !== undefined){
-    const token = getCookie("jwtToken");
-    console.log(token);
-  }
-  const axiosInstance = axios.create({
-      headers:{
-        'Content-Type': 'application/json',
-      }
-    });
+//   // 결제 버튼 클릭 이벤트를 처리하고 데이터를 서버로 보내는 코드
+//   if (getCookie("jwtToken") !== undefined){
+//     const token = getCookie("jwtToken");
+//     console.log(token);
+//   }
+//   const axiosInstance = axios.create({
+//       headers:{
+//         'Content-Type': 'application/json',
+//       }
+//     });
 
   axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   axiosInstance.post(localIP + '/payment/create', payment)
@@ -133,17 +144,20 @@ const handlePayment = () => {
       })
       .catch((error) => {
           console.log(error);
+          
       });
-};
 
 
-const handlePaymentMethodChange = (event) => {
 
-  const selectedMethod = event.target.value; // Assuming the value comes from the event
+const handlePaymentMethodChange = (newValue) => {
+
+  const selectedMethod = newValue; // Assuming the value comes from the event
   setPayment((prevPayment) => ({
     ...prevPayment,
     paymentMethod: selectedMethod,
+
   }));
+  
 
 };
 
@@ -227,6 +241,10 @@ const handlePaymentMethodChange = (event) => {
               </div>
               <div className="m_Right" /**오른쪽빈공간 */></div>             
           </div>
+          {console.log(payment)}
        </div>
     )
+
 }
+
+
