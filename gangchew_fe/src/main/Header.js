@@ -1,12 +1,12 @@
-import * as React from 'react';
-import header from '../main/css/header.css';
-import TextField from '@mui/material/TextField';
-import { useState } from 'react';
-import MessageBadge from '../component/MessageBadge';
-import {CgProfile} from 'react-icons/cg';
-import {BiSearch} from 'react-icons/bi';
-import SearchBar from '../component/inputs/SearchBar';
-import MessageDrop from './MessageDrop';
+import * as React from "react";
+import header from "../main/css/header.css";
+import TextField from "@mui/material/TextField";
+import { useState } from "react";
+import MessageBadge from "../component/MessageBadge";
+import { CgProfile } from "react-icons/cg";
+import { BiSearch } from "react-icons/bi";
+import SearchBar from "../component/inputs/SearchBar";
+import MessageDrop from "./MessageDrop";
 import axios from "axios";
 import { getCookie, removeCookie } from "../member/Cookie";
 import { Link } from "react-router-dom";
@@ -14,31 +14,29 @@ import { useEffect } from 'react';
 import MyPageDrop from './MyPageDrop';
 
 const Header = () => {
+  const [login, setLogin] = useState(false);
 
-    const [login, setLogin] = useState(null);
-    const [kakaoLogin, setKakaoLogin] = useState(false);
-    const [naverLogin, setNaverLogin] = useState(false);
+  const MyCookie = getCookie("jwtToken");
 
-    const MyCookie = getCookie("jwtToken");
-
-    useEffect(() => {
-      if(MyCookie != null) {
-        setLogin(true);
-      }else {
-        setLogin(false);
-      }
-    }, [])
-
-    const loginHandle = () => { // 클릭시 로그인 페이지로 이동(비로그인의 경우)
-      window.location.href = "/login";
+  useEffect(() => {
+    if (MyCookie != null) {
+      setLogin(true);
+    } else {
+      setLogin(false);
     }
+  }, []);
 
-    /* 로그아웃 로직 작동 - 로컬 및 소셜 통합처리 */
-    const logoutHandle = (event) => {
-      const requestUrl = "http://localhost:9000/authenticate/logout";
-      const requestMethod = "GET";
-      console.log(MyCookie);
-      if(window.confirm("로그아웃 하시겠습니까?")) {
+  const loginHandle = () => {
+    // 클릭시 로그인 페이지로 이동(비로그인의 경우)
+    window.location.href = "/login";
+  };
+
+  /* 로그아웃 로직 작동 - 로컬 및 소셜 통합처리 */
+  const logoutHandle = (event) => {
+    const requestUrl = "http://localhost:9000/authenticate/logout";
+    const requestMethod = "GET";
+    console.log(MyCookie);
+    if (window.confirm("로그아웃 하시겠습니까?")) {
       axios({
         method: requestMethod,
         url: requestUrl,
@@ -48,30 +46,31 @@ const Header = () => {
       })
         .then((response) => {
           console.log("서버 응답 데이터:", response.data);
-         
+          removeCookie("jwtToken", { path: "/" });
+          setLogin(false);
           const result = response.data.result;
-          
-          if (MyCookie != null && result !== "로그아웃 되었습니다.") { //소셜 로그아웃 - 소셜 로그아웃 콜백 url에 따라 판단
+
+          if (result !== "로그아웃 되었습니다.") {
+            //소셜 로그아웃 - 소셜 로그아웃 콜백 url에 따라 판단
             console.log(response.data.result);
-            removeCookie("jwtToken"); // 브라우저에서 쿠키 삭제
             const redirectUrl = result;
             window.location.href = redirectUrl; // 소셜 로그아웃 콜백 url로 이동
-
-          } else if(MyCookie != null) {
-            removeCookie("jwtToken"); // 브라우저에서 쿠키 삭제
-            setLogin(true);
-            alert("로그아웃 되었습니다.");
-            window.location.href = "/main";
+          } else if (result === "로그아웃 되었습니다.") {
+            alert(result);
+            window.location.reload();
           } else {
             alert("로그인이 만료되었습니다."); // 이미 쿠키가 만료된 경우
-            window.location.href = "/main";
-        }
+            window.location.href = "/";
+          }
         })
         .catch((error) => {
           console.error("오류 발생:", error);
         });
-      };
-    };
+    }
+  };
+  const clickHandle = () => {
+    window.location.href = "/";
+  };
 
     
 

@@ -1,11 +1,29 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { getCookie } from "../member/Cookie";
 
-const ConsumerComment = () => {
+const ConsumerComment = ({postId}) => {
 
   const cloudIP = 'http://138.2.114.150:9000';
   const localIP = 'http://localhost:9000';
-  const currentUserID = 'user123';
+  
+  const [currentUserID,setCurrentUserID] = useState('');
+
+  let token = '';
+
+  if (getCookie("jwtToken") !== undefined){
+      token = getCookie("jwtToken");
+      console.log(token);
+  }
+
+  const axiosInstance = axios.create({
+      headers:{
+        'Content-Type': 'application/json',
+      }
+    });
+  
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
 
   const [comments, setComments] = useState([]);
   const [input, setInput] = useState('');
@@ -25,7 +43,7 @@ const ConsumerComment = () => {
       };
       ///////////////////////////// real source
       // post 요청
-      axios.post(localIP+'/studentcomment/save',newComment)
+      axiosInstance.post(localIP+'/studentcomment/save',newComment)
       .then((res)=>{
         console.log(res);
         alert('등록되었습니다.');
@@ -47,7 +65,7 @@ const ConsumerComment = () => {
       ///////////////////////////// real source    
       // delete 요청
       const deleteComment = comments.filter((comment) => comment.id === id);
-      axios.delete(localIP+'/studentcomment/delete?id='+deleteComment.comment_id)
+      axiosInstance.delete(localIP+'/studentcomment/delete?id='+deleteComment.comment_id)
       .then((res)=>{
         console.log(res);
         alert('삭제되었습니다');
@@ -66,10 +84,10 @@ const ConsumerComment = () => {
   };
 
   useEffect(() => {
-      axios.get(localIP+'/studentcomment')
+    axiosInstance.get(localIP+`/studentcomment?id=${postId}`)
       .then((res) => {
         console.log(res);
-        setComments(res);
+        setComments(res.data.result);
       })
       .catch((error) => {
         console.log(error);

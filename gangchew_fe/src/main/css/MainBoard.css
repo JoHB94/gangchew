@@ -18,8 +18,11 @@ body {
 }
 
 .inner-content-right {
-    transform: translateX(-38.3%) translateY(1%);
-    
+    transform: translateX(-38.3%) translateY(0.75%);
+}
+
+.inner-content-right h2 {
+    /* 실시간 랭킹 텍스트 조정 항목 */
 }
 
 .inner-content-bottom {
@@ -28,7 +31,6 @@ body {
 
 .inner-content-bottom .SliderItem {
     transform: scale(1.086) translateX(3.95%);
-
 }
 
 .inner-content-left {

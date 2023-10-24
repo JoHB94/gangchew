@@ -12,6 +12,7 @@ import MyActivityPayment from './mypage/MyActivityPayment';
 import FundingInfo from './funding/FundingInfo';
 import RegistrationForm from './member/RegistrationForm';
 import MainBoard from './main/MainBoard';
+import FirstSlider from './component/mainSlider/FirstSlider';
 import SearchList from './main/SearchList';
 import ConsumerUpdate from './consumer/ConsumerUpdate';
 import ConsumerComment from './consumer/ConsumerComment';
@@ -20,6 +21,9 @@ import KakaoRedirect from "./member/Kakao/KakaoRedirect";
 import NaverRedirect from "./member/Naver/NaverRedirect";
 import MessageList from './main/MessageList';
 
+import UserPage from './member/UserPage';
+import FundingPayment from './payment/FundingPayment';
+import PaymentForm  from "./consumer/PaymentForm";
 
 function App() {
   
@@ -32,8 +36,10 @@ function App() {
           {/* 헤더 없는 페이지 */}
           <Route exact path='/login' element={<Login/>}/>
           <Route exact path='/registration' element={<RegistrationForm/>}/>
-          <Route path="/login/kakao/callback" element={<KakaoRedirect/>}/>
-          <Route path='/login/naver/callback' element={<NaverRedirect/>}/>
+          <Route path="/login/kakao/callback" element={<KakaoRedirect/>}/> {/* 카카오 로그인 ridirect처리용 페이지 */}
+          <Route path='/login/naver/callback' element={<NaverRedirect/>}/> {/* 네이버 로그인 ridirect처리용 페이지 */}
+          <Route exact path='/fundingpayment' element={<FundingPayment/>}/>
+          
 
           {/* 헤더를 포함하는 페이지 */}
         <Route element={<Layout />}>
@@ -56,6 +62,8 @@ function App() {
           <Route exact path='/myactivitypayment/:fundingId' element={<MyActivityPayment/>}/>
           
           <Route exact path='/searchlist' element={<SearchList/>}/>
+          <Route exact path='/user' element={<UserPage/>}/>
+          <Route exact path='/paymentform/' element={<PaymentForm/>}/>
         </Route>
       </Routes>
     {/* 푸터 컴포넌트 들어갈 부분*/}

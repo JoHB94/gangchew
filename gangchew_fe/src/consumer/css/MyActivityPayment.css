@@ -134,16 +134,18 @@
 }
 .m_WarningBox{
     width: auto;
-    height: 300px;
+    height: auto;
     background-color: #f3f1f1;
     border-radius: 10px;
     padding: 20px
+
     
 }
 .m_WarningBox_1{
     font: color #dcdcdc;
     padding-right: 30px;
     padding-top: 10px;
+    
 }
 .m_WarningBox_2{
     display: flex;

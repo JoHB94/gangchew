@@ -2,11 +2,10 @@
     
   }
 
-  .custom-datepicker-container {
-    position: absolute; /* 컨테이너의 위치를 상대 위치로 설정 */
+  #fundingInfoLink {
+    text-decoration: none;
   }
-  
-  .react-datepicker__week {
-    background-color: rgba(255, 255, 255, 1)!important; /* 배경색을 원하는 색상으로 설정 */
-    
+
+  * > a {
+    text-decoration: none;
   }

@@ -8,6 +8,7 @@ import { SiNaver } from "react-icons/si";
 import MemberModal from "./MemberModal";
 import KakaoLoginApi from "./Kakao/KakaoLoginApi";
 import NaverLoginApi from "./Naver/NaverLoginApi";
+import img from "../member/img/KakaoTalk_20231022_233606091_03.jpg";
 
 import "../member/css/Login.css";
 import { setCookie } from "./Cookie";
@@ -44,7 +45,7 @@ const Login = () => {
       .then((response) => {
         console.log("서버 응답 데이터:", response.data);
         if (response.data.isSuccess === true) {
-          setCookie("jwtToken", response.data.result, { maxAge: 60 * 60 }); //만료기한 1시간 설정
+          setCookie("jwtToken", response.data.result, { maxAge: 60 * 60, path: "/" }); //만료기한 1시간 설정
           alert(response.data.message); // 차후 뷰에 맞는 메세지로 변경 필요
           window.location.href = "/"; // 로그인 성공시 메인페이지로 이동
         } else if (response.data.isSuccess === false) {
@@ -71,7 +72,7 @@ const Login = () => {
     STATE: "fake",
   }
   
-  //OAuth요청 URL
+  /* OAuth요청 URL */
   const socialOauthUrl = {
     kakaoUrl: `https://kauth.kakao.com/oauth/authorize?grant_type=authorization_code&client_id=${kakaoData.REST_API_KEY}&redirect_uri=${kakaoData.REDIRECT_KAKAO_URI}&response_type=code&scope=account_email,profile_image,profile_nickname`,
     naverUrl: `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naverData.CLIENT_ID}&state=${naverData.STATE}_STRING&redirect_uri=${naverData.REDIRECT_NAVER_URI}`,
@@ -81,7 +82,7 @@ const Login = () => {
   return (
     <div>
       <div className="container">
-        <div className="left">left</div>
+        <div className="left"><img src={img} alt="left" style={{width: "100%", height: "99vh", objectFit: "cover", transform: "scaleY(1.0195)"}}></img></div>
 
         <div className="right">
           <div className="login-form">

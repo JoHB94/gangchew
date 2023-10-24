@@ -3,7 +3,9 @@ import styled from "styled-components";
 
 export const SlideItem = styled.div`
   opacity: 1;
-  transform: scale(0.78, 0.74);
+  transform: scale(0.89, 0.92);
+  color: black;
+  text-decoration: none;
 `;
 
 export const SlideContainer = styled.div`
@@ -24,14 +26,14 @@ export const SlideContainer = styled.div`
     height: 100%;
 
     
-    border: 1px solid black;
+    //border: 1px solid black; 슬라이더 확인용 구분선
     
   }
 
   /* center 모드일때 center에게 강조할 경우 사용 */
 .center .slick-center ${SlideItem} {
     opacity: 1;
-    transform: scale(0.89);
+    transform: scale(0.99);
   }
 
   /* center 모드일때 center 외 속성에게 사용 */
