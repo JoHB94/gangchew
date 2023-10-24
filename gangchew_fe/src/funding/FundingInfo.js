@@ -150,7 +150,7 @@ export default function FundingInfo(){
     }
 
     const fundingLikeClick=()=>{
-        axiosInstance.get(localIP+`funding/toggle-like?id=${data.funding.id}`)
+        axiosInstance.get(localIP+`funding/toggle-like?id=${fundingId}`)
         .then((res)=>{
             if(res.data.message === "로그인 상태가 아닙니다."){
                 alert('로그인 상태가 아닙니다.');
@@ -171,15 +171,20 @@ export default function FundingInfo(){
         })
     }
 
-    // const fundingPartClick=()=>{
-    //     axios.post('')
-    //     .then((res)=>{
-    //         console.log(res);
-    //     })
-    //     .catch((error)=>{
-    //         console.log(error);
-    //     })
-    // }
+    const fundingPartClick=()=>{
+        axiosInstance.get(localIP + `participants/join?funding=${fundingId}`)
+        .then((res)=>{
+            console.log("펀딩참여 url: " + `participants/currentuser?funding=${fundingId}` )
+            console.log(res);
+            if(res.data.result ==="펀딩에 참여되었습니다. "){
+                alert('펀딩에 참여되었습니다.')
+            }
+        })
+        .catch((error)=>{
+            console.log("펀딩참여 url: " + `participants/currentuser?funding=${fundingId}` )
+            console.log(error);
+        })
+    }
 
     // const reFundClick=()=>{
     //     axios.post('')
@@ -292,7 +297,7 @@ export default function FundingInfo(){
                                 </div>
 
                                 <div id="f_info_buttonBox">
-                                    <div >
+                                    <div onClick={fundingPartClick}>
                                         <DoFunding />
                                     </div>
                                     <div id="f_heart_button" onClick={fundingLikeClick}>

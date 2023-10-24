@@ -18,6 +18,7 @@ import ConsumerComment from './consumer/ConsumerComment';
 import Layout from "./component/Layout";
 import KakaoRedirect from "./member/Kakao/KakaoRedirect";
 import NaverRedirect from "./member/Naver/NaverRedirect";
+import MessageList from './main/MessageList';
 
 
 function App() {
@@ -43,6 +44,8 @@ function App() {
           <Route exact path='/fundingcreate' element={<FundingCreate/>}/>
           <Route exact path='/fundinginfo/:fundingId' element={<FundingInfo/>}/>
           <Route exact path='/searchlist/:keyword' element={<SearchList/>}/>
+          <Route exact path='/messagelist' element={<MessageList/>}/>
+
 
           <Route exact path='/consumerupdate/:postId' element={<ConsumerUpdate/>}/> 
           <Route exact path='/consumercreate' element={<ConsumerCreate/>}/>        
