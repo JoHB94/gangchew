@@ -1,110 +1,176 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-
-import { FaHeart  } from 'react-icons/fa';
-import { BiSolidMessageSquareEdit  } from 'react-icons/bi';
-import { RiChatDeleteLine  } from 'react-icons/ri';
-import { LiaCommentDots  } from 'react-icons/lia';
+import { FaHeart } from 'react-icons/fa';
+import { LiaCommentDots } from 'react-icons/lia';
 import '../consumer/css/ConsumerDetail.css';
 import '../component/css/SimpleLine.css';
-import OkButton from '../component/buttons/OkButton';
-import CancelButton from '../component/buttons/CancelButton';
+import EditButton from '../component/buttons/EditButton';
+import DeleteButton from '../component/buttons/DeleteButton';
 import { useParams } from "react-router-dom";
+import ConsumerComment from './ConsumerComment';
+import { Viewer } from '@toast-ui/react-editor';
+import { getCookie } from "../member/Cookie";
+import { useNavigate } from 'react-router-dom'
 
+export default function ConsumerDetail() {
 
-export default function ConsumerDetail({ history, location, match }){
-
-    const {postId}  = useParams();
-
-    //**************************state*************************************** */    
+    // **************************state***************************************
     const [consumer, setConsumer] = useState({
+        postId: 0,
         title: '',
-        category_id: 0,
+        fundingCategory:{},
         writer: '',
-        content: ''
+        content: '',
+        regDt: '',
+        user_id:''
     });
+    const [loginId, setLoginId] = useState('');
+
+    const { postId } = useParams();
+    const navigate = useNavigate();
+    const [isLiked,setIsLiked] = useState(false);
+    const cloudIP = 'http://138.2.114.150:9000';
+    const localIP = 'http://localhost:9000';
+    
+    let token = '';
+
+    if (getCookie("jwtToken") !== undefined){
+        token = getCookie("jwtToken");
+        console.log(token);
+    }
+
+    const axiosInstance = axios.create({
+        headers:{
+          'Content-Type': 'application/json',
+        }
+      });
+    
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     // consumer 조회 및 셋팅
+    useEffect(() => {
+        console.log(postId);
+        axiosInstance.get(localIP + `/studentrequest/read?id=${postId}`)
+            .then((res) => {
+                console.log(res);
+                setConsumer(res.data.result);
+                setIsLiked(res.data.result.like);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
-    useEffect(()=>{
-        console.log(postId)
-        axios.get(`http://localhost:9000/studentrequest/read?id=${postId}`)
+        axiosInstance.post(localIP + '/user/myinfo')
+            .then((res)=>{
+                console.log('유저정보 반환')
+                console.log(res);
+                if(res.data.message === "요청에 성공하였습니다."){
+                    setLoginId(res.data.result.username);
+                }
+                
+            }).catch((error)=>{
+                console.log(error);
+            })
+        
+        
+        // json test
+        // axios.get('/consumer/ConsumerDetail.json')
+        // .then((res)=>{
+        //     console.log(res.data);
+        //     setConsumer(res.data);
+        // })
+        // .catch((error)=>{
+        //     console.log(error);
+        // })
+    }, []);
+
+    // ************************onClick***************************************
+
+    // **************************좋아요 버튼***************************************
+
+    const handleLikeClick = () => {
+        setIsLiked(!isLiked);
+        axiosInstance.get(localIP +`/studentrequest/toggle-like?id=${postId}`)
         .then((res)=>{
-            console.log(res.data);
+            console.log(res);
+            if(res.data.message === "좋아요가 등록되었습니다."){
+                alert('좋아요가 등록되었습니다.');
+            }
+            
+            if(res.data.message === "좋아요 취소가 완료하였습니다."){
+                alert('좋아요가 등록되었습니다.');
+            }
+            
+            if(res.data.message === "로그인 상태가 아닙니다."){
+                alert('로그인을 해주세요');
+                navigator('/login');
+            }
         })
         .catch((error)=>{
             console.log(error);
         })
 
-    },[]);
-
-
-
-//**************************좋아요 버튼************************************** */    
-    const [liked, setLiked] = useState(false);
-
-    const handleLikeClick = () => {
-        setLiked(!liked);
-    }
-   
-   
-
+    };
 
     return (
-    <div>
-        {consumer ? (
         <div>
-            <div className="c_HeaderBlank" /**헤더 */></div>
-                <div className="c_Container">
-                <div className="c_Left" /**왼쪽빈공간 */></div>
-                <div className="c_Center">
-                    <div>
-                        <h2>수요자 게시판</h2>     
-                        <div className="SimpleLine"></div>         
-                    </div>
-                    <div>
-                        <div className="c_Writer">{consumer.writer}</div>
-                        <div className="c_Date"></div>
-                        <div className="c_Cate"></div>
-                        <div className="c_BtnContainer">    
-                            <div className="c_EditButton"><OkButton/></div>
-                            <div className="c_DeleteButton"><CancelButton/></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div className='c_TitleBox'></div>
-                        <div className='c_CategoryBox'></div>
-                        <div className='c_ContentBox'></div>
-                        <div className="c_BtnBox_1">
-                            <div className="c_LikeBtn" onClick={handleLikeClick}>{liked ? <FaHeart size={23} color="red" /> : <FaHeart size={23} />}</div>
-                            <div className="c_CommentBtn"><LiaCommentDots size={30}/></div>
-                        </div>
-                        <div className="c_CommentBox"/*댓글창 */></div>                        
-                        <div className="c_CommentSaveBtn"><OkButton/></div>
-                        <div className="c_CommentDetail"/*댓글입력시 */>
-                            <div className="c_CommentBox1">  
-                                <div className="c_CommentWriter"/*작성자*/>댓글작성자</div>    
-                                <div className="c_CommentDate"/*작성일자*/>작성일자</div>
+            {consumer ? (
+                <div>
+                    <div className="c_DetailHeaderBlank" />
+                    {/* 헤더 */}
+                    <div className="c_DetailContainer">
+                        <div className="c_DetailLeft" />
+                        {/* 왼쪽빈공간 */}
+                        <div className="c_DetailCenter">
+                            <div>
+                                <h2>수요자 게시판</h2>
+                                <div className="SimpleLine"></div>
                             </div>
-                            <div className="c_CommentContent"/*댓글내용*/>댓글내용</div>
-                            <div className="c_CommentBtnBox">
-                                <div className="c_CommentBtn1"/*수정버튼*/><BiSolidMessageSquareEdit size={20}/></div>
-                                <div className="c_CommentBtn2"/*삭제버튼*/><RiChatDeleteLine size={20}/></div>
-                                <div className="c_CommentBtn3"/*좋아요버튼*/ onClick={handleLikeClick}>{liked ? <FaHeart  color="red" /> : <FaHeart  />}11</div>
+                            <div>
+                                <div className="c_DetailWriter_DateBox">
+                                    <span className="c_DetailWriter">작성자: {consumer.writer}</span>
+                                    <span className="c_DetailDate">{consumer.regDt}</span>
+                                </div>
+                                <div className="c_DetailBtnContainer">
+                                   {(loginId === consumer.writer) &&
+                                   <div className="c_DetailEditButton">
+                                        <EditButton />
+                                    </div>
+                                   
+                                   } 
+                                    {
+                                    (loginId === consumer.writer) &&
+                                    <div className="c_DetailDeleteButton">
+                                        <DeleteButton />
+                                    </div>
+                                    }
+                                </div>
                             </div>
-                                
+                            <div>
+                                <div className='c_DetailTitleBox'>{consumer.title}</div>
+                                <div className='c_DetailCategoryBox'>{consumer.fundingCategory.categoryName}</div>
+                                {/* 토스트 뷰어 영역 */}
+                                <div className='c_DetailContentBox'><Viewer initialValue={consumer.content} key={consumer.content} /></div>                               
+                                <div className="c_DetailBtnBox_1">
+                                    <div className="c_DetailLikeBtn" onClick={handleLikeClick}>
+                                       { isLiked ? (<FaHeart size={23} color="red" />) : (<FaHeart size={23} />)}
+                                    </div>
+                                    <div className="c_DetailCommentBtn"><LiaCommentDots size={30} /></div>
+                                </div>
+                                <div className="c_DetailCommentBox">
+                                    <ConsumerComment postId={postId}/>
+                                </div>
+                            </div>
                         </div>
-                        <div className="c_BottomBlank"/*아래빈공간 */></div>                      
+                        <div className="c_DetailRight" />
+                        {/* 오른쪽빈공간 */}
+                        <div className="c_DetailBottomEmptBox"></div>
                     </div>
+                    
                 </div>
-                <div className="c_Right" /**오른쪽빈공간 */></div>
-            </div>
+            ) : (
+                    <div></div>
+                )}
         </div>
-        ):(
-            <div></div>
-        )}
-        
-    </div>
-    )
+    );
 }
-    

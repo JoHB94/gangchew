@@ -79,6 +79,7 @@ const Header = () => {
                 <h2 id="h_h2">GangChew</h2>
               </div>
 
+<<<<<<< HEAD
             <ul id="list">
               <Link id="container33" to="/fundinglist">
                 <li>펀딩list</li>
@@ -103,6 +104,46 @@ const Header = () => {
             </div>
           </div>
         </div>
+=======
+    
+
+    return (
+        <div>
+            <div id ="scroll_wrapper">
+                <div id='container80'>
+                    <div id='container_left'>
+                        <div id='h_title'>
+                            <h2 id='h_h2'>GangChew</h2>
+                            
+                        </div>
+                        
+                        <ul id='list'>
+                            <Link id='container33' to="/fundinglist"><li >펀딩list</li></Link>
+                            <li id='container33'>펀딩작성</li>
+                            <li id='container33'>요청list</li>
+                        </ul>
+                        
+                    </div>
+                    <div id='container_right'>
+                        <div id='search'>                      
+                            <SearchBar/>
+                        </div>
+                        <div id='member'>
+                            <div id='container33' onClick={login? logoutHandle : loginHandle}>
+                                {login?('로그아웃'):('로그인')}
+                            </div>
+                            <div id='container33'>
+                              {login?(<MessageDrop/>):('')}
+                                
+                            </div>
+                            <div id='container33'>
+                              {login?(<CgProfile size={32}/>):('')}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+>>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
       </div>
     </div>
   );

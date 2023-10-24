@@ -33,7 +33,7 @@ export default function FundingList() {
     { id: 7, name: '비즈니스&마케팅'}
   ];
   const [data, setData] = useState({});
-  const [totalItems, setTotalItems] = useState(0);
+  const [totalItems, setTotalItems] = useState(1);
   // const [isLoading, setIsLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(defaultPage);
@@ -41,7 +41,7 @@ export default function FundingList() {
   const [orderby, setOrderby] = useState(defaultOrderby);
   const [currentCategory, setCurrentCategory] = useState(defaultCategory);
   const [state,setState] = useState('');
-  const [token, setToken] = useState('');
+  
   const count = Math.ceil(totalItems/itemsPerPage);
 
 //************************************ axios ************************************************** */
@@ -49,8 +49,13 @@ export default function FundingList() {
   const cloudIP = ' http://138.2.114.150:9000/';
   const localIP = 'http://localhost:9000/';
   const URI = `funding/all?itemsPerPage=${itemsPerPage}&category=${currentCategory}&orderby=${orderby}&currentpage=${currentPage}`;
-  // setToken(getCookie("jwtToken"));
-  // const token = getCookie("jwtToken");
+  
+  const token = '';
+
+    if (getCookie("jwtToken") === !undefined){
+        token = getCookie("jwtToken");
+    }
+
   const axiosInstance = axios.create({
     headers:{
       'Content-Type': 'application/json',

@@ -13,7 +13,7 @@ import { getCookie } from '../member/Cookie';
 
 
 
-export default function ConsumerCreate() {   
+export default function ConsumerUpdate() {   
    
     const navigate = useNavigate();
    

@@ -6,7 +6,7 @@
     
 }
 .m_Container{
-    height: 800px;
+    height: 100%;
     
     display: flex;
 }
@@ -28,38 +28,33 @@
 }
 .m_OrderB2{
     width: auto;
-    border-radius: 10px;  
-    background-color:#dcdcdc;
-    height: 100px;
+    border: solid 1px #dcdcdc;  
+    border-radius: 10px;   
     padding: 20px;
+    margin-bottom: 20px;
     
 }
 .m_OrderBox_1{
     width: 70%;
-    border: solid 1px #d3d3d3;
+    border: solid 1px #dcdcdc;  
     border-radius: 10px;
     padding: 20px;
     
 }
 .m_OrderBox_2{
     width: 30%;
-    border: solid 1px #d3d3d3;
+    border: solid 1px#dcdcdc;  
     border-radius: 10px;
     margin-left: 20px;
 }
 .m_OrderB3{
-    width: auto;
-    background-color:#dcdcdc;
-    height: 100px;
-    border-radius: 10px;
-    margin-top: 20px;
-    padding: 20px;
+    margin-left: 20px;
 }
 
 .m_OrderBox_21{
     width: auto;
     border-radius: 10px;  
-    background-color:#dcdcdc;
+    border: solid 1px#dcdcdc;  
     height: 100px;
     margin: 20px;
     padding: 20px;
@@ -101,7 +96,7 @@
 .m_OrderM_1{
     width: 70%;
     border-radius: 10px;  
-    border: solid 1px #d3d3d3;
+    border: solid 1px #dcdcdc;  
     height: 300px;
     margin-top: 20px;    
     padding: 20px;
@@ -118,7 +113,7 @@
 .m_OrderS{
     width: auto;
     border-radius: 10px;
-    border: solid 1px #d3d3d3;
+    border: solid 1px #dcdcdc;  
     height: 45px;
     align-items: center;
     padding-left: 20px;
@@ -127,7 +122,7 @@
 .m_OrderP{
     width: auto;
     border-radius: 10px;
-    border: solid 1px #d3d3d3;
+    border: solid 1px #dcdcdc;  
     height: 100px;
     align-items: center;
     padding-left: 20px;
@@ -139,22 +134,19 @@
 }
 .m_WarningBox{
     width: auto;
-    height: 300px;
+    height: auto;
     background-color: #f3f1f1;
     border-radius: 10px;
     padding: 20px
+
     
 }
 .m_WarningBox_1{
     font: color #dcdcdc;
     padding-right: 30px;
     padding-top: 10px;
+    
 }
-
-<<<<<<< HEAD
-=======
-
->>>>>>> d61f12ff76502c042674e5663d8f4c68959279f6
 .m_WarningBox_2{
     display: flex;
     align-items: center;
@@ -174,7 +166,7 @@
 
 }
 .m_OrderPay{
-    width: 500px;
+    width: auto;
     height: 150px; 
     margin-left: 20px;
 }
@@ -193,4 +185,32 @@
 }
 .m_PayRadio{
     margin-top: 20px;
+    width: 50px;
+}
+.list_item {
+    font-size: 12px;
+    color: #686767;
+  }
+  .m_OrderB1{
+    padding: 20px;
+    font-size: 15px;
+    width: 100%;
+    height: auto;
+  }
+  .m_PaymentItem{
+    padding: 20px;
+    font-size: 15px;
+  }
+  .m_OrderB3 > div {
+    display: inline-flex;
+    width: fit-content; /* 또는 필요한 너비 값으로 대체 가능 */
+}
+.m_OrderB4{
+    width: auto;   
+    height: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 20px; 
+    display: flex;  
+    justify-content: right;
 }

@@ -1,0 +1,20 @@
+[  
+    {
+      "comment_id":"100",
+      "writer":"w1",
+      "writeDt":"2023-10-11",
+      "content":"댓글내용1"
+    },
+    {
+      "comment_id":"101",
+      "writer":"w2",
+      "writeDt":"2023-10-11",
+      "content":"댓글내용2"
+    },
+    {
+      "comment_id":"102",
+      "writer":"w3",
+      "writeDt":"2023-10-11",
+      "content":"댓글내용3"
+    }
+]

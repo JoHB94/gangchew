@@ -6,7 +6,12 @@ import Stack from "@mui/material/Stack";
 
 import "../component/css/SimpleLine.css";
 
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
+=======
+import { Link } from 'react-router-dom';
+import { getCookie } from "../member/Cookie";
+>>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
 
 export default function ListBox() {
   //*****************************state********************************************* */
@@ -20,6 +25,7 @@ export default function ListBox() {
   const [currentPage, setCurrentPage] = useState(defaultCurrentPage);
   //************************************ axios ************************************************** */
 
+<<<<<<< HEAD
   const reqServer = () => {
     axios
       .get(
@@ -34,6 +40,37 @@ export default function ListBox() {
       });
   };
 
+=======
+  const cloudIP = 'http://138.2.114.150:9000';
+  const localIP = 'http://localhost:9000';
+
+  const token = '';
+
+  if (getCookie("jwtToken") === !undefined){
+      token = getCookie("jwtToken");
+      console.log(token);
+  }
+
+  const axiosInstance = axios.create({
+      headers:{
+        'Content-Type': 'application/json',
+      }
+    });
+
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+  const  reqServer=()=>{
+    axiosInstance.get(localIP+'studentrequest/all')
+    .then((res)=>{
+      console.log("통신성공 {}",res);
+      setConsumers(res);
+      //setConsumers(res.state);
+    }).catch((error)=>{ 
+      console.log(error);
+    })
+  }
+  
+>>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
   /*************************************useEffect********************************* */
   //페이지가 렌더될 때 실행될 함수.
   useEffect(() => {
@@ -44,16 +81,38 @@ export default function ListBox() {
   const handlePage = (event, page) => {
     console.log(page);
     setCurrentPage(page);
+<<<<<<< HEAD
 
     // reqServer();
   };
 
+=======
+    reqServer();
+  } 
+  
+>>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
   const handleChange = (event) => {
     const newValue = event.target.value;
     console.log(newValue);
     setOrderby(newValue);
     setCurrentPage(defaultCurrentPage);
+<<<<<<< HEAD
     //reqServer();
+=======
+
+  };  
+  const ListBoxStyle ={
+    width: 'auto',
+    marginTop: '20px',
+    marginBottom: '20px',
+    padding: '20px',
+    paddingLeft: '50px',
+    paddingRight: '50px',
+    height: 'auto',        
+    borderRadius: '10px',    
+    border: 'solid 1px #d3d3d3',
+
+>>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
   };
   const ListBoxStyle = {
     width: "auto",

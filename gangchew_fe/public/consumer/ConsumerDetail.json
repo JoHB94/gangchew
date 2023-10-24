@@ -1,23 +1,28 @@
 {
-  "id": 1,
-  "title": "Leanne Graham",
+  "postId": 1,
+  "title": "제목1234",
   "content": "aaaaaaaaa",
-  "categoryId": "Bret",
-  "writer": "Sincere",
+  "categoryId": "7",
+  "categoryName": "비즈니스&마케팅",
+  "writer": "작성자aaa",
+  "regDt": "2023-10-01",
   "likecount": 100,
   "studentcount": 200 ,
-  "comments":[
+  "comments":[  
     {
+      "comment_id":"100",
       "writer":"w1",
       "writeDt":"20231011",
       "content":"댓글내용1"
     },
     {
+      "comment_id":"101",
       "writer":"w2",
       "writeDt":"20231011",
       "content":"댓글내용2"
     },
     {
+      "comment_id":"102",
       "writer":"w3",
       "writeDt":"20231011",
       "content":"댓글내용3"

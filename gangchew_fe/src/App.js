@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Header from './main/Header';
 import FundingList from './funding/FundingList';
 import FundingCreate from './funding/FundingCreate';
 import Login from './member/Login';
@@ -11,18 +10,24 @@ import ConsumerList from './consumer/ConsumerList';
 import MyActivityDetail from './mypage/MyActivityDetail';
 import MyActivityPayment from './mypage/MyActivityPayment';
 import FundingInfo from './funding/FundingInfo';
-import FundingTest from './funding/FundingTest';
-import SelectRegistration from './member/SelectRegistration';
 import RegistrationForm from './member/RegistrationForm';
 import MainBoard from './main/MainBoard';
+<<<<<<< HEAD
 import FirstSlider from './component/mainSlider/FirstSlider';
+=======
+>>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
 import SearchList from './main/SearchList';
-import FundingUpdate from './funding/FundingUpdate';
+import ConsumerUpdate from './consumer/ConsumerUpdate';
+import ConsumerComment from './consumer/ConsumerComment';
 import Layout from "./component/Layout";
 import KakaoRedirect from "./member/Kakao/KakaoRedirect";
 import NaverRedirect from "./member/Naver/NaverRedirect";
+<<<<<<< HEAD
 import UserPage from './member/UserPage';
 import FundingPayment from './payment/FundingPayment';
+=======
+import PaymentForm  from "./consumer/PaymentForm";
+>>>>>>> 141bbb26011dda58fe81547aeee95673a2ac0681
 
 function App() {
   
@@ -42,21 +47,27 @@ function App() {
 
           {/* 헤더를 포함하는 페이지 */}
         <Route element={<Layout />}>
+          
+
           <Route exact path='/' element={<MainBoard/>}/>
           <Route exact path='/fundinglist' element={<FundingList/>}/>
           <Route exact path='/fundingcreate' element={<FundingCreate/>}/>
           <Route exact path='/fundinginfo/:fundingId' element={<FundingInfo/>}/>
           <Route exact path='/searchlist/:keyword' element={<SearchList/>}/>
+          <Route exact path='/consumerupdate/:postId' element={<ConsumerUpdate/>}/> 
           <Route exact path='/consumercreate' element={<ConsumerCreate/>}/>        
           <Route exact path='/consumerdetail/:postId' element={<ConsumerDetail/>}/>
+          <Route exact path='/consumerComment' element={<ConsumerComment/>}/>
           <Route exact path='/consumerlist' element={<ConsumerList/>}/>
           <Route exact path='/myactivitydetail' element={<MyActivityDetail/>}/>
-          <Route exact path='/myactivitypayment' element={<MyActivityPayment/>}/>
+          <Route exact path='/myactivitypayment/:fundingId' element={<MyActivityPayment/>}/>
           <Route exact path='/searchlist' element={<SearchList/>}/>
           <Route exact path='/user' element={<UserPage/>}/>
+          <Route exact path='/paymentform/' element={<PaymentForm/>}/>
         </Route>
       </Routes>
     {/* 푸터 컴포넌트 들어갈 부분*/}
+    
     </BrowserRouter>
   </div>
   );
