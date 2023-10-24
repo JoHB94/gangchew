@@ -3,6 +3,7 @@ import Card from "../../component/css/card.css";
 import EmptyHeart from "../buttons/EmptyHeart";
 import FullHeart from "../buttons/FullHeart";
 import { useEffect } from "react";
+import axios from "axios";
 
 /**
  *
@@ -36,13 +37,33 @@ export default function FirstCard(props) {
   }, []);
 
   const likeHandler = () => {
-    setLike(!like);
-    /**axios통신 부분 추가 */
+    const requestUrl = `http://localhost:9000/funding/toggle-like?id=${fundingData.id}`;
+    const requestMethod = "GET";
+
+    axios({
+      method: requestMethod,
+      url: requestUrl,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      console.log("서버 응답 데이터:", response.data);
+      setLike(!like);
+    })
+    .catch((error) => {
+      console.error("오류 발생:", error);
+    })
+
   };
+
+  const infoHandle =() => {
+      window.location.href = `/fundinginfo/${fundingData.id}`;
+  }
 
   return (
     <div>
-      <div id="card_container">
+      <div id="card_container" onClick={infoHandle}>
         {/**카드 컨테이너 */}
         <div id="card_imgContainer">
           {/**카드 이미지 */}

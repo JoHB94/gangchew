@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
 import FirstCard from "../card/FirstCard";
+import { Link } from "react-router-dom";
 
 import "../css/MainSlider.css";
 import { SlideItem, SlideContainer } from "../MainSliderStyled";
@@ -16,8 +17,9 @@ export default class FirstSlider extends Component {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
+          initialSlide: 0,
           infinite: true,
-          dots: false,
+          dots: true,
           autoplaySpeed: 2600,
         },
       },
@@ -26,8 +28,9 @@ export default class FirstSlider extends Component {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
+          initialSlide: 0,
           infinite: true,
-          dots: false,
+          dots: true,
           autoplaySpeed: 2400,
         },
       },
@@ -36,7 +39,7 @@ export default class FirstSlider extends Component {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          dots: false,
+          dots: true,
           initialSlide: 1, // 초기 슬라이드 위치
           autoplaySpeed: 1700,
         },
@@ -46,7 +49,7 @@ export default class FirstSlider extends Component {
 
   render() {
     const { dataArray } = this.props;
-
+    console.log(dataArray)
     const settings = {
       className: "center",
       centerMode: true,
@@ -56,7 +59,8 @@ export default class FirstSlider extends Component {
       autoplay: true,
       autoplaySpeed: 3000,
       speed: 500,
-      dots: false,
+      dots: true,
+      arrow: true,
       responsive: this.responsiveSettings,
     };
 
@@ -64,8 +68,8 @@ export default class FirstSlider extends Component {
       (
         item // 배열 개수만큼 컴포넌트 출력
       ) => (
-        <SlideItem key={item.fundingId}>
-          <FirstCard key={item.fundingId} data={item} />
+        <SlideItem key={item}>
+          <FirstCard  data={item} />
         </SlideItem>
       )
     );
@@ -75,6 +79,7 @@ export default class FirstSlider extends Component {
         <Slider {...settings}>
           {/* {loopUI()} */}
           {ObArray}
+          
         </Slider>
       </SlideContainer>
     );

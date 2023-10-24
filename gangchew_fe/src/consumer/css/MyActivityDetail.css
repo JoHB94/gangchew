@@ -4,26 +4,21 @@
     display: flex;
     
 }
-.m_Container{
-    height: 800px;
-    
-    display: flex;
-}
-.m_Left{
-    width: 20%;
-   
-   
-    
+.m_ContainerDetail{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 20% 60% 20%; /* 화면 비율 그리드로 조정 */
+    justify-items: center
 }
 
-.m_Right{
-    width: 20%;
-    
-   
+.m_RightDetail, .m_LeftDetail {
+
 }
 
-.m_Center{
-    width: 60%;
+.m_CenterDetail{
+    min-width: 1000px;
+    max-width: 1200px;
+    height: 100vh;
 }
 .m_FundingBox{
     width: 100%;

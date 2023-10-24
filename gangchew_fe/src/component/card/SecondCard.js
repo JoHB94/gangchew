@@ -40,9 +40,13 @@ export default function SecondCard(props) {
     /**axios통신 부분 추가 */
   };
 
+  const infoHandle =() => {
+    window.location.href = `/fundinginfo/${fundingData.id}`;
+}
+
   return (
     <div>
-      <div id="card_container">
+      <div id="card_container" onClick={infoHandle}>
         {/**카드 컨테이너 */}
         <div id="card_imgContainer">
           {/**카드 이미지 */}

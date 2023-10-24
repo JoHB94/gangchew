@@ -17,7 +17,7 @@ export default class ThirdSlider extends Component {
           slidesToShow: 3,
           slidesToScroll: 1,
           infinite: true,
-          dots: false,
+          dots: true,
           autoplaySpeed: 2600,
         },
       },
@@ -27,7 +27,7 @@ export default class ThirdSlider extends Component {
           slidesToShow: 2,
           slidesToScroll: 1,
           infinite: true,
-          dots: false,
+          dots: true,
           autoplaySpeed: 2400,
         },
       },
@@ -36,7 +36,7 @@ export default class ThirdSlider extends Component {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-          dots: false,
+          dots: true,
           initialSlide: 1, // 초기 슬라이드 위치
           autoplaySpeed: 1700,
         },
@@ -45,6 +45,7 @@ export default class ThirdSlider extends Component {
   }
 
   render() {
+    
     const { dataArray } = this.props;
 
     const settings = {
@@ -56,7 +57,7 @@ export default class ThirdSlider extends Component {
       autoplay: true,
       autoplaySpeed: 3000,
       speed: 500,
-      dots: false,
+      dots: true,
       responsive: this.responsiveSettings,
     };
     console.log(dataArray);
@@ -64,8 +65,8 @@ export default class ThirdSlider extends Component {
       (
         item // 배열 개수만큼 컴포넌트 출력
       ) => (
-        <SlideItem key={item.fundingId}>
-          <ThirdCard key={item.fundingId} data={item} />
+        <SlideItem key={item}>
+          <ThirdCard data={item} />
         </SlideItem>
       )
     );

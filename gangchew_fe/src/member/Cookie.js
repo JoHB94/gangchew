@@ -13,6 +13,6 @@ export const getCookie = (name) => {
 };
 
 //쿠키 삭제
-export const removeCookie = (name) =>{
-    return cookies.remove(name);
+export const removeCookie = (name, option) =>{
+    return cookies.remove(name, { ...option });
 }
