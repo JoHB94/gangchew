@@ -9,9 +9,11 @@ export default class SimpleSlider extends Component {
     const settings = {
       dots: true,
       infinite: true,
+      autoplay: true,
       speed: 500,
       slidesToShow: 1,
-      slidesToScroll: 1
+      slidesToScroll: 1,
+      autoplaySpeed: 2400,
     };
 
     const imgs = ['/gangchewSlider01.png','/gangchewSlider02.png','/gangchewSlider03.png',];

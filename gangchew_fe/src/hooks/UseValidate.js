@@ -44,7 +44,7 @@ const UseValidate = (changeValue) => {
     ) {
       setValidText((prevState) => ({
         ...prevState,
-        validUsername: "5~15자의 영문 소문자, 숫자만 가능합니다.",
+        validUsername: "5~15자의 영문 소문자 및 숫자만 가능합니다.",
       }));
       setIsValid((prevState) => ({ ...prevState, isUsername: false }));
     } else {
@@ -56,7 +56,7 @@ const UseValidate = (changeValue) => {
   useEffect(() => {
     const passwordReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,20}$/;
 
-    if (userPassword.length === 0) {
+    if (!userPassword || userPassword.length === 0) {
       setValidText((prevState) => ({ ...prevState, validPassword: "" }));
       setIsValid((prevState) => ({ ...prevState, isPassword: false }));
     } else if (!passwordReg.test(userPassword)) {
@@ -75,7 +75,7 @@ const UseValidate = (changeValue) => {
   useEffect(() => {
     const passwordReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,20}$/;
 
-    if (userPasswordCheck.length === 0) {
+    if (!userPasswordCheck || userPasswordCheck.length === 0) {
       setValidText((prevState) => ({ ...prevState, validPasswordCheck: "" }));
       setIsValid((prevState) => ({ ...prevState, isPasswordCheck: false }));
     } else if (!passwordReg.test(userPasswordCheck)) {
