@@ -79,7 +79,7 @@ const axiosInstance = axios.create({
                 }
                 if(res.data.message === "요청에 성공하였습니다."){
                     alert('저장되었습니다.')
-                    navigate('/consumerdetail');
+                    navigate('/consumerlist');
                 }
                 console.log(consumer);
                 console.log(res);

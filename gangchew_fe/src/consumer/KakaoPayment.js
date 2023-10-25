@@ -1,86 +1,54 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const KakaoPayment = ({ fundingId }) => {
+const KakaoPayment = () => {
+  const [paymentData, setPaymentData] = useState({
+    next_redirect_pc_url: "",
+    tid: "",
+  });
+
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.iamport.kr/js/iamport.payment-1.2.0.js';
-    script.async = true;
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      const price = 0;
-      const IMP = window.IMP;
-      IMP.init('imp67011510');
-
-      // ...
-
-      document.addEventListener('click', (event) => {
-        if (event.target && event.target.id === 'joinFundingButton') {
-          const id = event.target.getAttribute('data-funding-id');
-          const confirmed = window.confirm('확인을 누르시면 결제창으로 이동합니다. (결제 후 펀딩 참여 확정)');
-          if (confirmed) {
-            IMP.request_pay({
-              pg: 'kakaopay.TC0ONETIME',
-              merchant_uid: 'merchant_' + new Date().getTime(),
-              name: '강츄 펀딩 결제',
-              amount: price,
-              buyer_email: 'Iamport@chai.finance',
-              buyer_name: '아임포트 기술지원팀',
-              buyer_tel: '010-1234-5678',
-              buyer_addr: '서울특별시 강남구 삼성동',
-              buyer_postcode: '123-456',
-            }, (rsp) => {
-              if (rsp.success) {
-                console.log(rsp);
-                axios.get('/login/cookie')
-                  .then((cookieResponse) => {
-                    const data = cookieResponse.data;
-                    const msg = data.message;
-                    const isSuccess = data.isSuccess;
-                    let jwtToken = '';
-
-                    if (isSuccess === true) {
-                      jwtToken = data.result;
-                    }
-                    axios.get(`/participants/join?funding=${id}`, {
-                      headers: {
-                        Authorization: `Bearer ${jwtToken}`,
-                      },
-                    }).then((joinResponse) => {
-                      const data = joinResponse.data;
-                      const msg = data.message;
-                      const isSuccess = data.isSuccess;
-                      const confirmed_result = window.confirm(data.message);
-                      console.log(data);
-
-                      if (confirmed_result) {
-                        console.log(data.result);
-                      }
-                      // handle success or failure
-                    }).catch((error) => {
-                      console.error('Error:', error);
-                    });
-                  })
-                  .catch((error) => {
-                    console.error('Error:', error);
-                  });
-              } else {
-                console.log(rsp);
-              }
-            });
-          }
-        }
-      });
+    const params = {
+      cid: "TC0ONETIME",
+      partner_order_id: "partner_order_id",
+      partner_user_id: "partner_user_id",
+      item_name: "초코파이",
+      quantity: 1,
+      total_amount: 2200,
+      vat_amount: 200,
+      tax_free_amount: 0,
+      approval_url: `http://localhost:3000/successPayment`,
+      fail_url: "http://localhost:3000/myactivitydetail",
+      cancel_url: "http://localhost:3000/myactivitydetail",
     };
-  }, [fundingId]);
 
-  return <div>KakaoPayment</div>;
+    axios({
+      url: "https://kapi.kakao.com/v1/payment/ready",
+      method: "POST",
+      headers: {
+        Authorization: "KakaoAK c0d026ab03eee1c1a97749b87e53aa89",
+        "Content-type": "application/json",
+      },
+      params,
+    }).then((response) => {
+      const {
+        data: { next_redirect_pc_url, tid },
+      } = response;
+
+      setPaymentData({ next_redirect_pc_url, tid });
+
+      // 백엔드 호출
+    });
+  }, []); // 빈 배열은 컴포넌트가 마운트될 때 한 번만 실행됨
+
+  const { next_redirect_pc_url } = paymentData;
+
+  return (
+    <div>
+      <h2>Pay page</h2>
+      <a href={next_redirect_pc_url}>{next_redirect_pc_url}</a>
+    </div>
+  );
 };
 
 export default KakaoPayment;
-
-
-
-
-
