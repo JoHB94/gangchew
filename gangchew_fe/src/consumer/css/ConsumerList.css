@@ -6,7 +6,7 @@
 }
 
 .c_ListContainer{
-    height: 800px;
+    height: auto;
     
     display: flex;
 }
@@ -14,19 +14,20 @@
 
 .c_ListLeft{
     width: 20%;
-   
+    height: 100%;
    
     
 }
 
 .c_ListRight{
     width: 20%;
-    
+    height: 100%;
    
 }
 
 .c_ListCenter{
     width: 60%;
+    height: 100%;
 }
 .c_ListListBox{
     width: auto;
@@ -58,6 +59,7 @@
     display: flex;
     justify-content: right;
     align-items: center;
+    width: auto;
 }
 
 .c_ListMid{
@@ -71,11 +73,6 @@
     padding-left: 50px;
     
 }
-
-/* .c_ListBlank{
-    width: auto%;
-} */
-
 .C_ListListRowBottom{
     width: auto;
     height: 50px;
@@ -93,6 +90,8 @@
     display: flex;
     justify-content: right;
     width: 50%;
+
+    
 }
 .c_ListListTitle{
     width: 50%;
@@ -101,6 +100,12 @@
 .c_ListPagination{
     display: flex;
     justify-content: center;
+}
+.c_ListListBtn1{
+    margin-right: 10px;
+}
+.c_ListListBtn2{
+    margin-right: 10px;
 }
 
 .c_Pagination{
