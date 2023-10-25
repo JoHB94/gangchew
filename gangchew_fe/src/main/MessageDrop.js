@@ -64,7 +64,7 @@ export default function MessageDrop() {
           <Menu {...bindMenu(popupState)}>
             {msgList ? (
                  msgList.map((item, index) => (
-                  index==0 ? (''):(
+                  msgCount ==0 ? (''):(
                     <MenuItem key={index} className='drop_menu' >
                     <MessageDiv messages={item} />
                   </MenuItem>

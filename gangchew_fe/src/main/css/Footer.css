@@ -1,18 +1,13 @@
 #footer_container{
     width: 100%;
-    height: 350px;
+    height: 250px;
     /* background-image: url('/public/gangChewFooter002.png'); */
     background-size: contain;
     display: flex;
 }
 
-#footer_left{
-    width: 30%;
+#footer_section{
+    width: 25%;
     background-color: #E1E1E1;
 }
 
-#footer_right{
-    background-image: url('/public/gangChewFooter001.png');
-    background-size: contain;
-    width: 70%;
-}
