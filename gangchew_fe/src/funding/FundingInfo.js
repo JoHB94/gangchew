@@ -35,8 +35,8 @@ export default function FundingInfo(){
             id : 0,
             likeCount : 0,
             location : '',
-            maxParticipants : 0,
-            minParticipants : 0,
+            max_participants : 0,
+            min_participants : 0,
             state : '',
             subtitle : '',
             thumbnail : '',
@@ -50,11 +50,14 @@ export default function FundingInfo(){
         }
         
     });
+    const[participants,setParticipants] = useState(0);
+    const[state,setState] = useState('');
     const[liked, setLiked] = useState(false);
     const[deadline,setDeadline] = useState('');
     const[diffDayValue, setDiffDayValue] = useState('');
     const[isOffline,setIsOffline] = useState(false);
     const[userId, setUserId] = useState('');
+    const[isPart, setIspart] =useState(false);
     // const [token, setToken] = useState('');
     const {fundingId} = useParams();
     // const[title, setTitle] = useState('');
@@ -88,6 +91,9 @@ export default function FundingInfo(){
             setDeadline(res.data.result.funding.deadline);
             setLiked(res.data.result.liked);
             setHtml(res.data.result.funding.content);
+            setState(res.data.result.funding.state);
+            console.log(res.data.result.participants);
+            setParticipants(res.data.result.participants);
        
         }).catch((error)=>{
             console.log(error);
@@ -98,9 +104,11 @@ export default function FundingInfo(){
         .then((res)=>{
             console.log(res);
             setUserId(res.data.result.fullname);
+            
         }).catch((error)=>{
             console.log(error);
         })
+
     },[])
 
     useEffect(()=>{
@@ -108,6 +116,8 @@ export default function FundingInfo(){
             setIsWriter(true);
             console.log("작성자와 로그인 아이디 일치여부"+isWriter);
         }
+
+        
     },[userId,data])
 
 
@@ -119,7 +129,7 @@ export default function FundingInfo(){
     const fundingStartClick=()=>{
         const userRes = window.confirm("펀딩이 시작되면 수정할 수 없습니다. 정말로 시작하시겠습니까?");
             if(userRes){
-                axiosInstance.post(localIP + `funding/update?state=IN_PROGRESS&id=${fundingId}`)
+                axiosInstance.get(localIP + `funding/update/state?state=IN_PROGRESS&id=${fundingId}`)
                 .then((res)=>{
                     console.log(res);
                     if(res.data.message === "로그인 상태가 아닙니다."){
@@ -171,20 +181,23 @@ export default function FundingInfo(){
         })
     }
 
-    // const fundingPartClick=()=>{
-    //     axiosInstance.get(localIP + `participants/join?funding=${fundingId}`)
-    //     .then((res)=>{
-    //         console.log("펀딩참여 url: " + `participants/currentuser?funding=${fundingId}` )
-    //         console.log(res);
-    //         if(res.data.result ==="펀딩에 참여되었습니다. "){
-    //             alert('펀딩에 참여되었습니다.')
-    //         }
-    //     })
-    //     .catch((error)=>{
-    //         console.log("펀딩참여 url: " + `participants/currentuser?funding=${fundingId}` )
-    //         console.log(error);
-    //     })
-    // }
+    const fundingPartClick=()=>{
+        axiosInstance.get(localIP + `participants/join?funding=${fundingId}`)
+        .then((res)=>{
+            console.log("펀딩참여 url: " + `participants/currentuser?funding=${fundingId}` )
+            console.log(res);
+            if(res.data.message ==="펀딩에 참여되었습니다. "){
+                alert('펀딩에 참여되었습니다.')
+            }
+            if(res.data.message ==="이미 펀딩에 참여하였습니다."){
+                alert('이미 참여하신 펀딩입니다.')
+            }
+        })
+        .catch((error)=>{
+            console.log("펀딩참여 url: " + `participants/currentuser?funding=${fundingId}` )
+            console.log(error);
+        })
+    }
 
     // const reFundClick=()=>{
     //     axios.post('')
@@ -279,8 +292,8 @@ export default function FundingInfo(){
                                     <li id="f_info_li" className="f_Dday"><h3>{diffDayValue}</h3></li>
                                     <li id="f_info_li">마감일 {data.deadline}</li>
                                     <li id="f_info_li">금액 {data.funding.amount}원</li>
-                                    <li id="f_info_li">최대 모집 인원 {data.funding.maxParticipants}명</li>
-                                    <li id="f_info_li">현재 남은 인원 명{/**funding.max_participants - 참여인원 */}</li>
+                                    <li id="f_info_li">최대 모집 인원 {data.funding.max_participants}명</li>
+                                    <li id="f_info_li">현재 남은 인원 {participants} 명</li>
                                     {isOffline?(<div>
                                         <li id="f_info_li">강의 형태 <b>offline</b></li>
                                         <li id="f_info_li">강의 지역: {data.funding.location}</li>
@@ -322,8 +335,12 @@ export default function FundingInfo(){
                     </div>
                     <div id="f_writer_boxes">
                         {isWriter && <div id="f_writer_buttons">
-                            <span onClick={fundingStartClick}><StartFunding/></span>
-                            <span><UpdateFunding/></span>
+                            { state && state ==="ACTIVE" ? (
+                                <span onClick={fundingStartClick}><StartFunding/></span>
+                            ):('')}
+                            {state && state === "ACTIVE" ? (
+                                <span><UpdateFunding/></span>
+                            ):('')}
                             <span onClick={fundingCancelClick}><CancelFunding/></span>
                         </div>}
                         {isWriter && <div id="f_writer_msg">
@@ -332,10 +349,11 @@ export default function FundingInfo(){
                         </div>}
                     </div>
                     <div id="f_height150"></div>
+                    <div id="f_height150"></div>
                 </div>
                 <div id="f_right">{/**오른쪽 */}</div>
             </div>
-
+            {console.log("현재 게시글 상태"+state)}
         </div>
     )
 }

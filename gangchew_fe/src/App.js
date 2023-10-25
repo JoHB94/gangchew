@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import FundingList from './funding/FundingList';
 import FundingCreate from './funding/FundingCreate';
@@ -24,10 +24,13 @@ import KakaoPayment  from "./consumer/KakaoPayment";
 import SuccessPayment from './consumer/SuccessPayment';
 
 import MessageList from './main/MessageList';
-
 import UserPage from './member/UserPage';
 import FundingPayment from './payment/FundingPayment';
 import PaymentForm  from "./consumer/PaymentForm";
+import { useEffect } from 'react';
+import FundingUpdate from './funding/FundingUpdate';
+
+
 
 
 function App() {
@@ -53,6 +56,7 @@ function App() {
           <Route exact path='/' element={<MainBoard/>}/>
           <Route exact path='/fundinglist' element={<FundingList/>}/>
           <Route exact path='/fundingcreate' element={<FundingCreate/>}/>
+          <Route exact path='/fundingupdate/:fundingId' element={<FundingUpdate/>}/>
           <Route exact path='/fundinginfo/:fundingId' element={<FundingInfo/>}/>
           <Route exact path='/searchlist/:keyword' element={<SearchList/>}/>
           <Route exact path='/messagelist' element={<MessageList/>}/>

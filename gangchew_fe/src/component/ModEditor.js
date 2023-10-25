@@ -10,10 +10,10 @@ import '@toast-ui/editor/dist/toastui-editor.css';
  * @param {*} param0 
  * @returns 
  */
-export default function ToastEditor({name ,handleInputChange}) {
+export default function ModEditor({name ,handleInputChange,modValue}) {
   // Editor DOM 선택용
   const editorRef = useRef();
-  const [initalValue,setInitalValue] =useState('');
+  const [initalValue,setInitalValue] =useState(false);
   
     // 등록 버튼 핸들러
   const handleChange = () => {
@@ -30,7 +30,14 @@ export default function ToastEditor({name ,handleInputChange}) {
     
   };
 
+  useEffect(()=>{
+      editorRef.current?.getInstance().setHTML(modValue);    
+  },[])
 
+  useEffect(()=>{
+    setInitalValue(true);
+    console.log("이니셜 밸류 셋됨" + initalValue)
+  },[editorRef])
 
   return (
     <>

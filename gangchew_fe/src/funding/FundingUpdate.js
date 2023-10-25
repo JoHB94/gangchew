@@ -20,6 +20,9 @@ import { useDaumPostcodePopup } from "react-daum-postcode";
 import axios from 'axios';
 import AddressField from '../component/inputs/AddressField';
 import AddressButton from '../component/buttons/AdressButton';
+import { getCookie } from '../member/Cookie';
+import { useParams } from 'react-router-dom';
+import ModEditor from '../component/ModEditor';
 
 export default function FundingUpdate() {
 
@@ -29,7 +32,7 @@ export default function FundingUpdate() {
         title: '',
         subtitle: '',
         category_id: 0,
-        writer: '',
+        username: '',
         location: '',
         deadline: '',
         goal: 0,
@@ -39,17 +42,53 @@ export default function FundingUpdate() {
         thumbnail: '',
         content: ''
     });
-//************************************useEffect 추가 통신 후 funding 초기값 세팅******************* */
 
-    useEffect(()=>{
-        axios.post('')
-        .then((res)=>{
-            setFunding(res);
-        })
-        .catch((error)=>{
-            console.log(error);
-        })
+    const {fundingId} = useParams();
+
+    const[show,setShow] =useState(false);
+//************************************useEffect 추가 통신 후 funding 초기값 세팅******************* */
+const cloudIP = ' http://138.2.114.150:9000/';
+const localIP = 'http://localhost:9000/';
+
+let token = '';
+
+if (getCookie("jwtToken") !== undefined){
+    token = getCookie("jwtToken");
+}
+
+const axiosInstance = axios.create({
+    headers:{
+      'Content-Type': 'application/json',
+    }
+  });
+
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+
+
+
+useEffect(()=>{
+    axiosInstance.get(localIP + `funding/detail?funding=${fundingId}`)
+    .then((res)=>{
+        console.log(res.data.result.funding);
+        setFunding(res.data.result.funding);
+
+        // setDeadline(res.data.result.funding.deadline);
+        // setLiked(res.data.result.liked);
+        // setHtml(res.data.result.funding.content);
+   
+    }).catch((error)=>{
+        console.log(error);
+        
     })
+
+},[])
+
+useEffect(()=>{
+    if(funding.thumbnail){
+        setShow(true);
+    }
+},[funding])
 
 
 
@@ -98,16 +137,26 @@ export default function FundingUpdate() {
     };
 
 
-    /*submit 핸들러 : 버튼 클릭시 axios 통신을 합니다.*/ 
+    /*수정하기 submit********************************************************/ 
+
+
+    
+     
     const submit = (e) => {
-       
-        axios.post('/funding/create',funding)
+        checkFunding();
+        axiosInstance.create({headers:{'Content-Type': 'application/json',},})
+        .post(localIP + `funding/update?id=${fundingId}`,funding)
         .then((res) => {
             console.log(res);
+            if(res.data.message === "요청에 성공하였습니다."){
+                alert('수정완료');
+                window.location.href = '/fundinglist'
+            }
         }).catch((error) => {
             console.log(error);
         })
     }
+
 
 
         /* daum 주소 api 연결 */
@@ -139,7 +188,7 @@ export default function FundingUpdate() {
           }));
         setIsAddressNull(false);
     };
-
+//****************************************************************************** */
     const handleClick = () => {
         open({ onComplete: handleComplete });
         setIsAddressNull(!isAdressNull);
@@ -160,7 +209,94 @@ export default function FundingUpdate() {
         setaddress('');
         setIsAddressNull(true);
     }
-    /* --------- */
+ /* **************************************유효성 검증*********************************************/
+ const checkTitle=()=>{
+    const titleLength = (funding.title).length;
+    if (titleLength === 0){
+        
+        return <span style={{color:"red"}}>제목을 입력해 주세요.</span>;
+    }
+    if (titleLength > 0 && titleLength <=30){
+        return <span style={{color:"blue"}}>사용이 가능한 제목입니다.</span>
+    }
+    if(titleLength > 0 && titleLength > 30){
+        return <span style={{color:"red"}}>제목은 30글자를 초과할 수 없습니다.</span>
+    }
+    
+}
+
+const checkSubtitle=()=>{
+const subtitleLength = (funding.subtitle).length;
+if (subtitleLength === 0)
+return <span style={{color:"red"}}>부제목을 입력해 주세요.</span>;
+if (subtitleLength > 0 && subtitleLength <=50){
+    return <span style={{color:"blue"}}>사용이 가능한 부제목입니다.</span>
+}
+if(subtitleLength > 0 && subtitleLength > 50){
+return <span style={{color:"red"}}>부제목은 50글자를 초과할 수 없습니다.</span>
+}
+
+}
+
+const checkFunding=()=>{
+    if(funding.title === ''){
+        alert('제목을 입력하세요.');
+        return
+    }
+    if(funding.title !== '' && funding.title > 30){
+        alert('제목은 30자 이내여야 합니다.');
+        return
+    }
+
+    if(funding.subtitle === ''){
+        alert('부제목을 입력하세요.');
+        return
+    }
+    if(funding.subtitle !== '' && funding.subtitle > 50){
+        alert('부제목은 50자 이내여야 합니다.');
+        return
+    }
+    
+    if(funding.category_id === ''){
+        alert('카테고리를 선택하세요.')
+        return
+    }
+    if(funding.deadline === ''){
+        alert('마감일을 입력하세요.');
+        return          
+    }
+    if(funding.min_participants === '0'){
+        alert('최소인원을 입력하세요.');
+        return
+    }
+    if(funding.max_participants === '0'){
+        alert('최대인원을 입력하세요.');
+        return
+    }
+    
+    if(funding.goal === '0'){
+        alert('목표인원을 입력하세요.');
+        return
+    }
+    if(funding.goal < funding.min_participants){
+        alert('목표인원은 최소인원보다 커야합니다.');
+        return
+    }
+    if(funding.goal > funding.max_participants){
+        alert('최대인원은 목표인원보다 커야합니다.');
+        return
+    }
+
+    if(funding.thumbnail === ''){
+        alert('썸내일을 추가하세요.');
+        return
+    }
+    if(funding.content === ''){
+        alert('내용을 입력하세요.');
+        return
+    }
+}
+
 
     return (
         <div>
@@ -195,8 +331,9 @@ export default function FundingUpdate() {
                         <div id="p_infocontainer">
                             <div id='left10'></div>
                             <div id="p_nameInput">
-                                <TitleTextFilelds  text={'프로젝트 이름'} name={'title'} handleInputChange={handleInputChange} modValue=''/>
-                                {/* {console.log(funding.title)} */}
+                                {show && <TitleTextFilelds  text={'프로젝트 이름'} name={'title'} handleInputChange={handleInputChange} modValue={funding.title}/>}
+                                {console.log(funding.title)}
+                                {checkTitle()}
                             </div>
                         </div>
                         <div id="p_note">
@@ -217,8 +354,8 @@ export default function FundingUpdate() {
                         <div id="p_infocontainer">
                             <div id='left10'></div>
                             <div id="p_nameInput">
-                                <TitleTextFilelds  text={'부 제목'} name={'subtitle'} handleInputChange={handleInputChange} modValue='' multiline={true}/>
-                               
+                                {show && <TitleTextFilelds  text={'부 제목'} name={'subtitle'} handleInputChange={handleInputChange} modValue={funding.subtitle} multiline={true}/>}
+                                {checkSubtitle()}
                             </div>
                         </div>
                         <div id="p_note">
@@ -272,15 +409,15 @@ export default function FundingUpdate() {
                             
                             <div id='left10'></div>
                             <div id="p_infocontent">
-                                <TitleTextFilelds text={'목표인원'} name={'goal'} handleInputChange={handleInputChange} modValue=''/> 
+                               {show &&  <TitleTextFilelds text={'목표인원'} name={'goal'} handleInputChange={handleInputChange} modValue={funding.goal}/> }
                             </div>
                             <div id='left10'></div>
                             <div id="p_infocontent">
-                                <TitleTextFilelds text={'최소인원'} name={'min_participants'} handleInputChange={handleInputChange} modValue=''/>
+                                {show && <TitleTextFilelds text={'최소인원'} name={'min_participants'} handleInputChange={handleInputChange} modValue={funding.min_participants}/>}
                             </div>
                             <div id='left10'></div>
                             <div id="p_infocontent">
-                                <TitleTextFilelds text={'최대인원'} name={'max_participants'} handleInputChange={handleInputChange} modValue=''/>
+                                {show && <TitleTextFilelds text={'최대인원'} name={'max_participants'} handleInputChange={handleInputChange} modValue={funding.max_participants}/>}
                             </div>
                         </div>
                         <div id='p_infocontainer'>
@@ -343,7 +480,7 @@ export default function FundingUpdate() {
                     <div id="projectThumbnail">
                         <h2>썸네일</h2>
                         <div id="p_thumbInput">
-                            <InputThumbnail name={'thumbnail'} handleInputChange={handleInputChange}/>
+                            {show && <InputThumbnail name={'thumbnail'} handleInputChange={handleInputChange} modValue={funding.thumbnail}/>}
                         </div>
                     </div>
                     <hr id='p_hr'></hr>
@@ -368,7 +505,7 @@ export default function FundingUpdate() {
                         <h2>내용 설명</h2>
                         <div id="p_editor">
                             {/**toastUIEditor 들어갈 곳 */}
-                            <ToastEditor name={'content'} handleInputChange={handleInputChange}/>
+                            {show &&<ModEditor name={'content'} handleInputChange={handleInputChange} modValue={funding.content}/>}
                             
                         </div>
 
@@ -387,7 +524,7 @@ export default function FundingUpdate() {
                 <div id="right"></div>{/**오른쪽 사이드 */}
             </div>
             {console.log(funding)}
-            {console.log(isAdressNull)}
+
         </div>
     )
 }
