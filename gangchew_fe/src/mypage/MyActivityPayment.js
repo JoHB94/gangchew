@@ -12,6 +12,7 @@ import { partition } from "@jest/expect-utils";
 import PaymentForm from "../consumer/PaymentForm";
 import KakaoPayment from "../consumer/KakaoPayment";
 import FundingPayment from "../payment/FundingPayment";
+import FundingCartBtn from "../payment/FundingCartBtn";
 
 export default function MyActivityPayment(){
     //**************************state*************************************** */  
@@ -33,8 +34,6 @@ const [payment, setPayment] = useState({
   paymentMethod:'', // 결제수단
   
 });
-
-const [fundingAmount, setFundingAmount] =useState(0);
 
 const { fundingId } = useParams();
 const fundingIdAsNumber = parseInt(fundingId);
@@ -62,11 +61,6 @@ const axiosInstance = axios.create({
 // consumer 조회 및 셋팅
 useEffect(()=>{
     //axiosInstance.get(localIP + `/funding/detail?funding=${fundingIdAsNumber}`) // 번호가져오기 log string
-
-    if (getCookie("jwtToken") !== undefined){
-      const token = getCookie("jwtToken");
-      console.log(token);
-    }
     const axiosInstance = axios.create({
         headers:{
           'Content-Type': 'application/json',
@@ -78,9 +72,6 @@ useEffect(()=>{
     .then((res)=>{
         console.log(res);
         setFunding(res.data.result.funding);
-        setFundingAmount(Math.floor(res.data.result.funding.amount * 1.1)); // vat포함한 수강료 -> 소숫점이하 전부 내림
-        
-        
     })
     .catch((error)=>{
         console.log(error);
@@ -129,15 +120,15 @@ useEffect(()=>{
 //       }
 //     });
 
-  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  axiosInstance.post(localIP + '/payment/create', payment)
-      .then((res) => {
-          console.log("응답 {}",res.data); // 응답 데이터 처리
-      })
-      .catch((error) => {
-          console.log(error);
-          
-      });
+//   axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+//   axiosInstance.post(localIP + '/payment/create', payment)
+//       .then((res) => {
+//           console.log("응답 {}",res.data); // 응답 데이터 처리
+//       })
+//       .catch((error) => {
+//           console.log(error);
+//       });
+// };
 
 
 
@@ -176,17 +167,18 @@ const handlePaymentMethodChange = (newValue) => {
                             <div className="m_OrderBox_21">{funding.title}</div>
                             <div className="m_Line"></div>
                             <div className="m_OrderBox_22">
-                                <div className="m_OrderBox_22a">vat포함</div>
-                                <div className="m_OrderBox_22b">{fundingAmount}원</div>                                
+                                <div className="m_OrderBox_22a">총 금액</div>
+                                <div className="m_OrderBox_22b">{funding.amount}원</div>                                
                             </div>
                             <div className="m_OrderBox_Check">위 내용을 확인하였고, 결제에 동의합니다.</div>
                               
                             <div className="m_OrderBox_Btn">
                                 {/* <PayButton/> */}
-                                <FundingPayment title={funding.title} amount={fundingAmount} fundingId={fundingIdAsNumber}/>
-
-                                {/* <PaymentForm open={open} handleClose={handleClose} /> */}
-                                
+                                <FundingPayment title={funding.title} amount={funding.amount} fundingId={fundingIdAsNumber} paymentMethod={payment.paymentMethod}/>
+                              </div>
+                              <div className="m_OrderBox_Btn">
+                                {/* <PayButton/> */}
+                                <FundingCartBtn title={funding.title} amount={funding.amount} fundingId={fundingIdAsNumber} paymentMethod={payment.paymentMethod}/>
                               </div>
                           </div>
                     </div>

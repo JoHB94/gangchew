@@ -171,20 +171,20 @@ export default function FundingInfo(){
         })
     }
 
-    const fundingPartClick=()=>{
-        axiosInstance.get(localIP + `participants/join?funding=${fundingId}`)
-        .then((res)=>{
-            console.log("펀딩참여 url: " + `participants/currentuser?funding=${fundingId}` )
-            console.log(res);
-            if(res.data.result ==="펀딩에 참여되었습니다. "){
-                alert('펀딩에 참여되었습니다.')
-            }
-        })
-        .catch((error)=>{
-            console.log("펀딩참여 url: " + `participants/currentuser?funding=${fundingId}` )
-            console.log(error);
-        })
-    }
+    // const fundingPartClick=()=>{
+    //     axiosInstance.get(localIP + `participants/join?funding=${fundingId}`)
+    //     .then((res)=>{
+    //         console.log("펀딩참여 url: " + `participants/currentuser?funding=${fundingId}` )
+    //         console.log(res);
+    //         if(res.data.result ==="펀딩에 참여되었습니다. "){
+    //             alert('펀딩에 참여되었습니다.')
+    //         }
+    //     })
+    //     .catch((error)=>{
+    //         console.log("펀딩참여 url: " + `participants/currentuser?funding=${fundingId}` )
+    //         console.log(error);
+    //     })
+    // }
 
     // const reFundClick=()=>{
     //     axios.post('')
@@ -297,7 +297,7 @@ export default function FundingInfo(){
                                 </div>
 
                                 <div id="f_info_buttonBox">
-                                    <div onClick={fundingPartClick}>
+                                    <div >
                                         <DoFunding />
                                     </div>
                                     <div id="f_heart_button" onClick={fundingLikeClick}>

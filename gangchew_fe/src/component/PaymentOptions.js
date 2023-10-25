@@ -27,15 +27,15 @@ export default function PaymentOptions({ paymentMethod, handlePaymentMethodChang
         value={paymentMethod}
         onChange={handleSelection}
       >
-        <FormControlLabel value="creditCard" control={<Radio />} label="신용카드" />
-        <FormControlLabel value="bankTransfer" control={<Radio />} label="실시간 계좌 이체" />
-        <FormControlLabel value="bankDeposit" control={<Radio />} label="무통장 입금" />
-        <FormControlLabel value="mobilePayment" control={<Radio />} label="휴대폰 결제" />
+        <FormControlLabel value="uplus" control={<Radio />} label="신용/체크카드" />
+        <FormControlLabel value="danal" control={<Radio />} label="휴대폰 결제" />
+        {/* <FormControlLabel value="bankTransfer" control={<Radio />} label="실시간 계좌 이체(미구현)" />
+        <FormControlLabel value="bankDeposit" control={<Radio />} label="무통장 입금(미구현)" /> */}
       </RadioGroup>
       <div className="m_PayRadio">
         <RadioGroup name="otherPaymentMethods" value={paymentMethod} onChange={handleSelection}>
-          <FormControlLabel value="kakaoPay" control={<Radio />}  />
-          <FormControlLabel value="tossPay" control={<Radio />}  />
+          <FormControlLabel value="kakaopay" control={<Radio />}  />
+          <FormControlLabel value="tosspay" control={<Radio />}  />
         </RadioGroup>
       </div>
     </Container>

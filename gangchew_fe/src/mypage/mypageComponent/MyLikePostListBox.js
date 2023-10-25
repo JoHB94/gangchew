@@ -39,7 +39,6 @@ export default function MyLikePostListBox(props) {
           "Content-Type": "application/json"
         },
       });
-      console.log("받은 데이터: ", response.data); //Array개수 확인
       if(response.data.result.length == 0) {
         setHistory(true); //데이터 X 상태
       }else {

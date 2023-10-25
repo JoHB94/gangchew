@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import { getCookie } from "../member/Cookie";
 
-const FundingPayment = (props) => {
+const FundingCartBtn = (props) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const LOCAL_IP = "http://localhost:9000";
   const token = getCookie("jwtToken");
@@ -78,8 +78,8 @@ const FundingPayment = (props) => {
   const buttonStyle = {
     width: "100%", // Automatically set the width
     height: "50px",
-    backgroundColor: "#701edb",
-    color: "#FFFFFF",
+    backgroundColor: "white",
+    color: "#701edb",
   };
 
   return (
@@ -92,12 +92,12 @@ const FundingPayment = (props) => {
       onClick={initPayment}
       disabled={!isInitialized}
     >
-      결제하기
+      장바구니로 이동
     </Button>
   );
 };
 
-export default FundingPayment;
+export default FundingCartBtn;
 
 /*
 
