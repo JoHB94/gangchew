@@ -97,7 +97,8 @@
   .c_DetailContentBox{
     width: auto;
     margin-top: 20px;
-    height: 350px;        
+    min-height: 350px; 
+    height: auto;       
     border-radius: 10px;    
     border: solid 1px #d3d3d3;
     display: flex;

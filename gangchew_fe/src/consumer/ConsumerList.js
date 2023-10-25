@@ -8,8 +8,6 @@ import Stack from '@mui/material/Stack';
 import '../consumer/css/ConsumerList.css';
 import '../component/css/SimpleLine.css';
 
-import Button from '@mui/material/Button';
-import CreateIcon from '@mui/icons-material/Create';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -20,21 +18,8 @@ import { FaHeart } from 'react-icons/fa';
 import { LiaCommentDots } from 'react-icons/lia';
 import { Link, useNavigate } from 'react-router-dom'
 import { getCookie } from "../member/Cookie";
+import WriteButton from "../component/WriteButton";
 
-
-
-function WriteButton({ onClick }) {
-  const buttonStyle = {
-    backgroundColor: '#701edb',
-    color: 'white',
-  };   
-
-  return (
-    <Button variant="contained" startIcon={<CreateIcon />} style={buttonStyle} onClick={onClick}>
-      글쓰기
-    </Button>
-  );
-}
 
 
 export default function ConsumerList(){  
@@ -42,7 +27,7 @@ export default function ConsumerList(){
   const defaultItemsPerPage = 6;
   const defaultOrderby = 'newPosts';
   const defaultCurrentPage = 1;
-  
+
   const [consumers, setConsumers] = useState([]);
   const [orderby, setOrderby] = useState(defaultOrderby);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
@@ -79,10 +64,10 @@ const localIP = 'http://localhost:9000/';
     axiosInstance.get(localIP+`studentrequest/all?orderby=${orderby}&postsPerPage=6&currentpage=${currentPage}`)
     .then((res)=>{
       console.log("통신성공 {}",res);
+      console.log("URI: " + `studentrequest/all?orderby=${orderby}&postsPerPage=6&currentpage=${currentPage}`)
       setConsumers(res.data.result);
       setTotalItems(res.data.result[0].totalItems);
       console.log("orderby {}",orderby);
-      console.log(`studentrequest/all?orderby=${orderby}&postsPerPage=6&currentpage=${currentPage}`)
     }).catch((error)=>{ 
       console.log(error);
     })
@@ -177,6 +162,9 @@ const handleLike = (id) => {
     console.log(error);
   })
 
+
+//<div className="c_ListListBtn3"/*댓글수 */><LiaCommentDots/>{consumer.commentcount}</div>  
+
 }
         
 
@@ -214,7 +202,7 @@ const handleLike = (id) => {
 
                       </div>
                   </div>
-                  {consumers.map(consumer => (
+                  {consumers&&consumers.map(consumer => (
                   <div className="c_ListListBox" key={consumer.id}>
                       <div className="c_ListListRowTop">
                           <div className="c_ListListPostNumber"/**글번호 */>{consumer.id}</div>
@@ -228,9 +216,8 @@ const handleLike = (id) => {
                           <div className="c_ListListTitle"/*제목 */><Link to={`/consumerdetail/${consumer.id}`}>{ consumer.title }</Link></div>
                           <div className="c_ListListBlank"/*빈공간 */></div>
                           <div className="c_ListListBtnBox">
-                            <div className="c_ListListBtn1"/*조회수 */><VscEye/>{consumer.viewcount}</div>
-                            <div className="c_ListListBtn2"/*좋아요수 */><FaHeart onClick={() => handleLike(consumer.id)} style={{color:"red"}} />{consumer.likecount}</div>
-                            <div className="c_ListListBtn3"/*댓글수 */><LiaCommentDots/>{consumer.commentcount}</div>
+                            <div className="c_ListListBtn1"/*조회수 */><VscEye/>{consumer.viewCount}</div>
+                            <div className="c_ListListBtn2"/*좋아요수 */><FaHeart />{consumer.likeCount}</div>
                           </div>
                       </div>
                   </div>

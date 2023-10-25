@@ -1,135 +1,54 @@
-import React, { useState } from "react";
-import { TextField, Button, Box, Modal, Fade } from '@mui/material';
-import { getCookie } from '../member/Cookie';
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const PaymentForm = ({ open, handleClose }) => {
-
-  const [funding, setFunding] = useState({
-    id: 0,
-    title: '',
-    amount: 0,
-    thumbnail: '',
+const KakaoPayment = () => {
+  const [paymentData, setPaymentData] = useState({
+    next_redirect_pc_url: "",
+    tid: "",
   });
 
-  const [payment, setPayment] = useState({
-    bank_name: '',
-    bank_account: '',
-  });
+  useEffect(() => {
+    const params = {
+      cid: "TC0ONETIME",
+      partner_order_id: "partner_order_id",
+      partner_user_id: "partner_user_id",
+      item_name: "초코파이",
+      quantity: 1,
+      total_amount: 2200,
+      vat_amount: 200,
+      tax_free_amount: 0,
+      approval_url: "http://localhost:3000/myactivitydetail",
+      fail_url: "http://localhost:3000/myactivitydetail",
+      cancel_url: "http://localhost:3000/myactivitydetail",
+    };
 
-  const cloudIP = 'http://138.2.114.150:9000';
-  const localIP = 'http://localhost:9000';
-  const currentUserID = 'user123';
+    axios({
+      url: "https://kapi.kakao.com/v1/payment/ready",
+      method: "POST",
+      headers: {
+        Authorization: "KakaoAK c0d026ab03eee1c1a97749b87e53aa89",
+        "Content-type": "application/json",
+      },
+      params,
+    }).then((response) => {
+      const {
+        data: { next_redirect_pc_url, tid },
+      } = response;
 
-  
+      setPaymentData({ next_redirect_pc_url, tid });
 
-  
-
-  const handlePayment = () => {
-    console.log("handlePayment", payment);
-
-    // 결제 버튼 클릭 이벤트를 처리하고 데이터를 서버로 보내는 코드
-    let token = '';
-
-  if (getCookie("jwtToken") !== undefined){
-      token = getCookie("jwtToken");
-      console.log(token);
-  }
-  const axiosInstance = axios.create({
-      headers:{
-        'Content-Type': 'application/json',
-      }
+      // 백엔드 호출
     });
+  }, []); // 빈 배열은 컴포넌트가 마운트될 때 한 번만 실행됨
 
-    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    axiosInstance.post(localIP + '/payment/create', payment)
-      .then((res) => {
-        console.log("응답", res.data); // 응답 데이터 처리
-        if(res.message === "이미 결제 정보가 등록되었습니다."){
-          alert('이미 결제하셨습니다.')
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleBankNameChange = (event) => {
-    setPayment({ ...payment, bank_name: event.target.value });
-  };
-
-  const handleBankAccountChange = (event) => {
-    setPayment({ ...payment, bank_account: event.target.value });
-  };
+  const { next_redirect_pc_url } = paymentData;
 
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      closeAfterTransition
-      BackdropComponent={(props) => (
-        <div
-          onClick={handleClose}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0. 0)',
-          }}
-        />
-      )}
-      BackdropProps={{}}
-    >
-      <Fade in={open}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            bgcolor: 'white',
-            p: 3,
-            borderRadius: 10,
-            boxShadow: 3,
-            width: 300,
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          <h2>결제 정보 입력</h2>
-          <form>
-            <TextField
-              label="은행명"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={payment.bank_name}
-              onChange={handleBankNameChange}
-            />
-            <TextField
-              label="계좌번호"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={payment.bank_account}
-              onChange={handleBankAccountChange}
-            />
-            <Button
-              variant="contained"
-              fullWidth
-              sx={{ mt: 2, bgcolor: '#000', color: '#fff' }}
-              onClick={handlePayment}
-            >
-              결제하기
-            </Button>
-          </form>
-        </Box>
-      </Fade>
-    </Modal>
+    <div>
+      <h2>Pay page</h2>
+      <a href={next_redirect_pc_url}>{next_redirect_pc_url}</a>
+    </div>
   );
 };
 
-export default PaymentForm;
+export default KakaoPayment;

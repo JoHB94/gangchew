@@ -71,17 +71,7 @@ export default function ConsumerDetail() {
             }).catch((error)=>{
                 console.log(error);
             })
-        
-        
-        // json test
-        // axios.get('/consumer/ConsumerDetail.json')
-        // .then((res)=>{
-        //     console.log(res.data);
-        //     setConsumer(res.data);
-        // })
-        // .catch((error)=>{
-        //     console.log(error);
-        // })
+               
     }, []);
 
     // ************************onClick***************************************
