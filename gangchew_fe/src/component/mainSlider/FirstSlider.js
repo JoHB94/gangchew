@@ -69,7 +69,7 @@ export default class FirstSlider extends Component {
         item // 배열 개수만큼 컴포넌트 출력
       ) => (
         <SlideItem key={item}>
-          <FirstCard  data={item} />
+          <FirstCard  data={item.funding} rate={item.achievementrate}/>
         </SlideItem>
       )
     );

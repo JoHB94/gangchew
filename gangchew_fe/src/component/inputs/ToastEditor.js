@@ -38,6 +38,7 @@ export default function ToastEditor({name ,handleInputChange}) {
         previewStyle="vertical" // 미리보기 스타일 지정
         height="500px" // 에디터 창 높이
         initialEditType="wysiwyg" //
+        autofocus={false}
         onChange={handleChange}
         toolbarItems={[
           // 툴바 옵션 설정

@@ -32,6 +32,7 @@ export default function FirstCard(props) {
     setFundingData({ ...props.data });
   }, [props.data]);
 
+
   useEffect(() => {
     /**로그인 한 아이디와 해당 카드 번호를 기준으로 좋아요 여부를 반환하는 axios 통신 */
   }, []);
@@ -90,7 +91,7 @@ export default function FirstCard(props) {
             {/**진행률 */}
             <span id="card_rate">
               {/* 현재 진행률 {rate}% */}
-              진행률
+              진행률 {props.rate} %
             </span>
           </div>
         </div>

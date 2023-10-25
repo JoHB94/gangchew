@@ -30,8 +30,17 @@ const useDataTransfer = (orderbyIndex, topNum, state, criteria, hours) => {
               "Content-Type": "application/json",
             },
           });
+          console.log("데이터", response.data.result);
 
-          setFundingData(response.data.result);
+          const arrayMap = response.data.result;
+          // const fundingMap = [];
+          // for (var [index, map] of Object.entries(arrayMap)) {
+          //   var funding = map.funding;
+          // }
+          // fundingMap.push(funding); // 펀딩 객체배열만 추출해 저장
+
+          // console.log(arrayMap)
+          setFundingData(arrayMap);
           setLoading(false);
         } catch (error) {
           console.error("오류 발생:", error);
@@ -53,7 +62,10 @@ const useDataTransfer = (orderbyIndex, topNum, state, criteria, hours) => {
             },
           });
 
-          setFundingData(response.data.result);
+          const arrayMap = response.data.result;
+          
+
+          setFundingData(arrayMap);
           setLoading(false);
         } catch (error) {
           console.error("오류 발생:", error);

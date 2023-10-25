@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { partition } from "@jest/expect-utils";
 import PaymentForm from "../consumer/PaymentForm";
 import KakaoPayment from "../consumer/KakaoPayment";
+import FundingPayment from "../payment/FundingPayment";
 
 export default function MyActivityPayment(){
     //**************************state*************************************** */  
@@ -33,7 +34,7 @@ const [payment, setPayment] = useState({
   
 });
 
-const [kakaoPay, setKakaoPay] = useState(false);
+const [fundingAmount, setFundingAmount] =useState(0);
 
 const { fundingId } = useParams();
 const fundingIdAsNumber = parseInt(fundingId);
@@ -77,6 +78,7 @@ useEffect(()=>{
     .then((res)=>{
         console.log(res);
         setFunding(res.data.result.funding);
+        setFundingAmount(Math.floor(res.data.result.funding.amount * 1.1)); // vat포함한 수강료 -> 소숫점이하 전부 내림
         
         
     })
@@ -95,26 +97,16 @@ useEffect(()=>{
 
 },[]);
 
-// const handlePayment = () => {
-//   console.log("handlePayment {}", payment ); 
-  
-//   setPayment((prevPayment) => ({
-//     ...prevPayment,
-//     funding : fundingId,
-//     // bankName : 
-//     // bankAccount :
+// const [open, setOpen] = useState(false);
 
-//   }));
-const [open, setOpen] = useState(false);
+// const handleOpen = () => {
+//   // setOpen(true);
+//   setKakaoPay(true);
+// };
 
-const handleOpen = () => {
-  // setOpen(true);
-  setKakaoPay(true);
-};
-
-const handleClose = () => {
-  setOpen(false);
-};
+// const handleClose = () => {
+//   setOpen(false);
+// };
 
 
 
@@ -161,11 +153,6 @@ const handlePaymentMethodChange = (newValue) => {
 
 };
 
-
-
-
-
-
     return (
         <div>
             <div className="m_HeaderBlank" /**헤더 */></div>
@@ -183,19 +170,20 @@ const handlePaymentMethodChange = (newValue) => {
                                 {funding.thumbnail && <Card funding={funding}></Card>}
                             </div> 
                             <div className="SimpleLine"></div>  
-                            <div className="m_OrderB4" /*결제금액*/>{funding.amount}원</div>                                
+                            <div className="m_OrderB4" /*결제금액*/>{funding.amount}원</div>
                         </div>
                         <div className="m_OrderBox_2">
                             <div className="m_OrderBox_21">{funding.title}</div>
                             <div className="m_Line"></div>
                             <div className="m_OrderBox_22">
                                 <div className="m_OrderBox_22a">vat포함</div>
-                                <div className="m_OrderBox_22b">{funding.amount}원</div>                                
+                                <div className="m_OrderBox_22b">{fundingAmount}원</div>                                
                             </div>
                             <div className="m_OrderBox_Check">위 내용을 확인하였고, 결제에 동의합니다.</div>
                               
                             <div className="m_OrderBox_Btn">
-                                <PayButton/>
+                                {/* <PayButton/> */}
+                                <FundingPayment title={funding.title} amount={fundingAmount} fundingId={fundingIdAsNumber}/>
 
                                 {/* <PaymentForm open={open} handleClose={handleClose} /> */}
                                 
@@ -213,6 +201,15 @@ const handlePaymentMethodChange = (newValue) => {
                                 /></div>
                             <div className="m_OrderPay" /*페이체크*/>
                               <label>
+                                {/* 
+                                결제PG코드
+                                카카오페이 : kakaopay
+                                토스페이 : tosspay
+                                신용/체크카드(토스페이먼츠 지원) : uplus
+                                다날휴대폰결제 : danal
+
+                                 */}
+
                                 <div className="m_KakaoPay"><img className="kakaoPay" src={process.env.PUBLIC_URL + '/logokakao.png' } alt="kakao"/></div>
                                 <div className="m_TossPay"><img className="TossPay" src={process.env.PUBLIC_URL + '/logotoss.png'} alt="toss"/></div>
 
