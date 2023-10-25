@@ -4,6 +4,7 @@ import axios from "axios";
 //페이지 네이션 import
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import RefundButton from "../../component/buttons/RefundButton";
 
 import "../../component/css/SimpleLine.css";
 
@@ -110,6 +111,9 @@ export default function MyactivityListBox(props) {
                 </div>
                 <div style={{ flex: 1 }} className="List_RegDt" /* 조회수 */>
                   조회수 {item.funding.viewCount}
+                </div>
+                <div style={{ flex: 1 }} className="List_RegDt" /* 환불버튼 */>
+                  <RefundButton fundingId={item.funding.id} title={item.funding.title} amount={item.funding.amount}/> 
                 </div>
               </div>
               <div className="List_Title" /**제목 영역 */>
