@@ -4,6 +4,7 @@ import EmptyHeart from "../buttons/EmptyHeart";
 import FullHeart from "../buttons/FullHeart";
 import { useEffect } from "react";
 import axios from "axios";
+import { getCookie } from "../../member/Cookie";
 
 /**
  *
@@ -26,17 +27,24 @@ export default function FirstCard(props) {
     achievementrate: 0,
     totalItems: 0,
   });
-
+  const token = getCookie("jwtToken");
+  if(!token) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }
+  
   // 외부에서 받은 펀딩 데이터 입수
   useEffect(() => {
     setFundingData({ ...props.data });
   }, [props.data]);
 
-  useEffect(() => {
-    /**로그인 한 아이디와 해당 카드 번호를 기준으로 좋아요 여부를 반환하는 axios 통신 */
-  }, []);
 
-  const likeHandler = () => {
+  useEffect(() => {
+    setLike(props.like)
+  }, [props.like]);
+
+  const likeHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     const requestUrl = `http://localhost:9000/funding/toggle-like?id=${fundingData.id}`;
     const requestMethod = "GET";
 
@@ -57,7 +65,7 @@ export default function FirstCard(props) {
 
   };
 
-  const infoHandle =() => {
+  const infoHandle =(e) => {
       window.location.href = `/fundinginfo/${fundingData.id}`;
   }
 
@@ -90,7 +98,7 @@ export default function FirstCard(props) {
             {/**진행률 */}
             <span id="card_rate">
               {/* 현재 진행률 {rate}% */}
-              진행률
+              진행률 {props.rate} %
             </span>
           </div>
         </div>

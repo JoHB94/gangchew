@@ -73,7 +73,7 @@ export default function SecondCard(props) {
             {/**진행률 */}
             <span id="card_rate">
               {/* 현재 진행률 {rate}% */}
-              진행률
+              진행률 {props.rate} %
             </span>
           </div>
         </div>

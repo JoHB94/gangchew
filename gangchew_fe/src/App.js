@@ -19,12 +19,17 @@ import ConsumerComment from './consumer/ConsumerComment';
 import Layout from "./component/Layout";
 import KakaoRedirect from "./member/Kakao/KakaoRedirect";
 import NaverRedirect from "./member/Naver/NaverRedirect";
+
+import KakaoPayment  from "./consumer/KakaoPayment";
+import SuccessPayment from './consumer/SuccessPayment';
+
 import MessageList from './main/MessageList';
 import UserPage from './member/UserPage';
 import FundingPayment from './payment/FundingPayment';
 import PaymentForm  from "./consumer/PaymentForm";
 import { useEffect } from 'react';
 import FundingUpdate from './funding/FundingUpdate';
+
 
 
 
@@ -66,8 +71,13 @@ function App() {
           <Route exact path='/myactivitypayment/:fundingId' element={<MyActivityPayment/>}/>
           
           <Route exact path='/searchlist' element={<SearchList/>}/>
+
+          <Route exact path='/kakaopayment/' element={<KakaoPayment/>}/>
+          <Route path='/successPayment/:pg_token' element={<SuccessPayment/>}/>
+
           <Route exact path='/user' element={<UserPage/>}/>
           <Route exact path='/paymentform/' element={<PaymentForm/>}/>
+
         </Route>
       </Routes>
     {/* 푸터 컴포넌트 들어갈 부분*/}

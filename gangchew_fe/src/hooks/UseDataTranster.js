@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { getCookie } from "../member/Cookie";
+
 
 const useDataTransfer = (orderbyIndex, topNum, state, criteria, hours) => {
   // 외부에서 상수를 받아옴(criteria: useeffect를 선택호출하기위한 구분기준 -> 1 or 2 선택)
@@ -15,6 +17,12 @@ const useDataTransfer = (orderbyIndex, topNum, state, criteria, hours) => {
   ];
   const requestMethod = "GET";
 
+  const token = getCookie('jwtToken');
+  console.log(token);
+  if(token) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }
+  
   useEffect(() => {
     if (criteria === 1) {
       //criteria == 1을 설정할 경우 실시간 랭킹 출력
@@ -30,8 +38,17 @@ const useDataTransfer = (orderbyIndex, topNum, state, criteria, hours) => {
               "Content-Type": "application/json",
             },
           });
+          console.log("데이터", response.data);
 
-          setFundingData(response.data.result);
+          const arrayMap = response.data.result;
+          // const fundingMap = [];
+          // for (var [index, map] of Object.entries(arrayMap)) {
+          //   var funding = map.funding;
+          // }
+          // fundingMap.push(funding); // 펀딩 객체배열만 추출해 저장
+
+          // console.log(arrayMap)
+          setFundingData(arrayMap);
           setLoading(false);
         } catch (error) {
           console.error("오류 발생:", error);
@@ -53,7 +70,10 @@ const useDataTransfer = (orderbyIndex, topNum, state, criteria, hours) => {
             },
           });
 
-          setFundingData(response.data.result);
+          const arrayMap = response.data.result;
+          
+
+          setFundingData(arrayMap);
           setLoading(false);
         } catch (error) {
           console.error("오류 발생:", error);

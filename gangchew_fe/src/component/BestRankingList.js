@@ -13,13 +13,17 @@ export default function BestRankingList(props) {
     window.location.href = `/fundinginfo/${itemId}`;
   }
 
+  const listStyle = {
+    cursor: "pointer",
+  }
+
   return (
     <div style={{ border: "1px solid lightgray", borderRadius: "10px" }}>
-      <List sx={{ width: "100%" }}>
+      <List sx={{ width: "100%" }} style={listStyle}>
         {/* ListItem : list의 게시물 */}
         {props.dataArray.map((item, index) => (
           <>
-            <ListItem alignItems="flex-start" key={index} onClick={() => infoHandle(item.id)}>
+            <ListItem alignItems="flex-start" key={index} onClick={() => infoHandle(item.funding.id)} className="listItemStyle">
               <ListItemAvatar>
                 {/* <Avatar alt="Remy Sharp" src="" /> */}
                 <h2
@@ -31,7 +35,7 @@ export default function BestRankingList(props) {
                 </h2>
               </ListItemAvatar>
               <ListItemText
-                primary={item.title}
+                primary={item.funding.title}
                 secondary={
                   <React.Fragment>
                     <Typography
@@ -40,11 +44,11 @@ export default function BestRankingList(props) {
                       variant="body2"
                       color="text.primary"
                     >
-                      {item.writer.nickname}
+                      {item.funding.writer.nickname}
                     </Typography> {/* subtitle 글자 개수 40자 제한 */}
-                    {" — " + (item.subtitle.length > 40
-                      ? item.subtitle.substring(0, 40) + "..."
-                      : item.subtitle)}
+                    {" — " + (item.funding.subtitle.length > 40
+                      ? item.funding.subtitle.substring(0, 40) + "..."
+                      : item.funding.subtitle)}
                     {/* content */}
                   </React.Fragment>
                 }

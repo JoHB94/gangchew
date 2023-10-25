@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../consumer/css/ConsumerCreate.css';
 import '../component/css/SimpleLine.css';
 import ConsumerTitleTextFields from '../component/inputs/ConsumerTitleTextFields';
@@ -9,8 +9,7 @@ import CancelButton from '../component/buttons/CancelButton';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '../member/Cookie';
-
-
+import { useParams } from "react-router-dom";
 
 
 export default function ConsumerUpdate() {   
@@ -18,11 +17,26 @@ export default function ConsumerUpdate() {
     const navigate = useNavigate();
    
 //**************************state*************************************** */
-    const [consumer, setConsumer] = useState({
+    /*const [consumer, setConsumer] = useState({
         title: '',
         category_id: 0,
         content: ''
+    });*/
+    const [consumer, setConsumer] = useState({
+        postId: 0,
+        studentId: 0,
+        title: '',
+        category_id :0,
+        //fundingCategory:{},
+        writer: '',
+        content: '',
+        regDt: '',
+        user_id:''
     });
+    const [loginId, setLoginId] = useState('');
+    const { postId } = useParams();
+    console.log("postId {}",postId)
+
 //**************************callBack************************************* */
     // input 컴포넌트에서 호출할 함수
     const handleInputChange = (key, newValue) => {
@@ -47,7 +61,7 @@ var token = '';
 
 if (getCookie("jwtToken") !== undefined){
     token = getCookie("jwtToken");
-    console.log(token);
+    console.log("token {}",token);
 }
 
 const axiosInstance = axios.create({
@@ -56,8 +70,8 @@ const axiosInstance = axios.create({
     }
   });
 
-  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  const submit = (e) => {
+axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+const submit = (e) => {
     if (consumer.title.trim() === ''){
         alert('제목을 입력해주세요.');
         return;
@@ -81,19 +95,44 @@ const axiosInstance = axios.create({
                     alert('저장되었습니다.')
                     navigate('/consumerdetail');
                 }
-                console.log(consumer);
-                console.log(res);
+                console.log("submit consumer {}",consumer);
+                console.log("submit res {}",res);
             })
             .catch((error) => {
-                console.log(error);
+                console.log("submit error {}",error);
             });
     }
 };
-    const backToList = () => {
-        navigate('/consumerlist');
-      };
-    
 
+const backToList = () => {
+    navigate('/consumerlist');
+};
+
+// consumer 조회 및 셋팅
+useEffect(() => {
+    console.log("useEffect {}",postId);
+    axiosInstance.get(localIP + `/studentrequest/read?id=${postId}`)
+        .then((res) => {
+            console.log(res);
+            setConsumer(res.data.result);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+    axiosInstance.post(localIP + '/user/myinfo')
+        .then((res)=>{
+            console.log('유저정보 반환')
+            console.log(res);
+            if(res.data.message === "요청에 성공하였습니다."){
+                setLoginId(res.data.result.username);
+            }
+            
+        }).catch((error)=>{
+            console.log(error);
+        })
+            
+}, []);
 
 
     return (

@@ -4,6 +4,7 @@ import axios from "axios";
 //페이지 네이션 import
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import RefundButton from "../../component/buttons/RefundButton";
 
 import "../../component/css/SimpleLine.css";
 
@@ -45,10 +46,8 @@ export default function MyactivityListBox(props) {
         }
 
         for (let i = 0; i < response.data.result.length; i++) {
-          if (response.data.result[i].writer === props.myUsername) {
             myArray.push(response.data.result[i]);
             setConsumers(myArray);
-          }
         }
       } catch (error) {
         console.error("오류 발생:", error);
@@ -105,17 +104,20 @@ export default function MyactivityListBox(props) {
                   style={{ flex: 1 }}
                   className="List_PostNumber" /* 카테고리 */
                 >
-                  {item.fundingCategory.categoryName}
+                  {item.funding.fundingCategory.categoryName}
                 </div>
                 <div style={{ flex: 1 }} className="List_Writer" /*작성자*/>
                   {props.myUserNickname}
                 </div>
                 <div style={{ flex: 1 }} className="List_RegDt" /* 조회수 */>
-                  조회수 {item.viewCount}
+                  조회수 {item.funding.viewCount}
+                </div>
+                <div style={{ flex: 1 }} className="List_RegDt" /* 환불버튼 */>
+                  <RefundButton fundingId={item.funding.id} title={item.funding.title} amount={item.funding.amount}/> 
                 </div>
               </div>
               <div className="List_Title" /**제목 영역 */>
-                <Link to={`/consumerdetail/${item.postId}`}>{item.title}</Link>
+                <Link to={`/consumerdetail/${item.postId}`}>{item.funding.title}</Link>
               </div>
               <div className="SimpleLine" /**라인 */></div>
             </div>

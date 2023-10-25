@@ -310,7 +310,7 @@ export default function FundingInfo(){
                                 </div>
 
                                 <div id="f_info_buttonBox">
-                                    <div onClick={fundingPartClick}>
+                                    <div >
                                         <DoFunding />
                                     </div>
                                     <div id="f_heart_button" onClick={fundingLikeClick}>

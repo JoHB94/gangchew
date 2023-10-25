@@ -1,6 +1,6 @@
 
 import TitleTextFilelds from '../component/inputs/TitleTextFields';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import fundingCreate from "../funding/css/fundingCreate.css";
 import CategorySelect from '../component/inputs/CategorySelect';
 import InputDate from '../component/inputs/InputDate';
@@ -25,7 +25,6 @@ import { getCookie } from '../member/Cookie';
 export default function FundingCreate() {
 
 //************************************states**************************************************** */
-  
     const [funding, setFunding] = useState({
         title: '',
         subtitle: '',
@@ -42,7 +41,7 @@ export default function FundingCreate() {
       
 
 //*************************************axios***************************************************** */
-
+    
     const cloudIP = ' http://138.2.114.150:9000/';
     const localIP = 'http://localhost:9000/';
 
