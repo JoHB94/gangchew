@@ -8,23 +8,24 @@ import axios from "axios";
 import Card from "../component/Card";
 import { getCookie } from '../member/Cookie';
 import { useParams } from "react-router-dom";
+import { partition } from "@jest/expect-utils";
 import PaymentForm from "../consumer/PaymentForm";
 import KakaoPayment from "../consumer/KakaoPayment";
 import FundingPayment from "../payment/FundingPayment";
 
 export default function MyActivityPayment(){
-
-//**************************state*************************************** */  
+    //**************************state*************************************** */  
 const [funding, setFunding] = useState({
-  id :0 ,
-  title :'' ,
-  amount: 0 ,  
-  thumbnail:'',
-  
+  amount : 0,
+  id : 0,       
+  subtitle : '',
+  thumbnail : '',
+  title : '',
+  viewCount : 0,
+         
 });
 
 const [payment, setPayment] = useState({
-  id:0,//결제key
   funding: 0,//펀딩번호
   participant:'',
   bank_name:'',
@@ -79,7 +80,7 @@ useEffect(()=>{
         setFunding(res.data.result.funding);
         setFundingAmount(Math.floor(res.data.result.funding.amount * 1.1)); // vat포함한 수강료 -> 소숫점이하 전부 내림
         
-        console.log(funding);
+        
     })
     .catch((error)=>{
         console.log(error);
@@ -128,24 +129,27 @@ useEffect(()=>{
 //       }
 //     });
 
-//   axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-//   axiosInstance.post(localIP + '/payment/create', payment)
-//       .then((res) => {
-//           console.log("응답 {}",res.data); // 응답 데이터 처리
-//       })
-//       .catch((error) => {
-//           console.log(error);
-//       });
-// };
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  axiosInstance.post(localIP + '/payment/create', payment)
+      .then((res) => {
+          console.log("응답 {}",res.data); // 응답 데이터 처리
+      })
+      .catch((error) => {
+          console.log(error);
+          
+      });
 
 
-const handlePaymentMethodChange = (event) => {
 
-  const selectedMethod = event.target.value; // Assuming the value comes from the event
+const handlePaymentMethodChange = (newValue) => {
+
+  const selectedMethod = newValue; // Assuming the value comes from the event
   setPayment((prevPayment) => ({
     ...prevPayment,
     paymentMethod: selectedMethod,
+
   }));
+  
 
 };
 
@@ -234,6 +238,10 @@ const handlePaymentMethodChange = (event) => {
               </div>
               <div className="m_Right" /**오른쪽빈공간 */></div>             
           </div>
+          {console.log(payment)}
        </div>
     )
+
 }
+
+

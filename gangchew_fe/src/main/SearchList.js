@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import searchList from "../main/css/searchList.css";
 import LongCard from "../component/LongCard";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getCookie } from '../member/Cookie';
 
 
@@ -16,10 +16,16 @@ export default function SearchList(){
     const itemsPerPage = 3;
     const {keyword} = useParams();
 
+
+    const [fundingTotalItems, setFundungTotalItems] = useState(0);
+  
     const [fundingData, setFundingData] = useState([]);
     const [consumerData, setConsumerData] = useState([]);
     const [currentFundingPage, setCurrentFundingPage] = useState(defaultCurrentPage);
     const [currentConsumerPage, setCurrentConsumerPage] = useState(defaultCurrentPage);
+
+    const fundingCount = Math.ceil(fundingTotalItems/itemsPerPage);
+    
     
     
 //************************************axios ****************************** */
@@ -47,6 +53,8 @@ export default function SearchList(){
         axiosInstance.get(localIP+fundingURI)
         .then((res)=>{
             setFundingData(res.data.result);
+            setFundungTotalItems(res.data.result[0].totalItems);
+            console.log(fundingCount);
             console.log("funding 조건 조회 완료");
             console.log(res)
         })
@@ -80,8 +88,12 @@ export default function SearchList(){
     const fundingPageHandler=(event,page)=>{
         setCurrentFundingPage(page);
         console.log(page);
-        // fundingReqServer();
+        
     }
+
+    useEffect(()=>{
+        fundingReqServer();
+    },[currentFundingPage]);
 
     const consumerPageHandler=(event,page)=>{
         setCurrentConsumerPage(page);
@@ -107,16 +119,18 @@ export default function SearchList(){
                         <div>
 
                         {fundingData && fundingData.length > 0 && fundingData.map((fundingData) => (
-                            <div id="search_list"  key={fundingData.fundingId} >
-                                <LongCard funding={fundingData}/>
-                            </div>
+                            <Link to={`/fundinginfo/${fundingData.fundingId}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <div id="search_list"  key={fundingData.fundingId} >
+                                    <LongCard funding={fundingData} keyword={keyword}/>
+                                </div>
+                            </Link>
                             ))}
                         
                         </div>
                         <div id="pagination100">
                         {/*------------페이지네이션 위치!!!!-----------*/}
                             <Stack spacing={2}>
-                            <Pagination count={3} variant="outlined" shape="rounded" color="secondary" 
+                            <Pagination count={fundingCount} variant="outlined" shape="rounded" color="secondary" 
                             page={currentFundingPage} onChange={fundingPageHandler}/>
                             </Stack>
                         </div>
