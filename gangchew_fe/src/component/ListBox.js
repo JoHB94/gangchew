@@ -1,26 +1,25 @@
-import React , { useState, useEffect } from "react";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 //페이지 네이션 import
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
-import '../component/css/SimpleLine.css';
+import "../component/css/SimpleLine.css";
 
 import { Link } from 'react-router-dom';
 import { getCookie } from "../member/Cookie";
 
 export default function ListBox() {
-
-//*****************************state********************************************* */
+  //*****************************state********************************************* */
   const defaultItemsPerPage = 3;
-  const defaultOrderby = 'newest';
+  const defaultOrderby = "newest";
   const defaultCurrentPage = 1;
-  
+
   const [consumers, setConsumers] = useState([]);
   const [orderby, setOrderby] = useState(defaultOrderby);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
-  const [currentPage,setCurrentPage] = useState(defaultCurrentPage);
-//************************************ axios ************************************************** */
+  const [currentPage, setCurrentPage] = useState(defaultCurrentPage);
+  //************************************ axios ************************************************** */
 
   const cloudIP = 'http://138.2.114.150:9000';
   const localIP = 'http://localhost:9000';
@@ -53,13 +52,13 @@ export default function ListBox() {
   
   /*************************************useEffect********************************* */
   //페이지가 렌더될 때 실행될 함수.
-  useEffect(()=>{
+  useEffect(() => {
     reqServer();
-  },[])
+  }, []);
 
-//******************************************page Handler************************************** */
-const handlePage =(event, page)=>{
-    console.log(page)
+  //******************************************page Handler************************************** */
+  const handlePage = (event, page) => {
+    console.log(page);
     setCurrentPage(page);
     reqServer();
   } 
@@ -83,38 +82,51 @@ const handlePage =(event, page)=>{
     border: 'solid 1px #d3d3d3',
 
   };
-  const List_Box_1Style ={
-    display: "flex", 
-    marginBottom: "20px",   
-  }
   
 
+  const List_Map_Style = {
+  }
 
-    return(
-        <div style={ListBoxStyle} /**전체 컨테이너 */>
-            {consumers.map(consumer => (
-            <div className="List_Map" key={consumer.postId}>
-                <div className="List_Box_1" style={List_Box_1Style} > 
-                  <div style={{ flex: 1 }} className="List_PostNumber" /**글번호 */>{consumer.postId}글번호</div>
-                  <div style={{ flex: 1 }} className="List_Writer" /*작성자*/>{consumer.writer}</div>
-                  <div style={{ flex: 1 }} className="List_RegDt"/*작성일자*/>{consumer.regDt}</div>                
-                                    
-                </div>
-                <div className="List_Title" /**제목 영역 */ ><Link to={`/consumerdetail/${consumer.postId}`}>{ consumer.title }</Link></div>
-                <div className="SimpleLine" /**라인 */></div>  
+  const List_Box_1Style = {
+    display: "flex",
+    marginBottom: "20px",
+  };
+
+  return (
+    <div style={ListBoxStyle} /**전체 컨테이너 */>
+      {consumers.map((consumer) => (
+        <div className="List_Map" key={consumer.postId} style={List_Map_Style}>
+          <div className="List_Box_1" style={List_Box_1Style}>
+            <div style={{ flex: 1 }} className="List_PostNumber" /**글번호 */>
+              {consumer.postId}글번호
             </div>
-            ))}
-            <div className="c_Pagination" /*페이지네이션*/>
-              <Stack spacing={2}>
-                <Pagination count={3} variant="outlined" shape="rounded" color="secondary"    
-                page={currentPage} onChange={handlePage}/>
-              </Stack>
+            <div style={{ flex: 1 }} className="List_Writer" /*작성자*/>
+              {consumer.writer}
             </div>
-
-
-
-           
+            <div style={{ flex: 1 }} className="List_RegDt" /*작성일자*/>
+              {consumer.regDt}
+            </div>
+          </div>
+          <div className="List_Title" /**제목 영역 */>
+            <Link to={`/consumerdetail/${consumer.postId}`}>
+              {consumer.title}
+            </Link>
+          </div>
+          <div className="SimpleLine" /**라인 */></div>
         </div>
-    )
-
+      ))}
+      <div className="c_Pagination" /*페이지네이션*/>
+        <Stack spacing={2}>
+          <Pagination
+            count={3}
+            variant="outlined"
+            shape="rounded"
+            color="secondary"
+            page={currentPage}
+            onChange={handlePage}
+          />
+        </Stack>
+      </div>
+    </div>
+  );
 }

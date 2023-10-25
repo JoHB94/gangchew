@@ -33,11 +33,13 @@ const InputDate =({name ,handleInputChange}) => {
     }
 
     return (
-      <DatePicker
-        showIcon
-        selected={selectedDate}
-        onChange={(date) => handleChange(date)}
-      />
+      <span className="custom-datepicker-container">
+        <DatePicker
+          showIcon
+          selected={selectedDate}
+          onChange={(date) => handleChange(date)}
+        />
+      </span>
     );
   };
   export default InputDate;

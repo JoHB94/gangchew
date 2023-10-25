@@ -8,22 +8,24 @@ import axios from "axios";
 import Card from "../component/Card";
 import { getCookie } from '../member/Cookie';
 import { useParams } from "react-router-dom";
+import { partition } from "@jest/expect-utils";
 import PaymentForm from "../consumer/PaymentForm";
 import KakaoPayment from "../consumer/KakaoPayment";
+import FundingPayment from "../payment/FundingPayment";
 
 export default function MyActivityPayment(){
-
-//**************************state*************************************** */  
+    //**************************state*************************************** */  
 const [funding, setFunding] = useState({
-  id :0 ,
-  title :'' ,
-  amount: 0 ,  
-  thumbnail:'',
-  
+  amount : 0,
+  id : 0,       
+  subtitle : '',
+  thumbnail : '',
+  title : '',
+  viewCount : 0,
+         
 });
 
 const [payment, setPayment] = useState({
-  id:0,//결제key
   funding: 0,//펀딩번호
   participant:'',
   bank_name:'',
@@ -32,7 +34,7 @@ const [payment, setPayment] = useState({
   
 });
 
-const [kakaoPay, setKakaoPay] = useState(false);
+const [fundingAmount, setFundingAmount] =useState(0);
 
 const { fundingId } = useParams();
 const fundingIdAsNumber = parseInt(fundingId);
@@ -76,8 +78,9 @@ useEffect(()=>{
     .then((res)=>{
         console.log(res);
         setFunding(res.data.result.funding);
+        setFundingAmount(Math.floor(res.data.result.funding.amount * 1.1)); // vat포함한 수강료 -> 소숫점이하 전부 내림
         
-        console.log(funding);
+        
     })
     .catch((error)=>{
         console.log(error);
@@ -94,37 +97,37 @@ useEffect(()=>{
 
 },[]);
 
-const [open, setOpen] = useState(false);
+// const [open, setOpen] = useState(false);
 
-const handleOpen = () => {
-  // setOpen(true);
-  setKakaoPay(true);
-};
+// const handleOpen = () => {
+//   // setOpen(true);
+//   setKakaoPay(true);
+// };
 
-const handleClose = () => {
-  setOpen(false);
-};
-
-
+// const handleClose = () => {
+//   setOpen(false);
+// };
 
 
 
-const handlePayment = () => {
-  console.log("handlePayment {}", payment ); 
-  payment.participant_id = currentUserID;
-  payment.bank_name = funding.fundingId;
-  payment.funding = funding.id;
 
-  // 결제 버튼 클릭 이벤트를 처리하고 데이터를 서버로 보내는 코드
-  if (getCookie("jwtToken") !== undefined){
-    const token = getCookie("jwtToken");
-    console.log(token);
-  }
-  const axiosInstance = axios.create({
-      headers:{
-        'Content-Type': 'application/json',
-      }
-    });
+
+// const handlePayment = () => {
+//   console.log("handlePayment {}", payment ); 
+//   payment.participant_id = currentUserID;
+//   payment.bank_name = funding.fundingId;
+//   payment.funding = funding.id;
+
+//   // 결제 버튼 클릭 이벤트를 처리하고 데이터를 서버로 보내는 코드
+//   if (getCookie("jwtToken") !== undefined){
+//     const token = getCookie("jwtToken");
+//     console.log(token);
+//   }
+//   const axiosInstance = axios.create({
+//       headers:{
+//         'Content-Type': 'application/json',
+//       }
+//     });
 
   axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   axiosInstance.post(localIP + '/payment/create', payment)
@@ -133,24 +136,22 @@ const handlePayment = () => {
       })
       .catch((error) => {
           console.log(error);
+          
       });
-};
 
 
-const handlePaymentMethodChange = (event) => {
 
-  const selectedMethod = event.target.value; // Assuming the value comes from the event
+const handlePaymentMethodChange = (newValue) => {
+
+  const selectedMethod = newValue; // Assuming the value comes from the event
   setPayment((prevPayment) => ({
     ...prevPayment,
     paymentMethod: selectedMethod,
+
   }));
+  
 
 };
-
-
-
-
-
 
     return (
         <div>
@@ -169,19 +170,20 @@ const handlePaymentMethodChange = (event) => {
                                 {funding.thumbnail && <Card funding={funding}></Card>}
                             </div> 
                             <div className="SimpleLine"></div>  
-                            <div className="m_OrderB4" /*결제금액*/>{funding.amount}원</div>                                
+                            <div className="m_OrderB4" /*결제금액*/>{funding.amount}원</div>
                         </div>
                         <div className="m_OrderBox_2">
                             <div className="m_OrderBox_21">{funding.title}</div>
                             <div className="m_Line"></div>
                             <div className="m_OrderBox_22">
                                 <div className="m_OrderBox_22a">vat포함</div>
-                                <div className="m_OrderBox_22b">{funding.amount}원</div>                                
+                                <div className="m_OrderBox_22b">{fundingAmount}원</div>                                
                             </div>
                             <div className="m_OrderBox_Check">위 내용을 확인하였고, 결제에 동의합니다.</div>
                               
                             <div className="m_OrderBox_Btn">
-                                <PayButton/>
+                                {/* <PayButton/> */}
+                                <FundingPayment title={funding.title} amount={fundingAmount} fundingId={fundingIdAsNumber}/>
 
                                 {/* <PaymentForm open={open} handleClose={handleClose} /> */}
                                 
@@ -199,6 +201,15 @@ const handlePaymentMethodChange = (event) => {
                                 /></div>
                             <div className="m_OrderPay" /*페이체크*/>
                               <label>
+                                {/* 
+                                결제PG코드
+                                카카오페이 : kakaopay
+                                토스페이 : tosspay
+                                신용/체크카드(토스페이먼츠 지원) : uplus
+                                다날휴대폰결제 : danal
+
+                                 */}
+
                                 <div className="m_KakaoPay"><img className="kakaoPay" src={process.env.PUBLIC_URL + '/logokakao.png' } alt="kakao"/></div>
                                 <div className="m_TossPay"><img className="TossPay" src={process.env.PUBLIC_URL + '/logotoss.png'} alt="toss"/></div>
 
@@ -227,6 +238,10 @@ const handlePaymentMethodChange = (event) => {
               </div>
               <div className="m_Right" /**오른쪽빈공간 */></div>             
           </div>
+          {console.log(payment)}
        </div>
     )
+
 }
+
+

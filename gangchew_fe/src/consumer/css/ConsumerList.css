@@ -73,11 +73,6 @@
     padding-left: 50px;
     
 }
-
-/* .c_ListBlank{
-    width: auto%;
-} */
-
 .C_ListListRowBottom{
     width: auto;
     height: 50px;
@@ -101,6 +96,7 @@
 .c_ListListTitle{
     width: 50%;
 }
+
 .c_ListPagination{
     display: flex;
     justify-content: center;
@@ -110,4 +106,9 @@
 }
 .c_ListListBtn2{
     margin-right: 10px;
+}
+
+.c_Pagination{
+    display: flex;
+    justify-content: center;
 }

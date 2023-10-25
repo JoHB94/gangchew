@@ -1,3 +1,15 @@
 ::-webkit-scrollbar {
     
   }
+
+  #fundingInfoLink {
+    text-decoration: none;
+  }
+
+  * > a {
+    text-decoration: none;
+  }
+
+  .listItemStyle:hover {
+    background-color: lightgray;
+  }
