@@ -1,33 +1,61 @@
 import React, { useEffect, useCallback, useState } from "react";
+import Button from "@mui/material/Button";
+import axios from "axios";
+import { getCookie } from "../member/Cookie";
 
-const FundingPayment = () => {
+const FundingPayment = (props) => {
+  const amount = props.amount;
+  console.log(props.amount);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [title, setTitle] = useState("");
+  const LOCAL_IP = "http://localhost:9000";
+
+  const token = getCookie("jwtToken");
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   const initPayment = useCallback(() => {
     const { IMP } = window;
     IMP.init("imp67011510"); // 아임포트 가맹점 식별번호
-    const data = { // 데이터 가상 설정
-      pg: "kakaopay.TC0ONETIME",
+    const data = {
+      // 데이터 가상 설정
+      pg: "tosspay",
       merchant_uid: "merchant_" + new Date().getTime(),
-      name: "강츄 펀딩 결제",
-      amount: 1000,
-      buyer_email: "example@example.com",
-      buyer_name: "구매자 이름",
-      buyer_tel: "010-1234-5678",
-      buyer_addr: "서울특별시 강남구",
-      buyer_postcode: "123-456",
+      name: props.title,
+      amount: props.amount,
+      //   buyer_name: "구매자 이름",
     };
 
     IMP.request_pay(data, (response) => {
       if (response.success) {
         // 결제 성공 시 처리
         console.log("결제 성공", response);
+
+        const requestData = async () => {
+          try {
+            const response = await axios({
+              url: `${LOCAL_IP}/participants/join?funding=${props.fundingId}`,
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            console.log(`${LOCAL_IP}/participants/join?${props.fundingId}`);
+            console.log("받은 데이터: ", response.data); 
+            if(response.data.code === 200) {
+                alert("펀딩에 성공하였습니다!");
+                window.location.href = "/myactivitydetail";
+            }
+          } catch (error) {
+            console.error("오류 발생:", error);
+          }
+        };
+        requestData();
       } else {
         // 결제 실패 시 처리
         console.log("결제 실패", response);
       }
     });
-  }, []);
+  }, [props.amount, props.title]);
 
   useEffect(() => {
     const loadIamportScript = async () => {
@@ -49,10 +77,25 @@ const FundingPayment = () => {
     loadIamportScript(); // 페이지 로드 시 아임포트 스크립트 로드 -> 결제 연결
   }, []);
 
+  const buttonStyle = {
+    width: "100%", // Automatically set the width
+    height: "50px",
+    backgroundColor: "#701edb",
+    color: "#FFFFFF",
+  };
+
   return (
-    <button onClick={initPayment} disabled={!isInitialized}>
-      결제 버튼
-    </button>
+    // <button onClick={initPayment} style={buttonStyle} disabled={!isInitialized}>
+    //   결제 버튼
+    // </button>
+    <Button
+      style={buttonStyle}
+      variant="contained"
+      onClick={initPayment}
+      disabled={!isInitialized}
+    >
+      결제하기
+    </Button>
   );
 };
 

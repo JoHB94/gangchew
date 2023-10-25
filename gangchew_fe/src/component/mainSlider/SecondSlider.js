@@ -67,7 +67,7 @@ export default class SecondSlider extends Component {
         item // 배열 개수만큼 컴포넌트 출력
       ) => (
         <SlideItem key={item}>
-          <SecondCard data={item} />
+          <SecondCard data={item.funding} rate={item.achievementrate}/>
         </SlideItem>
       )
     );

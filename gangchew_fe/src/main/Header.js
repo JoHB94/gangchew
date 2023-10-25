@@ -77,7 +77,7 @@ const Header = () => {
         <div id="container80">
           <div id="container_left">
             <div id="h_title">
-              <h2 id="h_h2">GangChew</h2>
+              <Link to="/"><h2 id="h_h2">GangChew</h2></Link>
             </div>
             <ul id="list">
               <Link id="container33" to="/fundinglist">
