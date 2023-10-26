@@ -1,0 +1,62 @@
+.HeaderBlank-cart{
+    height: 70px;
+    
+    display: flex;
+    
+}
+.ContainerDetail-cart{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 15% 49% 21% 15%; /* 화면 비율 그리드로 조정 */
+    /* justify-items: center */
+}
+
+.CenterDetail-cart{
+    width: 95%;
+    /* max-width: 800px; */
+    height: 100vh;
+}
+
+.totalAmount {
+    float: right;
+    margin-top: 50px;
+    width: 100%;
+    /* min-width: 400px; */
+    min-height: 450px;
+    max-height: 550px;
+    border: 1px solid lightgray;
+}
+
+.totalAmount-payButton {
+    margin: auto;
+    width: 95%;
+}
+
+.cartThumnail {
+    width: 150px; /* 원하는 너비로 조절 */
+    height: 130px; /* 원하는 높이로 조절 */
+    overflow: hidden; /* 이미지가 컨테이너를 벗어날 경우 숨김 */
+  }
+  
+  .cartThumnail img {
+    width: 100%; /* 부모 요소의 100% 너비로 이미지 크기 조절 */
+    height: 100%; /* 부모 요소의 100% 높이로 이미지 크기 조절 */
+    object-fit: cover; /* 이미지가 비율을 유지하면서 컨테이너를 채우도록 설정 */
+  }
+
+  .amountBoard {
+    font-size: 19px;
+    font-weight: bold;
+    letter-spacing: 2.5px;
+    color: #701edb;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3px;
+  }
+
+
+
+
+.m_RightDetail, .m_LeftDetail {
+
+}

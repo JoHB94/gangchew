@@ -45,10 +45,8 @@ export default function MyFundingListBox(props) {
         }
 
         for (let i = 0; i < response.data.result.length; i++) {
-          
             myArray.push(response.data.result[i]);
             setConsumers(myArray);
-          
         }
       } catch (error) {
         console.error("오류 발생:", error);
@@ -115,7 +113,7 @@ export default function MyFundingListBox(props) {
                 </div>
               </div>
               <div className="List_Title" /**제목 영역 */>
-                <Link to={`/consumerdetail/${item.postId}`}>{item.title}</Link>
+                <Link to={`/fundinginfo/${item.id}`}>{item.title}</Link>
               </div>
               <div className="SimpleLine" /**라인 */></div>
             </div>

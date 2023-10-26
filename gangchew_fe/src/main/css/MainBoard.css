@@ -40,3 +40,7 @@ body {
 .sliderTitle {
     /* title과 게시물 사이의 간격 조정 */
 }
+
+.blankPage {
+    min-height: 600px;
+}

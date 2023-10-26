@@ -117,7 +117,7 @@ export default function MyactivityListBox(props) {
                 </div>
               </div>
               <div className="List_Title" /**제목 영역 */>
-                <Link to={`/consumerdetail/${item.postId}`}>{item.funding.title}</Link>
+                <Link to={`/fundinginfo/${item.id}`}>{item.funding.title}</Link>
               </div>
               <div className="SimpleLine" /**라인 */></div>
             </div>

@@ -68,7 +68,7 @@ function RegistrationForm() {
     
     const isValidAllTrue = Object.values(isValid).every(value => value === true); // isValid 객체의 모든 요소가 true인지 확인
 
-    const serverUrl = "http://138.2.114.150:9000/signup";
+    const serverUrl = "http://localhost:9000/signup";
     const requestMethod = "POST";
 
     if(isValidAllTrue) {
@@ -273,7 +273,7 @@ function RegistrationForm() {
                 >
                   가입하기
                 </Button>
-                <Link to="/main">
+                <Link to="/">
                   <Button
                     className="submit-button"
                     color="secondary"
