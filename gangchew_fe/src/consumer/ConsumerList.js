@@ -179,7 +179,7 @@ const handleLike = (id) => {
                       <div className="SimpleLine"></div>         
                   </div>
                   <div className="c_ListBtnBox">
-                  <div><WriteButton onClick={moveToWrite} /></div>
+                  <div className="c_ListWrite"><WriteButton onClick={moveToWrite} /></div>
                       <div className="c_ListMid"></div>
                       <div>
                       <Box sx={{ minWidth: 120 }}>

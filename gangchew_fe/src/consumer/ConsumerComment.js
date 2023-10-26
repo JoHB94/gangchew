@@ -119,12 +119,15 @@ const ConsumerComment = ({ postId }) => {
     axiosInstance.get(localIP + `/studentcomment?id=${postId}`)
       .then((res) => {
         console.log(res);
-        
+  
         // 댓글을 최신순으로 정렬하여 새로운 배열을 생성
         const sortedComments = res.data.result.sort((a, b) => new Date(b.formatdate) - new Date(a.formatdate));
-        
+  
+        // 배열을 뒤집어서 올바른 순서를 유지합니다.
+        const reversedComments = sortedComments.reverse();
+  
         // 정렬된 댓글 목록을 상태로 설정하여 화면에 표시
-        setComments(sortedComments);
+        setComments(reversedComments);
         setCurrentUserID();  // 실제 로그인 Id로 저장하기
       })
       .catch((error) => {

@@ -4,6 +4,7 @@ import { FaHeart } from 'react-icons/fa';
 import { LiaCommentDots } from 'react-icons/lia';
 import '../consumer/css/ConsumerDetail.css';
 import '../component/css/SimpleLine.css';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import EditButton from '../component/buttons/EditButton';
 import DeleteButton from '../component/buttons/DeleteButton';
 import { useParams } from "react-router-dom";
@@ -140,7 +141,10 @@ export default function ConsumerDetail() {
                                 <div className='c_DetailTitleBox'>{consumer.title}</div>
                                 <div className='c_DetailCategoryBox'>{consumer.fundingCategory.categoryName}</div>
                                 {/* 토스트 뷰어 영역 */}
-                                <div className='c_DetailContentBox'><Viewer initialValue={consumer.content} key={consumer.content} /></div>                               
+                                <div className='c_DetailContentBox'>
+                                    {console.log(consumer.content)}
+                                {<Viewer initialValue={consumer.content} key={consumer.content} />}
+                                </div>                               
                                 <div className="c_DetailBtnBox_1">
                                     <div className="c_DetailLikeBtn" onClick={handleLikeClick}>
                                        { isLiked ? (<FaHeart size={23} color="red" />) : (<FaHeart size={23} />)}

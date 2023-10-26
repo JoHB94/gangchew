@@ -1,41 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../consumer/css/ConsumerCreate.css';
 import '../component/css/SimpleLine.css';
 import ConsumerTitleTextFields from '../component/inputs/ConsumerTitleTextFields';
 import CategorySelect from '../component/inputs/CategorySelect';
-import ToastEditor from '../component/inputs/ToastEditor';
 import OkButton from '../component/buttons/OkButton';
 import CancelButton from '../component/buttons/CancelButton';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '../member/Cookie';
 import { useParams } from "react-router-dom";
-
+import { Editor } from '@toast-ui/react-editor';
 
 export default function ConsumerUpdate() {   
    
     const navigate = useNavigate();
    
 //**************************state*************************************** */
+
+    const [loginId, setLoginId] = useState('');
+    const { postId } = useParams();
+    const [dataLoaded, setDataLoaded] = useState(false);
+    const editorRef = useRef();
+
+    console.log("postId {}",postId);
+
     /*const [consumer, setConsumer] = useState({
         title: '',
         category_id: 0,
         content: ''
     });*/
     const [consumer, setConsumer] = useState({
-        postId: 0,
         studentId: 0,
+        id:0,
         title: '',
         category_id :0,
-        //fundingCategory:{},
+        fundingCategory:{id:0},
         writer: '',
         content: '',
         regDt: '',
         user_id:''
     });
-    const [loginId, setLoginId] = useState('');
-    const { postId } = useParams();
-    console.log("postId {}",postId)
+
 
 //**************************callBack************************************* */
     // input 컴포넌트에서 호출할 함수
@@ -44,12 +49,38 @@ export default function ConsumerUpdate() {
             // 값을 확인하고 내용이 비어있으면 경고창 또는 오류 메시지를 추가하세요.
             alert('내용을 입력해주세요');
         } else {
-            setConsumer((prevFunding) => ({
-                ...prevFunding,
-                [key]: newValue
-            }));
+            if (key === 'content') {
+
+                console.log("editorRef {}",editorRef);
+                const newHTML = editorRef.current?.getInstance().getHTML();
+                const newMarkdown = editorRef.current?.getInstance().getMarkdown();
+                console.log("newHTML {}",newHTML);
+                console.log("newMarkdown {}",newMarkdown);
+                if (newHTML === ''){
+                    setConsumer((prevConsumer) => ({
+                        ...prevConsumer,
+                        [key]: newMarkdown
+                    }));
+                } else {
+                    setConsumer((prevConsumer) => ({
+                        ...prevConsumer,
+                        [key]: newHTML
+                    }));
+                }
+                /*                              
+                setConsumer((prevConsumer) => ({
+                    ...prevConsumer,
+                    [key]: newValue.getData()
+                }));*/
+            } else {
+                setConsumer((prevConsumer) => ({
+                    ...prevConsumer,
+                    [key]: newValue
+                }));
+            }
         }
     };
+ 
 //************************onClick*************************************** */ 
 
 
@@ -72,36 +103,38 @@ const axiosInstance = axios.create({
 
 axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 const submit = (e) => {
-    if (consumer.title.trim() === ''){
-        alert('제목을 입력해주세요.');
-        return;
-    }  else if(consumer.content.trim() === ''){
-        alert('내용을 입력해주세요.');
-        return;
-    }  else {
-        axiosInstance
-            .post(localIP + 'studentrequest/save', consumer)
-            .then((res) => {
-                if(res.data.message === "로그인 상태가 아닙니다."){
-                    alert('로그인 상태가 아닙니다.')
-                    navigate('/login');
-                    return;
-                }
-                if(res.data.message ==="일치하는 카테고리가 없습니다."){
-                    alert('카테고리를 선택해주세요');
-                    return
-                }
-                if(res.data.message === "요청에 성공하였습니다."){
-                    alert('저장되었습니다.')
-                    navigate('/consumerdetail');
-                }
-                console.log("submit consumer {}",consumer);
-                console.log("submit res {}",res);
-            })
-            .catch((error) => {
-                console.log("submit error {}",error);
-            });
-    }
+    // if ((consumer.title).length === 0){
+    //     alert('제목을 입력해주세요.');
+    //     return;
+    // }  else if((consumer.content).length === 0){
+    //     alert('내용을 입력해주세요.');
+    //     return;
+    // }
+
+    axiosInstance
+        .post(localIP + 'studentrequest/update', consumer)
+        .then((res) => {
+            if(res.data.message === "로그인 상태가 아닙니다."){
+                alert('로그인 상태가 아닙니다.')
+                navigate('/login');
+                return;
+            }
+            if(res.data.message ==="일치하는 카테고리가 없습니다."){
+                alert('카테고리를 선택해주세요');
+                return
+            }
+            if(res.data.message === "요청에 성공하였습니다."){
+                alert('저장되었습니다.')
+                //navigate(`/consumerdetail/${postId}`);
+                navigate(`/consumerlist`);
+            }
+            console.log("submit consumer {}",consumer);
+            console.log("submit res {}",res);
+        })
+        .catch((error) => {
+            console.log("submit error {}",error);
+        });
+    
 };
 
 const backToList = () => {
@@ -111,19 +144,33 @@ const backToList = () => {
 // consumer 조회 및 셋팅
 useEffect(() => {
     console.log("useEffect {}",postId);
-    axiosInstance.get(localIP + `/studentrequest/read?id=${postId}`)
+    axiosInstance.get(localIP + `studentrequest/read?id=${postId}`)
         .then((res) => {
-            console.log(res);
+            console.log('student {}',res);
             setConsumer(res.data.result);
+            
+            const key = 'studentId';
+            setConsumer((prevConsumer) => ({
+                ...prevConsumer,
+                [key]: res.data.result.id
+            }));
+             // 카테고리 값 설정
+             setConsumer((prevConsumer) => ({
+                ...prevConsumer,
+                category_id: res.data.result.fundingCategory.id
+            }));
+
+            setDataLoaded(true); // 데이터가 가져와지면 dataLoaded를 true로 설정합니다
+            //setConsumer(res);
+            
         })
         .catch((error) => {
             console.log(error);
         });
-
-    axiosInstance.post(localIP + '/user/myinfo')
+/*
+    axiosInstance.post(localIP + 'user/myinfo')
         .then((res)=>{
-            console.log('유저정보 반환')
-            console.log(res);
+            console.log('유저정보 반환 {}',res);
             if(res.data.message === "요청에 성공하였습니다."){
                 setLoginId(res.data.result.username);
             }
@@ -131,7 +178,7 @@ useEffect(() => {
         }).catch((error)=>{
             console.log(error);
         })
-            
+   */         
 }, []);
 
 
@@ -147,13 +194,23 @@ useEffect(() => {
                 </div>
                 <div>
                     <div className='c_CreateTitle'>
-                        <ConsumerTitleTextFields  text={'제목'} name={'title'} value={consumer.title} handleInputChange={handleInputChange} />
+                        {dataLoaded && <ConsumerTitleTextFields  text={'제목'} name={'title'} modValue={consumer.title} handleInputChange={handleInputChange} />}
                     </div>
                     <div className='c_CreateCategory'>
-                        <CategorySelect name={'category_id'} handleInputChange={handleInputChange}/>
+                        {dataLoaded && <CategorySelect name={'category_id'} modValue={consumer.category_id} handleInputChange={handleInputChange}/>}
                     </div>
                     <div className='c_Content'>
-                        <ToastEditor name={'content'} value={consumer.content} handleInputChange={handleInputChange}/>
+                    {dataLoaded && (
+                        <Editor
+                        ref={editorRef} // DOM 선택용 useRef
+                        initialValue={consumer.content}
+                        previewStyle="vertical"
+                        height="600px"
+                        initialEditType="wysiwyg"
+                        useCommandShortcut={true}
+                        onChange={(value) => handleInputChange('content', value)}
+                        />
+                    )}
                     </div>
                 </div>
                 <div className='c_Createheight100'>{/**에디터와 버튼사이 빈 공간 */}</div>
