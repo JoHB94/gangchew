@@ -4,6 +4,7 @@ import { FaHeart } from 'react-icons/fa';
 import { LiaCommentDots } from 'react-icons/lia';
 import '../consumer/css/ConsumerDetail.css';
 import '../component/css/SimpleLine.css';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import EditButton from '../component/buttons/EditButton';
 import DeleteButton from '../component/buttons/DeleteButton';
 import { useParams } from "react-router-dom";
@@ -74,32 +75,64 @@ export default function ConsumerDetail() {
                
     }, []);
 
-    // ************************onClick***************************************
+    // ************************삭제 버튼***************************************
+    const handleDeleteConsumer = () => {
+        // 삭제 여부 확인 대화 상자
+        const isConfirmed = window.confirm("이 게시물을 삭제하시겠습니까?");
+        if (isConfirmed) {
+            // 서버에 DELETE 요청
+            axiosInstance
+                .get(localIP + `/studentrequest/update/state?id=${postId}&state=DELETE`)
+                .then((res) => {
+                    console.log(res);
+                    
+                    if (res.data.message === "게시글이 존재하지 않습니다.") {
+                        alert('게시글이 존재하지 않습니다.');
+                        
+                        return;
+                    }
+    
+    
+                    if (res.data.message === "로그인 상태가 아닙니다.") {
+                        alert('로그인을 해주세요');
+                        navigate('/login');
+                        return;
+                    }
+                    alert('삭제가 완료되었습니다.');
+                    navigate('/consumerlist');
+                })
+                .catch((error) => {
+                    console.log(error);
+                    alert('오류가 발생했습니다.');
+                });
+        }
+    };
+        
+
 
     // **************************좋아요 버튼***************************************
 
     const handleLikeClick = () => {
+        if (!token) {
+            alert('로그인을 해주세요');
+            navigate('/login');
+            return;
+        }
         setIsLiked(!isLiked);
-        axiosInstance.get(localIP +`/studentrequest/toggle-like?id=${postId}`)
-        .then((res)=>{
-            console.log(res);
-            if(res.data.message === "좋아요가 등록되었습니다."){
-                alert('좋아요가 등록되었습니다.');
-            }
-            
-            if(res.data.message === "좋아요 취소가 완료하였습니다."){
-                alert('좋아요가 등록되었습니다.');
-            }
-            
-            if(res.data.message === "로그인 상태가 아닙니다."){
-                alert('로그인을 해주세요');
-                navigator('/login');
-            }
-        })
-        .catch((error)=>{
-            console.log(error);
-        })
-
+        axiosInstance.get(localIP + `/studentrequest/toggle-like?id=${postId}`)
+            .then((res) => {
+                console.log(res);
+                if (res.data.message === "좋아요가 등록되었습니다.") {
+                    alert('좋아요가 등록되었습니다.');
+                }
+    
+                if (res.data.message === "좋아요 취소가 완료하였습니다.") {
+                    alert('좋아요가 등록되었습니다.');
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     };
 
     return (
@@ -129,8 +162,9 @@ export default function ConsumerDetail() {
                                    
                                    } 
                                     {
+                                        // 만약 로그인된 사용자가 게시물 작성자와 동일한 경우
                                     (loginId === consumer.writer) &&
-                                    <div className="c_DetailDeleteButton">
+                                    <div className="c_DetailDeleteButton" onClick={handleDeleteConsumer}>
                                         <DeleteButton />
                                     </div>
                                     }
@@ -140,7 +174,10 @@ export default function ConsumerDetail() {
                                 <div className='c_DetailTitleBox'>{consumer.title}</div>
                                 <div className='c_DetailCategoryBox'>{consumer.fundingCategory.categoryName}</div>
                                 {/* 토스트 뷰어 영역 */}
-                                <div className='c_DetailContentBox'><Viewer initialValue={consumer.content} key={consumer.content} /></div>                               
+                                <div className='c_DetailContentBox'>
+                                    {console.log(consumer.content)}
+                                {<Viewer initialValue={consumer.content} key={consumer.content} />}
+                                </div>                               
                                 <div className="c_DetailBtnBox_1">
                                     <div className="c_DetailLikeBtn" onClick={handleLikeClick}>
                                        { isLiked ? (<FaHeart size={23} color="red" />) : (<FaHeart size={23} />)}
