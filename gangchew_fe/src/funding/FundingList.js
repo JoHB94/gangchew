@@ -47,7 +47,7 @@ export default function FundingList() {
   /**default 요청 메소드 : 현재 페이지는 currentPage, category는 전체, orderby는 최신순 */
   const cloudIP = ' http://138.2.114.150:9000/';
   const localIP = 'http://localhost:9000/';
-  const URI = `funding/all?itemsPerPage=${itemsPerPage}&category=${currentCategory}&orderby=${orderby}&currentpage=${currentPage}`;
+  const URI = `funding/all?itemsPerPage=${itemsPerPage}&category=${currentCategory}&orderby=${orderby}&currentpage=${currentPage}&state=IN_PROGRESS`;
   
   let token = '';
 

@@ -1,10 +1,10 @@
-import React,{ useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import inputThumbnail from '../funding/css/inputThumbnail.css';
 
-export default function InputThumbnail({name,handleInputChange}){
+export default function InputThumbnail({name,handleInputChange,modValue}){
 
   /*mui이미지 업로드 버튼*/ 
     const VisuallyHiddenInput = styled('input')({
@@ -40,6 +40,12 @@ export default function InputThumbnail({name,handleInputChange}){
         
       };
     }
+
+    useEffect(()=>{
+      if(modValue !== ''){
+        setSelectedImage(modValue);
+      }
+    },[])
 
     return(
         <div id='thumbContainer'>

@@ -80,7 +80,7 @@ const Header = () => {
                 <div id='container80'>
                     <div id='container_left'>
                         <div id='h_title'>
-                            <h2 id='h_h2'>GangChew</h2>
+                            <h2 id='h_h2'><Link to="/" style={{color:"white"}}>GangChew</Link></h2>
                             
                         </div>
                         
@@ -88,10 +88,12 @@ const Header = () => {
                             <Link id='container33' to="/fundinglist">
                               <li >펀딩list</li>
                             </Link>
-                            <Link id='container33' to={"/fundingcreate"}>
+                            <Link id='container33' to="/fundingcreate">
                               <li>펀딩작성</li>
                             </Link>
-                            <li id='container33'>요청list</li>
+                            <Link id='container33' to="/consumerlist">
+                              <li>요청list</li>
+                            </Link>
                         </ul>
                         
                     </div>

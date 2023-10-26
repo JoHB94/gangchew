@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // Toast 에디터
 import { Editor } from '@toast-ui/react-editor';
@@ -13,6 +13,7 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 export default function ToastEditor({name ,handleInputChange}) {
   // Editor DOM 선택용
   const editorRef = useRef();
+  const [initalValue,setInitalValue] =useState('');
   
     // 등록 버튼 핸들러
   const handleChange = () => {
@@ -29,16 +30,19 @@ export default function ToastEditor({name ,handleInputChange}) {
     
   };
 
+
+
   return (
-    <div>
+    <>
       <Editor
-        initialValue='내용을 입력해 주세요.'
+      
+        // initialValue={initalValue}
+        autofocus={false}
         ref={editorRef} // DOM 선택용 useRef
-        placeholder="내용을 입력해주세요."
+        // placeholder="내용을 입력해주세요."
         previewStyle="vertical" // 미리보기 스타일 지정
         height="500px" // 에디터 창 높이
         initialEditType="wysiwyg" //
-        autofocus={false}
         onChange={handleChange}
         toolbarItems={[
           // 툴바 옵션 설정
@@ -50,8 +54,6 @@ export default function ToastEditor({name ,handleInputChange}) {
         ]}
         useCommandShortcut={false} // 키보드 입력 컨트롤 방지
       ></Editor>
-      
-      
-    </div>
+     </> 
   );
 }

@@ -59,6 +59,7 @@
     margin: 20px;
     padding: 20px;
 }
+
 .m_OrderBox_22{
     display: flex;
     padding: 20px;
@@ -68,14 +69,18 @@
     display: flex;
     justify-content: right;
     width: 40%;
+    transform: scale(1.15);
 }
 .m_OrderBox_22b{
     display: flex;
-    justify-content: right;
+    justify-content: center;
     width: 60%;
     padding-right: 20px;
-}.m_OrderBox_Btn{
-    margin: 20px;
+    transform: scale(1.15);
+}
+
+.m_OrderBox_Btn{
+    margin: 10px 20px 5px 20px;
     
 }    
 

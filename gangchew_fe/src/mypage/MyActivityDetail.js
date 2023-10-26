@@ -22,7 +22,7 @@ export default function MyActivityDetail() {
   const token = getCookie("jwtToken");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-  /* 유저 인포 확인 */
+  /* 유저 인포 확인 - 닉네임 추출 */
   useEffect(() => {
     const requestData = async () => {
       try {
@@ -36,7 +36,6 @@ export default function MyActivityDetail() {
         console.log("받은 유저 정보 데이터: ", response.data.result);
         setMyUsername(response.data.result.username);
         setMyUserNickname(response.data.result.nickname);
-        console.log(myUsername);
         
       } catch (error) {
         console.error("오류 발생:", error);
@@ -70,11 +69,11 @@ export default function MyActivityDetail() {
             </div>
             <h3>좋아요 누른 게시물 내역</h3>
             <div className="m_BoardList">
-              <MyLikePostListBox myUsername={myUsername} myUserNickname={myUserNickname}/>
+              <MyLikePostListBox myUsername={myUsername} myUserNickname={myUserNickname}/>{/* 확인 */}
             </div>
             <h3>취소 / 환불 내역</h3>
             <div className="m_BoardList">
-              <MyRefundListBox myUsername={myUsername} myUserNickname={myUserNickname}/>
+              <MyRefundListBox myUsername={myUsername} myUserNickname={myUserNickname}/>{/* 확인 */}
             </div>
             <div className="m_BottomBlank" /*바텀빈공간 */></div>
           </div>

@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { CgProfile } from 'react-icons/cg';
+import { Link } from 'react-router-dom';
 
 export default function MyPageDrop() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -35,9 +36,9 @@ export default function MyPageDrop() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}><b>내 정보 수정</b></MenuItem>
-        <MenuItem onClick={handleClose}><b>나의 활동 내역</b></MenuItem>
-        <MenuItem onClick={handleClose}><b>쪽지 알림</b></MenuItem>
+        <MenuItem onClick={handleClose}><Link to='/user'><b>내 정보 수정</b></Link></MenuItem>
+        <MenuItem onClick={handleClose}><Link to='/myactivitydetail'><b>나의 활동 내역</b></Link></MenuItem>
+        
       </Menu>
     </div>
   );

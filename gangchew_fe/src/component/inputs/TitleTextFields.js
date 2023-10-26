@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
@@ -14,7 +14,7 @@ import TextField from "@mui/material/TextField";
 
 export default function TitleTextFields({size, text, name ,handleInputChange, modValue ,multiline}) { 
 
-  const [childInputValue, setChildInputValue] = useState(modValue);
+  const [childInputValue, setChildInputValue] = useState('');
  
 
   const handleChange = (event) => {
@@ -25,6 +25,13 @@ export default function TitleTextFields({size, text, name ,handleInputChange, mo
     // 입력 값이 변경될 때 콜백 함수 호출하여 부모 컴포넌트로 전달
     handleInputChange(key,newValue);
   };
+
+  useEffect(()=>{
+    if(modValue !== ''){
+      setChildInputValue(modValue);
+      console.log(modValue);
+    }
+  },[])
 
   return (
     <Box
