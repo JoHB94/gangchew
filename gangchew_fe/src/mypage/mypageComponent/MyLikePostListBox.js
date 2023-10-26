@@ -39,6 +39,7 @@ export default function MyLikePostListBox(props) {
           "Content-Type": "application/json"
         },
       });
+      console.log("받은 데이터: ", response.data.result); //Array개수 확인
       if(response.data.result.length == 0) {
         setHistory(true); //데이터 X 상태
       }else {
@@ -112,7 +113,7 @@ export default function MyLikePostListBox(props) {
           </div>
         </div>
         <div className="List_Title" /**제목 영역 */>
-          <Link to={`/consumerdetail/${item.postId}`}>
+          <Link to={`/fundinginfo/${item.type_id}`}>
           {item.title}
           </Link>
         </div>

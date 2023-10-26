@@ -66,7 +66,7 @@ export default class ThirdSlider extends Component {
         item // 배열 개수만큼 컴포넌트 출력
       ) => (
         <SlideItem key={item}>
-          <ThirdCard data={item.funding} rate={item.achievementrate}/>
+          <ThirdCard data={item.funding} rate={item.achievementrate} like={item.liked}/>
         </SlideItem>
       )
     );
