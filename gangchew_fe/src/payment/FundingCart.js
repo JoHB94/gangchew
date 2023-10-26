@@ -229,7 +229,7 @@ export default function FundingCart(props) {
         <div className="totalAmount">
           <div className="totalAmount-title">
             <h2>{!selectedTitles[0] ? "" : `${selectedTitles[0]} 외 ${selectedTitles.length-1}건`}</h2>
-            <h2>합계 : {totalAmount}원 / {selectedFundingId}
+            <h2>합계 : {totalAmount}원
           </h2>
           </div>
           <div class="paymentPG">
