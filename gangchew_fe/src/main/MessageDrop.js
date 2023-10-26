@@ -52,7 +52,10 @@ export default function MessageDrop() {
 
   useEffect(() => {
     reqServer();
+    const intervalId = setInterval(reqServer, 10000);
+    return () => clearInterval(intervalId);
   }, []);
+
 
   return (
     <PopupState variant="popover" popupId="demo-popup-menu">
@@ -63,15 +66,13 @@ export default function MessageDrop() {
           </Button>
           <Menu {...bindMenu(popupState)}>
           {msgCount ? (
-                 msgList.map((item, index) => (
-                  index==0 ? (''):(
-                  msgCount ==0 ? (''):(
+                msgList.map((item, index) => (
                     <MenuItem key={index} className='drop_menu' >
                     <MessageDiv messages={item} />
                   </MenuItem>
-                  ) 
                   
-                )))
+                  
+                ))
             ):(
               <MenuItem>
                 <div><b>메세지가 없습니다.</b></div>

@@ -45,8 +45,10 @@ export default function MyFundingListBox(props) {
         }
 
         for (let i = 0; i < response.data.result.length; i++) {
+          
             myArray.push(response.data.result[i]);
             setConsumers(myArray);
+          
         }
       } catch (error) {
         console.error("오류 발생:", error);
