@@ -20,13 +20,17 @@ export default function ConsumerTitleTextFields({ size, text, name, handleInputC
     const handleChange = (event) => {
       const key = name;
       const newValue = event.target.value;
+     
+
       setChildInputValue(newValue);
   
       // 입력 값이 변경될 때 콜백 함수 호출하여 부모 컴포넌트로 전달
       handleInputChange(key, newValue);
   
       // 유효성 검사 - 제목이 20글자를 넘지 않도록 및 필수 입력 유효성 검사
-      if (newValue.length > 100) {
+      if(newValue==null || newValue=='undefined') {
+
+      } else if (newValue.length > 100) {
         setError(true);
         console.error('제목은 100글자를 넘을 수 없습니다.');
       } else if (newValue.trim().length === 0) {
