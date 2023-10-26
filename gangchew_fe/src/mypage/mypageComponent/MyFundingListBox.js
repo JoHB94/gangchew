@@ -45,10 +45,10 @@ export default function MyFundingListBox(props) {
         }
 
         for (let i = 0; i < response.data.result.length; i++) {
-          if (response.data.result[i].writer === props.myUsername) {
+          
             myArray.push(response.data.result[i]);
             setConsumers(myArray);
-          }
+          
         }
       } catch (error) {
         console.error("오류 발생:", error);

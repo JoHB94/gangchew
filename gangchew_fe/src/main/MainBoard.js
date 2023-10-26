@@ -33,21 +33,21 @@ const MainBoard = () => {
                 <div className="inner-content-left">
                   <div>
                     <h2 className="sliderTitle">새로 오픈한 펀딩</h2>
-                    {/* <FirstSlider dataArray={newestDataArray}/> */}
+                    <FirstSlider dataArray={newestDataArray}/>
                   </div>
                   <div>
                     <h2 className="sliderTitle">뜨거운 관심 펀딩</h2>
-                    {/* <SecondSlider  dataArray={deadlineDataArray}/> */}
+                    <SecondSlider  dataArray={deadlineDataArray}/>
                   </div>
                 </div>
                 <div className="inner-content-right">
                   <h2>실시간 랭킹</h2>
-                  {/* <BestRankingList dataArray={bestRankDataArray}/> */}
+                  <BestRankingList dataArray={bestRankDataArray}/>
                 </div>
                 <div className="inner-content-bottom">
                   <div className="SliderItem">
                     <h2 className="sliderTitle">마감이 임박한 펀딩</h2>
-                    {/* <ThirdSlider isSecondSlider={true}  dataArray={mostViewDataArray}/> */}
+                    <ThirdSlider isSecondSlider={true}  dataArray={mostViewDataArray}/>
                   </div>
                 </div>
               </div>
