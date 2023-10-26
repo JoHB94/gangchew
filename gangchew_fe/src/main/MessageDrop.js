@@ -62,20 +62,21 @@ export default function MessageDrop() {
             <MessageBadge count={msgCount} />
           </Button>
           <Menu {...bindMenu(popupState)}>
-            {msgList ? (
+          {msgCount ? (
                  msgList.map((item, index) => (
+                  index==0 ? (''):(
                   msgCount ==0 ? (''):(
                     <MenuItem key={index} className='drop_menu' >
                     <MessageDiv messages={item} />
                   </MenuItem>
                   ) 
                   
-                ))
+                )))
             ):(
               <MenuItem>
                 <div><b>메세지가 없습니다.</b></div>
               </MenuItem>
-            )}    
+            )}      
           </Menu>
         </React.Fragment>
       )}
