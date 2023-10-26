@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { getCookie } from "../member/Cookie";
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const ConsumerComment = ({ postId }) => {
   const cloudIP = 'http://138.2.114.150:9000';
   const localIP = 'http://localhost:9000';
+
+  let navigate = useNavigate();
 
   const [currentUserID, setCurrentUserID] = useState('');
   let token = '';
@@ -36,6 +40,12 @@ const ConsumerComment = ({ postId }) => {
 
   const handleAddComment = () => {
     console.log("currentUserID {}",currentUserID);
+    if (!token) {
+      alert('로그인이 필요합니다.');
+      navigate('/login'); // 로그인 페이지로 이동
+      return;
+    }
+
     if (input.trim() !== '') {
       const newComment = {
         //id: comments.length,
@@ -85,6 +95,7 @@ const ConsumerComment = ({ postId }) => {
         .catch((error) => {
           console.log(error);
           alert('등록 실패되었습니다.');
+          
         });
     }
   };
@@ -119,15 +130,12 @@ const ConsumerComment = ({ postId }) => {
     axiosInstance.get(localIP + `/studentcomment?id=${postId}`)
       .then((res) => {
         console.log(res);
-  
+        
         // 댓글을 최신순으로 정렬하여 새로운 배열을 생성
         const sortedComments = res.data.result.sort((a, b) => new Date(b.formatdate) - new Date(a.formatdate));
-  
-        // 배열을 뒤집어서 올바른 순서를 유지합니다.
-        const reversedComments = sortedComments.reverse();
-  
+        
         // 정렬된 댓글 목록을 상태로 설정하여 화면에 표시
-        setComments(reversedComments);
+        setComments(sortedComments);
         setCurrentUserID();  // 실제 로그인 Id로 저장하기
       })
       .catch((error) => {

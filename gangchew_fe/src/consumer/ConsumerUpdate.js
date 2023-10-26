@@ -138,6 +138,7 @@ const submit = (e) => {
 };
 
 const backToList = () => {
+    alert('취소되었습니다.');
     navigate('/consumerlist');
 };
 

@@ -61,7 +61,7 @@ const localIP = 'http://localhost:9000/';
         }
       });
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    axiosInstance.get(localIP+`studentrequest/all?orderby=${orderby}&postsPerPage=6&currentpage=${currentPage}`)
+    axiosInstance.get(localIP+`studentrequest/all?orderby=${orderby}&postsPerPage=6&currentpage=${currentPage}&state=ACTIVE`)
     .then((res)=>{
       console.log("통신성공 {}",res);
       console.log("URI: " + `studentrequest/all?orderby=${orderby}&postsPerPage=6&currentpage=${currentPage}`)
