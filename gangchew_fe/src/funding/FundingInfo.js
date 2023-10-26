@@ -20,6 +20,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Progress from "../component/Progress";
 import FullHeart from "../component/buttons/FullHeart";
+import { Navigate } from "react-router-dom";
 
 
 export default function FundingInfo(){
@@ -150,9 +151,14 @@ export default function FundingInfo(){
     }
 
     const fundingCancelClick=()=>{
-        axiosInstance.get(localIP + `funding/delete?id=${fundingId}`)
+        axiosInstance.get(localIP + `funding/update/state?id=${fundingId}&state=DELETE`)
         .then((res)=>{
             console.log(res);
+            if(res.data.result){
+                setState(res.data.result)
+                alert('펀딩이 취소되었습니다.');
+                Navigate('/fundinglist')
+            }
         })
         .catch((error)=>{
             console.log(error);
@@ -293,7 +299,7 @@ export default function FundingInfo(){
                                     <li id="f_info_li">마감일 {data.deadline}</li>
                                     <li id="f_info_li">금액 {data.funding.amount}원</li>
                                     <li id="f_info_li">최대 모집 인원 {data.funding.max_participants}명</li>
-                                    <li id="f_info_li">현재 남은 인원 {participants} 명</li>
+                                    <li id="f_info_li">현재 남은 인원 {data.funding.max_participants - participants} 명</li>
                                     {isOffline?(<div>
                                         <li id="f_info_li">강의 형태 <b>offline</b></li>
                                         <li id="f_info_li">강의 지역: {data.funding.location}</li>
@@ -311,7 +317,7 @@ export default function FundingInfo(){
 
                                 <div id="f_info_buttonBox">
                                     <div >
-                                        <DoFunding />
+                                        <DoFunding onClick={fundingPartClick}/>
                                     </div>
                                     <div id="f_heart_button" onClick={fundingLikeClick}>
                                         {liked ? (<FullHeart size={45}/>):(<EmptyHeart size={45}/>)}
