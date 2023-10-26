@@ -10,11 +10,20 @@ export default class ThirdSlider extends Component {
   constructor(props) {
     super(props);
     this.responsiveSettings = [
-      // 반응형 속성 설정
+      {
+        breakpoint: 7800,
+        settings: {
+          slidesToShow: props.dataArray.length < 5 ? props.dataArray.length : 5,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true,
+          autoplaySpeed: 2600,
+        },
+      },
       {
         breakpoint: 2890,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: props.dataArray.length < 4 ? props.dataArray.length : 4,
           slidesToScroll: 1,
           infinite: true,
           dots: true,
@@ -53,7 +62,7 @@ export default class ThirdSlider extends Component {
       centerMode: true,
       infinite: true,
       centerPadding: "0px",
-      slidesToShow: 5,
+      slidesToShow: dataArray.length < 3 ? dataArray.length : 3,
       autoplay: true,
       autoplaySpeed: 3000,
       speed: 500,

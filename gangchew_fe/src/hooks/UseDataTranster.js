@@ -20,6 +20,8 @@ const useDataTransfer = (orderbyIndex, topNum, state, criteria, hours) => {
   const token = getCookie('jwtToken');
   if(token) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }else {
+    axios.defaults.headers.common["Authorization"] = null;
   }
   
   useEffect(() => {

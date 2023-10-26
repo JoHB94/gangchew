@@ -2,11 +2,13 @@ import React, { useEffect, useCallback, useState } from "react";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { getCookie } from "../member/Cookie";
+import { useNavigate } from "react-router-dom";
 
 const FundingPayment = (props) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const LOCAL_IP = "http://localhost:9000";
   const token = getCookie("jwtToken");
+  const navigate = useNavigate();
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   const initPayment = useCallback(() => {
@@ -29,7 +31,7 @@ const FundingPayment = (props) => {
 
         console.log("결제버튼 누름: ", props.fundingId);
 
-        if (props.fundingid) {
+        if (props.fundingId) {
           const requestData = async () => {
             try {
               const response = await axios({
@@ -41,8 +43,9 @@ const FundingPayment = (props) => {
               });
               console.log(`${LOCAL_IP}/participants/join?${props.fundingId}`);
               console.log("받은 데이터: ", response.data);
-              if (response.data.result === "펀딩에 참여되었습니다. ") {
+              if (response.data.code === 200) {
                 alert("펀딩에 성공하였습니다!");
+                navigate('/myactivitydetail');
               } else {
                 alert("이미 참여된 펀딩입니다!");
               }
@@ -53,6 +56,7 @@ const FundingPayment = (props) => {
           requestData();
         } else {
           for (let i = 0; i < props.fundingIdMap.length; i++) {
+            
             const requestData = async () => {
               try {
                 const response = await axios({
@@ -62,13 +66,15 @@ const FundingPayment = (props) => {
                     "Content-Type": "application/json",
                   },
                 });
-                console.log(`${LOCAL_IP}/participants/join?${props.fundingIdMap[i]}`);
+                console.log(
+                  `${LOCAL_IP}/participants/join?${props.fundingIdMap[i]}`
+                );
                 console.log("받은 데이터: ", response.data);
 
-                if (response.data.result === "펀딩에 참여되었습니다. ") {
+                if (response.data.code === 200) {
                   const serverUrl = `${LOCAL_IP}/fundingcart/delete?funding=${props.fundingIdMap[i]}`;
                   const requestMethod = "GET";
-                  
+
                   axios({
                     method: requestMethod,
                     url: serverUrl,
@@ -78,13 +84,13 @@ const FundingPayment = (props) => {
                   })
                     .then((response) => {
                       console.log("서버 응답 데이터:", response.data);
-                        
                     })
                     .catch((error) => {
                       console.error("오류 발생:", error);
                     });
                 } else {
                   alert("이미 참여된 펀딩입니다!");
+                  window.location.reload();
                 }
               } catch (error) {
                 console.error("오류 발생:", error);
@@ -99,7 +105,7 @@ const FundingPayment = (props) => {
         console.log("결제 실패", response);
       }
     });
-  }, [props.amount, props.title, props.paymentMethod]);
+  }, [props.paymentMethod, props.titles, props.title, props.amount, props.fundingId, props.fundingIdMap, navigate]);
 
   useEffect(() => {
     const loadIamportScript = async () => {

@@ -15,7 +15,7 @@ export default class FirstSlider extends Component {
       {
         breakpoint: 2890,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: props.dataArray.length < 3 ? props.dataArray.length : 3,
           slidesToScroll: 1,
           initialSlide: 0,
           infinite: true,
@@ -26,7 +26,7 @@ export default class FirstSlider extends Component {
       {
         breakpoint: 1900,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: props.dataArray.length < 2 ? props.dataArray.length : 2, 
           slidesToScroll: 1,
           initialSlide: 0,
           infinite: true,
@@ -55,7 +55,7 @@ export default class FirstSlider extends Component {
       centerMode: true,
       infinite: true,
       centerPadding: "0px",
-      slidesToShow: 5,
+      slidesToShow: dataArray.length < 3 ? dataArray.length : 3,
       autoplay: true,
       autoplaySpeed: 3000,
       speed: 500,
