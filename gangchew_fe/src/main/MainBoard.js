@@ -27,7 +27,7 @@ const MainBoard = () => {
           </div>
           <div className="centerBoard">
             {newestLoading || mostViewLoading || deadlineLoading || bestRankLoading ? (
-              <div></div>
+              <div className="blankPage"></div>
             ) : (
               <div className="content">
                 <div className="inner-content-left">

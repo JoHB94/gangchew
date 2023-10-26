@@ -2,95 +2,56 @@ import React, { useEffect, useCallback, useState } from "react";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { getCookie } from "../member/Cookie";
+import { useNavigate } from "react-router-dom";
 
 const FundingCartBtn = (props) => {
-  const [isInitialized, setIsInitialized] = useState(false);
   const LOCAL_IP = "http://localhost:9000";
   const token = getCookie("jwtToken");
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  const navigate = useNavigate();
+  
+  const fundingStoreHandle = () => { // 버튼을 누르면 펀딩이 장바구니에 저장(클릭 후 저장 성공시 장바구니 페이지로 선택적 리다이렉트)
+    const serverUrl = `${LOCAL_IP}/fundingcart/add?funding=${props.fundingId}`;
+    const requestMethod = "GET";
 
-  const initPayment = useCallback(() => {
-    const { IMP } = window;
-    IMP.init("imp67011510"); // 아임포트 가맹점 식별번호
-    const data = {
-      // 데이터 가상 설정
-      pg: props.paymentMethod,
-      merchant_uid: "merchant_" + new Date().getTime(),
-      name: props.title,
-      amount: props.amount,
-      //   buyer_name: "구매자 이름",
-    };
-
-    IMP.request_pay(data, (response) => {
-      if (response.success) {
-        // 결제 성공 시 처리
-        console.log("결제 성공", response);
-
-        const requestData = async () => {
-          try {
-            const response = await axios({
-              url: `${LOCAL_IP}/participants/join?funding=${props.fundingId}`,
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            console.log(`${LOCAL_IP}/participants/join?${props.fundingId}`);
-            console.log("받은 데이터: ", response.data); 
-            if(response.data.result ==="펀딩에 참여되었습니다. ") {
-                alert("펀딩에 성공하였습니다!");
-                window.location.href = "/myactivitydetail";
-            }else {
-              alert("이미 참여된 펀딩입니다!")
+    axios({
+      method: requestMethod,
+      url: serverUrl,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        console.log("서버 응답 데이터:", response.data);
+        if(response.data.code === 200) { // 장바구니 추가 성공
+            if(window.confirm(`${response.data.result}\n\n장바구니로 이동할까요?`)) {
+                navigate("/fundingcart");
             }
-          } catch (error) {
-            console.error("오류 발생:", error);
-          }
-        };
-        requestData();
-      } else {
-        // 결제 실패 시 처리
-        console.log("결제 실패", response);
-      }
-    });
-  }, [props.amount, props.title, props.paymentMethod]);
+        }
 
-  useEffect(() => {
-    const loadIamportScript = async () => {
-      const { IMP } = window;
-      if (!IMP) {
-        // IMP 객체가 없으면 아임포트 스크립트 로드
-        const script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = "https://cdn.iamport.kr/js/iamport.payment-1.2.0.js";
-        document.head.appendChild(script);
-        script.onload = () => {
-          setIsInitialized(true);
-        };
-      } else {
-        setIsInitialized(true);
-      }
-    };
+        if(response.data.code === 400) { // 이미 추가된 펀딩
+            alert(response.data.message);
+        }
 
-    loadIamportScript(); // 페이지 로드 시 아임포트 스크립트 로드 -> 결제 연결
-  }, []);
+      })
+      .catch((error) => {
+        console.error("오류 발생:", error);
+      });
+  }
 
   const buttonStyle = {
-    width: "100%", // Automatically set the width
+    width: "100%", 
     height: "50px",
     backgroundColor: "white",
     color: "#701edb",
   };
 
   return (
-    // <button onClick={initPayment} style={buttonStyle} disabled={!isInitialized}>
-    //   결제 버튼
-    // </button>
+    
     <Button
       style={buttonStyle}
-      variant="contained"
-      onClick={initPayment}
-      disabled={!isInitialized}
+      variant=""
+      onClick={fundingStoreHandle}
     >
       장바구니로 이동
     </Button>
@@ -99,9 +60,3 @@ const FundingCartBtn = (props) => {
 
 export default FundingCartBtn;
 
-/*
-
-결제 성공시(응답데이터 :Success - true) 서버로(/participant/join, get)통신을 보냄
-funding_id를 요청 데이터로 보냄
-
-*/

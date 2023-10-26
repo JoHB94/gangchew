@@ -23,7 +23,6 @@ const [funding, setFunding] = useState({
   thumbnail : '',
   title : '',
   viewCount : 0,
-         
 });
 
 const [payment, setPayment] = useState({
@@ -32,7 +31,6 @@ const [payment, setPayment] = useState({
   bank_name:'',
   bank_account:'',
   paymentMethod:'', // 결제수단
-  
 });
 
 const { fundingId } = useParams();
@@ -138,10 +136,7 @@ const handlePaymentMethodChange = (newValue) => {
   setPayment((prevPayment) => ({
     ...prevPayment,
     paymentMethod: selectedMethod,
-
   }));
-  
-
 };
 
     return (
@@ -174,11 +169,11 @@ const handlePaymentMethodChange = (newValue) => {
                               
                             <div className="m_OrderBox_Btn">
                                 {/* <PayButton/> */}
-                                <FundingPayment title={funding.title} amount={funding.amount} fundingId={fundingIdAsNumber} paymentMethod={payment.paymentMethod}/>
+                                <FundingPayment titles={funding.title} amount={funding.amount} fundingId={fundingIdAsNumber} paymentMethod={payment.paymentMethod}/>
                               </div>
                               <div className="m_OrderBox_Btn">
                                 {/* <PayButton/> */}
-                                <FundingCartBtn title={funding.title} amount={funding.amount} fundingId={fundingIdAsNumber} paymentMethod={payment.paymentMethod}/>
+                                <FundingCartBtn title={funding.title} fundingId={fundingIdAsNumber} paymentMethod={payment.paymentMethod}/>
                               </div>
                           </div>
                     </div>

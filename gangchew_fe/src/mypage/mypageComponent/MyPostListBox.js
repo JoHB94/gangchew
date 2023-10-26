@@ -116,7 +116,7 @@ export default function MyPostListBox(props) {
                 </div>
               </div>
               <div className="List_Title" /**제목 영역 */>
-                <Link to={`/consumerdetail/${item.postId}`}>{item.title}</Link>
+                <Link to={`/consumerdetail/${item.id}`}>{item.title}</Link>
               </div>
               <div className="SimpleLine" /**라인 */></div>
             </div>

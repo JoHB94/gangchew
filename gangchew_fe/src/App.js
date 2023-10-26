@@ -29,6 +29,8 @@ import UserPage from './member/UserPage';
 import FundingPayment from './payment/FundingPayment';
 import PaymentForm  from "./consumer/PaymentForm";
 
+import FundingCart from './payment/FundingCart';
+
 
 function App() {
   
@@ -72,7 +74,9 @@ function App() {
           <Route path='/successPayment/:pg_token' element={<SuccessPayment/>}/>
 
           <Route exact path='/user' element={<UserPage/>}/>
-          <Route exact path='/paymentform/' element={<PaymentForm/>}/>
+          <Route exact path='/paymentform' element={<PaymentForm/>}/>
+
+          <Route exact path='/fundingcart' element={<FundingCart/>}/>
 
         </Route>
       </Routes>

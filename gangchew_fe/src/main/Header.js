@@ -10,8 +10,8 @@ import MessageDrop from "./MessageDrop";
 import axios from "axios";
 import { getCookie, removeCookie } from "../member/Cookie";
 import { Link } from "react-router-dom";
-import { useEffect } from 'react';
-import MyPageDrop from './MyPageDrop';
+import { useEffect } from "react";
+import MyPageDrop from "./MyPageDrop";
 
 const Header = () => {
   const [login, setLogin] = useState(false);
@@ -72,48 +72,42 @@ const Header = () => {
     window.location.href = "/";
   };
 
-    
-
-    return (
-        <div>
-            <div id ="scroll_wrapper">
-                <div id='container80'>
-                    <div id='container_left'>
-                        <div id='h_title'>
-                            <h2 id='h_h2'>GangChew</h2>
-                            
-                        </div>
-                        
-                        <ul id='list'>
-                            <Link id='container33' to="/fundinglist">
-                              <li >펀딩list</li>
-                            </Link>
-                            <Link id='container33' to={"/fundingcreate"}>
-                              <li>펀딩작성</li>
-                            </Link>
-                            <li id='container33'>요청list</li>
-                        </ul>
-                        
-                    </div>
-                    <div id='container_right'>
-                        <div id='search'>                      
-                            <SearchBar/>
-                        </div>
-                        <div id='member'>
-                            <div id='container33' onClick={login? logoutHandle : loginHandle}>
-                                {login?('로그아웃'):('로그인')}
-                            </div>
-                            <div id='container33'>
-                              {login?(<MessageDrop/>):('')}
-                                
-                            </div>
-                            <div id='container33'>
-                              {login?(<MyPageDrop/>):('')}
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  return (
+    <div>
+      <div id="scroll_wrapper">
+        <div id="container80">
+          <div id="container_left">
+            <Link id="h_title" to="/">
+              <div id="h_title">
+                <h2 id="h_h2">GangChew</h2>
+              </div>
+            </Link>
+            <ul id="list">
+              <Link id="container33" to="/fundinglist">
+                <li>펀딩list</li>
+              </Link>
+              <Link id="container33" to={"/fundingcreate"}>
+                <li>펀딩작성</li>
+              </Link>
+              <li id="container33">요청list</li>
+            </ul>
+          </div>
+          <div id="container_right">
+            <div id="search">
+              <SearchBar />
+            </div>
+            <div id="member">
+              <div
+                id="container33"
+                onClick={login ? logoutHandle : loginHandle}
+              >
+                {login ? "로그아웃" : "로그인"}
+              </div>
+              <div id="container33">{login ? <MessageDrop /> : ""}</div>
+              <div id="container33">{login ? <MyPageDrop /> : ""}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
