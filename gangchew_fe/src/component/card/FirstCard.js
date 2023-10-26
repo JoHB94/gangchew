@@ -6,18 +6,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { getCookie } from "../../member/Cookie";
 
-/**
- *
- *
- * funding(Object) : 펀딩 글 객체
- * rate(int) : 달성률
- * funding.title : 제목
- * funding.thumbnail(byte[]) : 썸네일 인코딩해야함.
- * 필요 데이터: 좋아요 등록 여부,
- *
- */
 export default function FirstCard(props) {
-  // const rate = Math.floor(funding.goal/funding.participants)
+
   const [like, setLike] = useState(false);
   const [fundingData, setFundingData] = useState({
     fundingId: 0,
@@ -27,6 +17,7 @@ export default function FirstCard(props) {
     achievementrate: 0,
     totalItems: 0,
   });
+  
   const token = getCookie("jwtToken");
   if(!token) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;

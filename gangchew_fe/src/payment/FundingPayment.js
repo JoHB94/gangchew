@@ -16,38 +16,84 @@ const FundingPayment = (props) => {
       // 데이터 가상 설정
       pg: props.paymentMethod,
       merchant_uid: "merchant_" + new Date().getTime(),
-      name: props.title,
+      name: props.titles
+        ? props.titles
+        : `${props.title[0]} 외 ${props.title.length - 1}건`,
       amount: props.amount,
       //   buyer_name: "구매자 이름",
     };
-
     IMP.request_pay(data, (response) => {
       if (response.success) {
         // 결제 성공 시 처리
         console.log("결제 성공", response);
 
-        const requestData = async () => {
-          try {
-            const response = await axios({
-              url: `${LOCAL_IP}/participants/join?funding=${props.fundingId}`,
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
-            console.log(`${LOCAL_IP}/participants/join?${props.fundingId}`);
-            console.log("받은 데이터: ", response.data); 
-            if(response.data.result ==="펀딩에 참여되었습니다. ") {
+        console.log("결제버튼 누름: ", props.fundingId);
+
+        if (props.fundingid) {
+          const requestData = async () => {
+            try {
+              const response = await axios({
+                url: `${LOCAL_IP}/participants/join?funding=${props.fundingId}`,
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+              console.log(`${LOCAL_IP}/participants/join?${props.fundingId}`);
+              console.log("받은 데이터: ", response.data);
+              if (response.data.result === "펀딩에 참여되었습니다. ") {
                 alert("펀딩에 성공하였습니다!");
-                window.location.href = "/myactivitydetail";
-            }else {
-              alert("이미 참여된 펀딩입니다!")
+              } else {
+                alert("이미 참여된 펀딩입니다!");
+              }
+            } catch (error) {
+              console.error("오류 발생:", error);
             }
-          } catch (error) {
-            console.error("오류 발생:", error);
+          };
+          requestData();
+        } else {
+          for (let i = 0; i < props.fundingIdMap.length; i++) {
+            const requestData = async () => {
+              try {
+                const response = await axios({
+                  url: `${LOCAL_IP}/participants/join?funding=${props.fundingIdMap[i]}`,
+                  method: "GET",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                });
+                console.log(`${LOCAL_IP}/participants/join?${props.fundingIdMap[i]}`);
+                console.log("받은 데이터: ", response.data);
+
+                if (response.data.result === "펀딩에 참여되었습니다. ") {
+                  const serverUrl = `${LOCAL_IP}/fundingcart/delete?funding=${props.fundingIdMap[i]}`;
+                  const requestMethod = "GET";
+                  
+                  axios({
+                    method: requestMethod,
+                    url: serverUrl,
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  })
+                    .then((response) => {
+                      console.log("서버 응답 데이터:", response.data);
+                        
+                    })
+                    .catch((error) => {
+                      console.error("오류 발생:", error);
+                    });
+                } else {
+                  alert("이미 참여된 펀딩입니다!");
+                }
+              } catch (error) {
+                console.error("오류 발생:", error);
+              }
+            };
+            requestData();
           }
-        };
-        requestData();
+          alert("펀딩에 성공하였습니다!");
+        }
       } else {
         // 결제 실패 시 처리
         console.log("결제 실패", response);
@@ -92,16 +138,9 @@ const FundingPayment = (props) => {
       onClick={initPayment}
       disabled={!isInitialized}
     >
-      결제하기
+      바로결제
     </Button>
   );
 };
 
 export default FundingPayment;
-
-/*
-
-결제 성공시(응답데이터 :Success - true) 서버로(/participant/join, get)통신을 보냄
-funding_id를 요청 데이터로 보냄
-
-*/

@@ -3,19 +3,11 @@ import Card from "../../component/css/card.css";
 import EmptyHeart from "../buttons/EmptyHeart";
 import FullHeart from "../buttons/FullHeart";
 import { useEffect } from "react";
+import axios from "axios";
+import { getCookie } from "../../member/Cookie";
 
-/**
- *
- *
- * funding(Object) : 펀딩 글 객체
- * rate(int) : 달성률
- * funding.title : 제목
- * funding.thumbnail(byte[]) : 썸네일 인코딩해야함.
- * 필요 데이터: 좋아요 등록 여부,
- *
- */
 export default function SecondCard(props) {
-  // const rate = Math.floor(funding.goal/funding.participants)
+
   const [like, setLike] = useState(false);
   const [fundingData, setFundingData] = useState({
     fundingId: 0,
@@ -25,6 +17,11 @@ export default function SecondCard(props) {
     achievementrate: 0,
     totalItems: 0,
   });
+  
+  const token = getCookie("jwtToken");
+  if(!token) {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }
 
   // 외부에서 받은 펀딩 데이터 입수
   useEffect(() => {
@@ -32,12 +29,30 @@ export default function SecondCard(props) {
   }, [props.data]);
 
   useEffect(() => {
-    /**로그인 한 아이디와 해당 카드 번호를 기준으로 좋아요 여부를 반환하는 axios 통신 */
-  }, []);
+    setLike(props.like)
+  }, [props.like]);
 
-  const likeHandler = () => {
-    setLike(!like);
-    /**axios통신 부분 추가 */
+  const likeHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const requestUrl = `http://localhost:9000/funding/toggle-like?id=${fundingData.id}`;
+    const requestMethod = "GET";
+
+    axios({
+      method: requestMethod,
+      url: requestUrl,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      console.log("서버 응답 데이터:", response.data);
+      setLike(!like);
+    })
+    .catch((error) => {
+      console.error("오류 발생:", error);
+    })
+
   };
 
   const infoHandle = () => {
