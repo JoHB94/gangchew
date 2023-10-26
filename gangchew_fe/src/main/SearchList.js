@@ -7,6 +7,7 @@ import LongCard from "../component/LongCard";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { getCookie } from '../member/Cookie';
+import StudentLongCard from "../component/StudentLongCard";
 
 
 export default function SearchList(){
@@ -18,6 +19,7 @@ export default function SearchList(){
 
 
     const [fundingTotalItems, setFundungTotalItems] = useState(0);
+    const [consumerTotalItems, setConsumerTotalItems] = useState(0);
   
     const [fundingData, setFundingData] = useState([]);
     const [consumerData, setConsumerData] = useState([]);
@@ -25,6 +27,7 @@ export default function SearchList(){
     const [currentConsumerPage, setCurrentConsumerPage] = useState(defaultCurrentPage);
 
     const fundingCount = Math.ceil(fundingTotalItems/itemsPerPage);
+    const consumerCount = Math.ceil(consumerTotalItems/itemsPerPage);
     
     
     
@@ -47,16 +50,16 @@ export default function SearchList(){
   axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     const fundingURI = `fundingList?keyword=${keyword}&currentpage=${currentFundingPage}&itemsPerPage=${itemsPerPage}&name=funding`;
-    const userURI = `fundingList?keyword=${keyword}&currentpage=${currentFundingPage}&itemsPerPage=${itemsPerPage}&name=user`;
+    const userURI = `studentList?keyword=${keyword}&currentpage=${currentConsumerPage}&itemsPerPage=${itemsPerPage}&name=user`;
 
     const fundingReqServer=()=>{
         axiosInstance.get(localIP+fundingURI)
         .then((res)=>{
             setFundingData(res.data.result);
             setFundungTotalItems(res.data.result[0].totalItems);
-            console.log(fundingCount);
+            
             console.log("funding 조건 조회 완료");
-            console.log(res)
+            
         })
         .catch((error)=>{
             console.log(error);
@@ -66,7 +69,10 @@ export default function SearchList(){
     const consumerReqServer=()=>{
         axiosInstance.get(localIP+userURI)
         .then((res)=>{
-            setConsumerData(res);
+            
+            
+            setConsumerData(res.data.result);
+            setConsumerTotalItems(res.data.result[0].totalItems);
             console.log("consumer 조건 조회 완료");
         })
         .catch((error)=>{
@@ -77,13 +83,9 @@ export default function SearchList(){
 //*************************************useEffect************************** */
     useEffect(()=>{
         fundingReqServer();
-        
+        consumerReqServer();
     },[])
 
-    useEffect(()=>{
-        // consumerReqServer();
-
-    },[])
 //**********************************onClick Handler********************** */
     const fundingPageHandler=(event,page)=>{
         setCurrentFundingPage(page);
@@ -109,7 +111,7 @@ export default function SearchList(){
             <div id="search_container">
                 <div id="search_side"></div>
                 <div id="search_center">
-                    <div id="search_height150"></div>
+                    <div style={{height:"50px"}}></div>
                     <h1>검색 결과</h1><hr/>
                     <div id="search_funding">
 
@@ -141,13 +143,21 @@ export default function SearchList(){
                         <div id="search_title">
                             <h3>수요자 게시판 내 검색 결과입니다.</h3>
                         </div>
-                        <div id="search_list">
+                        <div>
                             {/**수요자 게시판 카드 들어갈 부분 */}
+                            {consumerData && consumerData.length > 0 && consumerData.map((consumerData)=>(
+                                <Link to={`/consumerdetail/${consumerData.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                    <div id="search_list" key={consumerData.id}>
+                                        <StudentLongCard post={consumerData} keyword={keyword}/>
+                                    </div>
+                                </Link>
+
+                            ))}
                         </div>
                         <div id="pagination100">
                         {/*------------페이지네이션 위치!!!!-----------*/}
                             <Stack spacing={2}>
-                            <Pagination count={3} variant="outlined" shape="rounded" color="secondary" 
+                            <Pagination count={consumerCount} variant="outlined" shape="rounded" color="secondary" 
                             page={currentConsumerPage} onChange={consumerPageHandler}/>
                             </Stack>
                         </div>

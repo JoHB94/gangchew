@@ -38,9 +38,7 @@ export default function FundingCreate() {
         thumbnail: '',
         content: ''
     });
-
-    const [validTitle, setValidTitle] = useState(false);
-    const [validSubtitle, setValidSubtitle] = useState(false);
+      
 
 //*************************************axios***************************************************** */
     
@@ -122,7 +120,7 @@ export default function FundingCreate() {
         });
     };
 
-
+    
   
 
 //*******************************daum 주소 API ************************************************** */
@@ -268,10 +266,10 @@ export default function FundingCreate() {
 
 
     return (
-        <div>
+        
             
-            <div id="p_headerarea"></div>{/**헤더에 가려지는 부분 */}
-            <div id="projectContainer">
+        <div id="projectContainer">
+                <div id="p_headerarea"></div>{/**헤더에 가려지는 부분 */}
                 <div id="left"></div>{/**왼쪽 사이드 */}
                 <div id="center">
                     {/* <div id="p_empty350"></div> */}
@@ -494,9 +492,8 @@ export default function FundingCreate() {
                     <div id="p_empty150"></div>
                 </div>
                 <div id="right"></div>{/**오른쪽 사이드 */}
+                {console.log(funding)}
             </div>
-            {console.log(funding)}
-            {console.log(isAdressNull)}
-        </div>
+       
     )
 }

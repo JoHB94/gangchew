@@ -77,19 +77,24 @@ const Header = () => {
       <div id="scroll_wrapper">
         <div id="container80">
           <div id="container_left">
-            <Link id="h_title" to="/">
-              <div id="h_title">
-                <h2 id="h_h2">GangChew</h2>
-              </div>
-            </Link>
+            <div id="h_title">
+              <h2 id="h_h2">
+                <Link to="/" style={{ color: "white" }}>
+                  GangChew
+                </Link>
+              </h2>
+            </div>
+
             <ul id="list">
               <Link id="container33" to="/fundinglist">
                 <li>펀딩list</li>
               </Link>
-              <Link id="container33" to={"/fundingcreate"}>
+              <Link id="container33" to="/fundingcreate">
                 <li>펀딩작성</li>
               </Link>
-              <li id="container33">요청list</li>
+              <Link id="container33" to="/consumerlist">
+                <li>요청list</li>
+              </Link>
             </ul>
           </div>
           <div id="container_right">
